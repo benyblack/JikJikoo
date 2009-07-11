@@ -1,0 +1,284 @@
+﻿<?xml version="1.0"?>
+<doc>
+<assembly>
+<name>
+JikjikooLib
+</name>
+</assembly>
+<members>
+<member name="M:oAuthExample.oAuthTwitter.AuthorizationLinkGet">
+	<summary>
+ Get the link to Twitter's authorization page for this application.
+ </summary>
+	<returns>The url with a valid request token, or a null string.</returns>
+</member><member name="M:oAuthExample.oAuthTwitter.AccessTokenGet(System.String)">
+	<summary>
+ Exchange the request token for an access token.
+ </summary>
+	<param name="authToken">The oauth_token is supplied by Twitter's authorization page following the callback.</param>
+</member><member name="M:oAuthExample.oAuthTwitter.oAuthWebRequest(oAuthExample.oAuthTwitter.Method,System.String,System.String)">
+	<summary>
+ Submit a web request using oAuth.
+ </summary>
+	<param name="method__1">GET or POST</param>
+	<param name="url">The full url, including the querystring.</param>
+	<param name="postData">Data to post (querystring format)</param>
+	<returns>The web server response.</returns>
+</member><member name="M:oAuthExample.oAuthTwitter.WebRequest(oAuthExample.oAuthTwitter.Method,System.String,System.String)">
+	<summary>
+ Web Request Wrapper
+ </summary>
+	<param name="method__1">Http Method</param>
+	<param name="url">Full url to the web resource</param>
+	<param name="postData">Data to post in querystring format</param>
+	<returns>The web server response.</returns>
+</member><member name="M:oAuthExample.oAuthTwitter.WebResponseGet(System.Net.HttpWebRequest)">
+	<summary>
+ Process the web response.
+ </summary>
+	<param name="webRequest">The request object.</param>
+	<returns>The response data.</returns>
+</member><member name="T:oAuthExample.OAuthBase.SignatureTypes">
+	<summary>
+ Provides a predefined set of algorithms that are supported officially by the protocol
+ </summary>
+</member><member name="T:oAuthExample.OAuthBase.QueryParameter">
+	<summary>
+ Provides an internal structure to sort the query parameter
+ </summary>
+</member><member name="T:oAuthExample.OAuthBase.QueryParameterComparer">
+	<summary>
+ Comparer class used to perform the sorting of the query parameters
+ </summary>
+</member><member name="M:oAuthExample.OAuthBase.ComputeHash(System.Security.Cryptography.HashAlgorithm,System.String)">
+	<summary>
+ Helper function to compute a hash value
+ </summary>
+	<param name="hashAlgorithm">The hashing algoirhtm used. If that algorithm needs some initialization, like HMAC and its derivatives, they should be initialized prior to passing it to this function</param>
+	<param name="data">The data to hash</param>
+	<returns>a Base64 string of the hash value</returns>
+</member><member name="M:oAuthExample.OAuthBase.GetQueryParameters(System.String)">
+	<summary>
+ Internal function to cut out all non oauth query string parameters (all parameters not begining with "oauth_")
+ </summary>
+	<param name="parameters">The query string part of the Url</param>
+	<returns>A list of QueryParameter each containing the parameter name and value</returns>
+</member><member name="M:oAuthExample.OAuthBase.UrlEncode(System.String)">
+	<summary>
+ This is a different Url Encode implementation since the default .NET one outputs the percent encoding in lower case.
+ While this is not a problem with the percent encoding spec, it is used in upper case throughout OAuth
+ </summary>
+	<param name="value">The value to Url encode</param>
+	<returns>Returns a Url encoded string</returns>
+</member><member name="M:oAuthExample.OAuthBase.NormalizeRequestParameters(System.Collections.Generic.IList{oAuthExample.OAuthBase.QueryParameter})">
+	<summary>
+ Normalizes the request parameters according to the spec
+ </summary>
+	<param name="parameters">The list of parameters already sorted</param>
+	<returns>a string representing the normalized parameters</returns>
+</member><member name="M:oAuthExample.OAuthBase.GenerateSignatureBase(System.Uri,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String@,System.String@)">
+	<summary>
+ Generate the signature base that is used to produce the signature
+ </summary>
+	<param name="url">The full url that needs to be signed including its non OAuth url parameters</param>
+	<param name="consumerKey">The consumer key</param>
+	<param name="token">The token, if available. If not available pass null or an empty string</param>
+	<param name="tokenSecret">The token secret, if available. If not available pass null or an empty string</param>
+	<param name="httpMethod">The http method used. Must be a valid HTTP method verb (POST,GET,PUT, etc)</param>
+	<param name="signatureType">The signature type. To use the default values use <see cref="T:oAuthExample.OAuthBase.SignatureTypes">OAuthBase.SignatureTypes</see>.</param>
+	<returns>The signature base</returns>
+</member><member name="M:oAuthExample.OAuthBase.GenerateSignatureUsingHash(System.String,System.Security.Cryptography.HashAlgorithm)">
+	<summary>
+ Generate the signature value based on the given signature base and hash algorithm
+ </summary>
+	<param name="signatureBase">The signature based as produced by the GenerateSignatureBase method or by any other means</param>
+	<param name="hash">The hash algorithm used to perform the hashing. If the hashing algorithm requires initialization or a key it should be set prior to calling this method</param>
+	<returns>A base64 string of the hash value</returns>
+</member><member name="M:oAuthExample.OAuthBase.GenerateSignature(System.Uri,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String@,System.String@)">
+	<summary>
+ Generates a signature using the HMAC-SHA1 algorithm
+ </summary>
+	<param name="url">The full url that needs to be signed including its non OAuth url parameters</param>
+	<param name="consumerKey">The consumer key</param>
+	<param name="consumerSecret">The consumer seceret</param>
+	<param name="token">The token, if available. If not available pass null or an empty string</param>
+	<param name="tokenSecret">The token secret, if available. If not available pass null or an empty string</param>
+	<param name="httpMethod">The http method used. Must be a valid HTTP method verb (POST,GET,PUT, etc)</param>
+	<returns>A base64 string of the hash value</returns>
+</member><member name="M:oAuthExample.OAuthBase.GenerateSignature(System.Uri,System.String,System.String,System.String,System.String,System.String,System.String,System.String,oAuthExample.OAuthBase.SignatureTypes,System.String@,System.String@)">
+	<summary>
+ Generates a signature using the specified signatureType 
+ </summary>
+	<param name="url">The full url that needs to be signed including its non OAuth url parameters</param>
+	<param name="consumerKey">The consumer key</param>
+	<param name="consumerSecret">The consumer seceret</param>
+	<param name="token">The token, if available. If not available pass null or an empty string</param>
+	<param name="tokenSecret">The token secret, if available. If not available pass null or an empty string</param>
+	<param name="httpMethod">The http method used. Must be a valid HTTP method verb (POST,GET,PUT, etc)</param>
+	<param name="signatureType">The type of signature to use</param>
+	<returns>A base64 string of the hash value</returns>
+</member><member name="M:oAuthExample.OAuthBase.GenerateTimeStamp">
+	<summary>
+ Generate the timestamp for the signature        
+ </summary>
+	<returns></returns>
+</member><member name="M:oAuthExample.OAuthBase.GenerateNonce">
+	<summary>
+ Generate a nonce
+ </summary>
+	<returns></returns>
+</member><member name="P:My.Resources.Resources.ResourceManager">
+	<summary>
+  Returns the cached ResourceManager instance used by this class.
+</summary>
+</member><member name="P:My.Resources.Resources.Culture">
+	<summary>
+  Overrides the current thread's CurrentUICulture property for all
+  resource lookups using this strongly typed resource class.
+</summary>
+</member><member name="T:My.Resources.Resources">
+	<summary>
+  A strongly-typed resource class, for looking up localized strings, etc.
+</summary>
+</member><member name="M:DNE.JikJikoo.TwitterApi.#ctor(System.String,System.String,System.String,System.String)">
+	<summary>
+	</summary>
+	<param name="user">Username in Twitter</param>
+	<param name="pass">Password in Twitter</param>
+	<param name="tok">Token for oAuth</param>
+	<param name="toksecret">TokenSecret for oAuth</param>
+	<remarks></remarks>
+</member><member name="M:DNE.JikJikoo.TwitterApi.ConfigProxy(DNE.JikJikoo.ProxyType,System.Int32,System.String,System.String,System.String)">
+	<summary>
+ Config Proxy.
+ Default Settings is : SOCKS4A,127.0.0.1,1080,"","" 
+ if you want to use default settign dont call this method
+ </summary>
+	<param name="ptype">Type of Proxy Server</param>
+	<param name="pport">Port of Proxy Server</param>
+	<param name="ip">IP of Proxy Server</param>
+	<param name="_user">User Name of Proxy Server</param>
+	<param name="_pass">Password of Proxy Server</param>
+	<remarks></remarks>
+</member><member name="F:DNE.JikJikoo.TwitterApi.friendtimelineurl">
+	<summary>
+ 
+Parameters:
+since_id.  Optional.  Returns only statuses with an ID greater than (that is, more recent than) the specified ID.
+http://twitter.com/statuses/friends_timeline.xml?since_id=12345
+max_id. Optional.  Returns only statuses with an ID less than (that is, older than) or equal to the specified ID.
+Example: http://twitter.com/statuses/friends_timeline.xml?max_id=54321
+count.  Optional.  Specifies the number of statuses to retrieve. May not be greater than 200. 
+Example: http://twitter.com/statuses/friends_timeline.xml?count=5 
+page. Optional. Specifies the page of results to retrieve. Note: there are pagination limits.
+Example: http://twitter.com/statuses/friends_timeline.rss?page=3
+ </summary>
+	<remarks></remarks>
+</member><member name="M:DNE.JikJikoo.TwitterApi.GetPublicTimeLine">
+	<summary>
+ statuses/public_timeline
+ Returns the 20 most recent statuses from non-protected users who have set a custom user icon. The public timeline is cached for 60 seconds so requesting it more often than that is a waste of resources.
+ </summary>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:DNE.JikJikoo.TwitterApi.GetPublicTimeLineXML">
+	<summary>
+ statuses/public_timeline
+ Returns the 20 most recent statuses from non-protected users who have set a custom user icon. The public timeline is cached for 60 seconds so requesting it more often than that is a waste of resources.
+ </summary>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:DNE.JikJikoo.TwitterApi.GetFriendsTimeLine">
+	<summary>
+ statuses/friends_timeline
+ Returns the 20 most recent statuses posted by the authenticating user and that user's friends. This is the equivalent of /timeline/home on the Web.
+ </summary>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:DNE.JikJikoo.TwitterApi.GetFriendsTimeLinesinceid(System.String)">
+	<summary>
+ statuses/friends_timeline
+ Returns the 20 most recent statuses posted by the authenticating user and that user's friends. This is the equivalent of /timeline/home on the Web.
+ </summary>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:DNE.JikJikoo.TwitterApi.GetUserTimeLine">
+	<summary>
+ statuses/user_timeline
+ Returns the 20 most recent statuses posted from the authenticating user. It's also possible to request another user's timeline via the id parameter. This is the equivalent of the Web /user page for your own user, or the profile page for a third party.
+ </summary>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:DNE.JikJikoo.TwitterApi.GetMentions">
+	<summary>
+ statuses/mentions
+ Returns the 20 most recent mentions (status containing @username) for the authenticating user.
+ </summary>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:DNE.JikJikoo.TwitterApi.ShowStatus(System.String)">
+	<summary>
+ Twitter REST API Method: statuses/show
+ Returns a single status, specified by the id parameter below.  The status's author will be returned inline.
+ </summary>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:DNE.JikJikoo.TwitterApi.UpdateStatus(System.String)">
+	<summary>
+ statuses/update
+ Updates the authenticating user's status.  Requires the status parameter specified below.  Request must be a POST.  A status update with text identical to the authenticating user's current status will be ignored to prevent duplicates.
+ </summary>
+	<param name="status">Text of new status</param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:DNE.JikJikoo.TwitterApi.DestroyStatus(System.String)">
+	<summary>
+ statuses/destroy
+ Destroys the status specified by the required ID parameter.  The authenticating user must be the author of the specified status.
+ </summary>
+	<param name="statusid"></param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:DNE.JikJikoo.TwitterApi.SendMessage(System.String,System.String)">
+	<summary>
+ Send Direct Message To Another User
+ </summary>
+	<param name="ToUser">User Id of who that message will send to him</param>
+	<param name="message">Text of message</param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:DNE.JikJikoo.TwitterApi.VerifyCredentials">
+	<summary>
+ Veryfy Credentials
+ </summary>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:DNE.JikJikoo.TwitterApi.UserShow(System.String)">
+	<summary>
+ users/show
+ Returns extended information of a given user, specified by ID or screen name as per the required id parameter.  The author's most recent status will be returned inline.
+ </summary>
+	<param name="screenname">Username in Twitter</param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:DNE.JikJikoo.TwitterApi.ExecuteGetCommand(System.String,System.String,System.String)">
+	<summary>
+ Executes an HTTP GET command and retrives the information.(from Yedda Project)
+ </summary>
+	<param name="url">The URL to perform the GET operation</param>
+	<param name="userName">The username to use with the request</param>
+	<param name="password">The password to use with the request</param>
+	<returns>The response of the request, or null if we got 404 or nothing.</returns>
+</member><member name="M:DNE.JikJikoo.TwitterApi.ExecutePostCommand(System.String,System.String,System.String,System.String)">
+	<summary>
+ Executes an HTTP POST command and retrives the information. (from Yedda Project)
+ This function will automatically include a "source" parameter if the "Source" property is set.
+ </summary>
+	<param name="url">The URL to perform the POST operation</param>
+	<param name="userName">The username to use with the request</param>
+	<param name="password">The password to use with the request</param>
+	<param name="data">The data to post</param>
+	<returns>The response of the request, or null if we got 404 or nothing.</returns>
+</member>
+</members>
+</doc>
