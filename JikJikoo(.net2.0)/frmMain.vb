@@ -153,6 +153,7 @@ Public Class frmMain
         CurrentUser = u
         picUser.Image = twa.GetImage(CurrentUser.Profile_image_url)
         lblUser.Text = CurrentUser.Screen_Name
+        lnkMentions.Text = "@" & CurrentUser.Screen_Name
         SetLastUpdateText(CurrentUser.Status.Text)
 
         Application.DoEvents()
