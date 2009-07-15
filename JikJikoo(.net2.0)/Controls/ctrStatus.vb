@@ -17,6 +17,15 @@ Public Class ctrStatus
     End Property
     Private lnkSourceHref As String = ""
     Private jc As New JikConfigManager()
+    Private _formated As Boolean = False
+    Public Property Formated() As Boolean
+        Get
+            Return _formated
+        End Get
+        Set(ByVal value As Boolean)
+            _formated = value
+        End Set
+    End Property
 
     Public Sub DateTimeUpdate()
         If Me.InvokeRequired Then
@@ -50,31 +59,60 @@ Public Class ctrStatus
 
         'picUser.ImageLocation = Status.User.Profile_image_url
         lblTime.Text = Util.GetPrettyDate(Status.CreatedAt, IIf(jc.lang.ToLower = "fa", Language.Farsi, Language.English))
-        DetectAtSign()
+        'DetectAtSign()
 
     End Sub
 
-    Private Sub DetectAtSign()
-        Dim pat As String = "@[a-z0-9A-Z]*"
-        Dim t As String = txtStatus.Text
-        Dim mc As MatchCollection = Regex.Matches(t, pat)
-        If mc Is Nothing Then Exit Sub
-        Dim offset As Int32 = 0
-        For i As Int32 = 0 To mc.Count - 1
-            txtStatus.Select(mc(i).Index + 1 + offset, mc(i).Length - 1)
-            txtStatus.InsertLink(mc(i).Value.Substring(1), "view")
-            offset += 1 + 4 '"#view".Lenght
+    Friend Sub FormatAtSigns()
+        If Me.InvokeRequired Then
+            Me.Invoke(New MethodInvoker(AddressOf FormatAtSigns))
+        Else
 
-        Next
+            Dim pat As String = "@[a-z0-9A-Z]*"
+            Dim t As String = txtStatus.Text
+            Dim mc As MatchCollection = Regex.Matches(t, pat)
+            If mc Is Nothing Then Exit Sub
+            Dim offset As Int32 = 0
+            For i As Int32 = 0 To mc.Count - 1
+                txtStatus.Select(mc(i).Index + 1 + offset, mc(i).Length - 1)
+                txtStatus.InsertLink(mc(i).Value.Substring(1), "user")
+                offset += 1 + 4 '"#view".Lenght
+
+            Next
+
+        End If
+
+
+    End Sub
+
+    Friend Sub FormatUrls()
+        If Me.InvokeRequired Then
+            Me.Invoke(New MethodInvoker(AddressOf FormatUrls))
+        Else
+            Dim urlpat As String = "(http|ftp|https):\/\/[\w\-_]+(\.[\w\-_]+)+([\w\-\.,@?^=%&amp;:/~\+#]*[\w\-\@?^=%&amp;/~\+#])?"
+            Dim t As String = txtStatus.Text
+            Dim mc As MatchCollection = Regex.Matches(t, urlpat)
+            If mc Is Nothing Then Exit Sub
+            Dim offset As Int32 = 0
+            For i As Int32 = 0 To mc.Count - 1
+                txtStatus.Select(mc(i).Index + offset, mc(i).Length)
+                txtStatus.InsertLink(mc(i).Value, "url")
+                offset += 4 '"#url".Lenght
+
+            Next
+
+        End If
 
     End Sub
 
     Private Sub txtStatus_LinkClicked(ByVal sender As Object, ByVal e As System.Windows.Forms.LinkClickedEventArgs) Handles txtStatus.LinkClicked
-        If Not e.LinkText.StartsWith("http://") Then
+        If e.LinkText = "" Then Exit Sub
+        Dim verb As String = e.LinkText.Split("#")(e.LinkText.Split("#").Length - 1)
+        If verb.ToLower = "user" Then
             RaiseEvent ReplyCommand(Me, New ReplyEventArgs(e.LinkText.Substring(0, e.LinkText.IndexOf("#"))))
 
-        Else
-            Process.Start(e.LinkText)
+        ElseIf verb.ToLower = "url" Then
+            Process.Start(e.LinkText.Substring(0, e.LinkText.Length - 4)) ' 4= "#url".lenght
 
         End If
 

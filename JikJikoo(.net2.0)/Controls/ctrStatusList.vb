@@ -134,23 +134,6 @@ Public Class ctrStatusList
 
             End If
 
-            'Dim c As New ctrStatus()
-            'c.Status = st
-            'If st.numId > _laststatusId Then _laststatusId = CLng(st.Id)
-            'If Images.ContainsKey(st.User.Profile_image_url) Then
-            '    c.picUser.Image = Images(st.User.Profile_image_url)
-            'Else
-            '    Dim img As Image = twa.GetImage(st.User.Profile_image_url)
-            '    Me.Images.Add(st.User.Profile_image_url, img)
-            '    c.picUser.Image = img
-
-            'End If
-            'AddHandler c.ReplyCommand, AddressOf Reply
-            'Me.pnlMain.Controls.Add(c)
-            'If c.Status.numId > CType(pnlMain.Controls(0), ctrStatus).Status.numId Then
-            '    pnlMain.Controls.SetChildIndex(pnlMain.Controls(pnlMain.Controls.Count - 1), 0)
-
-            'End If
         End If
 
     End Sub
@@ -160,13 +143,9 @@ Public Class ctrStatusList
         Dim st As Status = _tempstatus
         Dim c As New ctrStatus()
         c.Status = st
-        'If st.numId > _laststatusId Then _laststatusId = st.numId
         If Images.ContainsKey(st.User.Profile_image_url) Then
             c.picUser.Image = Images(st.User.Profile_image_url)
         Else
-            'Dim img As Image = twa.GetImage(st.User.Profile_image_url)
-            'Me.Images.Add(st.User.Profile_image_url, img)
-            'c.picUser.Image = img
             c.picUser.ImageLocation = st.User.Profile_image_url
 
         End If
@@ -203,6 +182,20 @@ Public Class ctrStatusList
     Public Sub DateTimesUpdate()
         For Each c As ctrStatus In Me.pnlMain.Controls
             c.DateTimeUpdate()
+
+        Next
+    End Sub
+
+    Friend Sub FormatStatusText()
+        For i As Int32 = 0 To pnlMain.Controls.Count - 1
+            Dim c As ctrStatus = pnlMain.Controls(i)
+            If Not c.Formated Then
+                c.FormatAtSigns()
+                c.FormatUrls()
+                c.Formated = True
+
+            End If
+           
 
         Next
     End Sub

@@ -59,6 +59,8 @@ Public Class frmMain
                 curSttsParams = New String() {stlMain.LastStatusId}
                 'Update prev controls datetime
                 stlMain.DateTimesUpdate()
+                stlMain.FormatStatusText()
+
 
             End If
 
