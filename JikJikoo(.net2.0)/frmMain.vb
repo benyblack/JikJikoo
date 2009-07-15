@@ -14,8 +14,6 @@ Public Class frmMain
     Private WaitingForCleanRefresh As Boolean = False
 
     Private Sub TwitterApiHttpError(ByVal sender As Object, ByVal hea As DNE.JikJikoo.HttpExEventArgs)
-        ' MsgBox("Error in downloading from " & hea.Url)
-        ' MsgBox(hea.Message & vbCrLf & New Uri(hea.Url).Host)
         ShowMessage("Error in connection", hea.Message & vbCrLf & New Uri(hea.Url).Host, True)
 
     End Sub
@@ -25,7 +23,7 @@ Public Class frmMain
         Try
             Thread.Sleep(50)
             ' check current user
-            ' if currentuser is nothing this mean app not connected yet
+            ' if currentuser is nothing this means app not connected yet
             If CurrentUser Is Nothing Then
                 SetCurrentUser()
             End If
