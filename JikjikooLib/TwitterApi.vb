@@ -16,7 +16,7 @@ Namespace DNE.JikJikoo
 
         Public Event DownloadingDataStart As EventHandler
         Public Event DownloadingDataEnd As EventHandler
-
+        Public Event HttpError As HttpEventHandler
 
         Public Sub New()
 
@@ -625,8 +625,24 @@ Namespace DNE.JikJikoo
                 wc.Proxy = wp
 
             End If
-            Return wc.DownloadData(url)
+            Dim b() As Byte = Nothing
+            Try
+                b = wc.DownloadData(url)
 
+
+            Catch ex As WebException
+                '
+                ' Handle HTTP 404 errors gracefully and return a null string to indicate there is no content.
+                '
+                RaiseEvent HttpError(Me, New HttpExEventArgs(ex, url))
+                If TypeOf ex.Response Is HttpWebResponse Then
+                    If TryCast(ex.Response, HttpWebResponse).StatusCode = HttpStatusCode.NotFound Then
+                        Return Nothing
+                    End If
+                End If
+
+            End Try
+            Return b
         End Function
 
         Private Function HttpRequestHTTP(ByVal method As String, ByVal url As String, ByVal query As String) As String
@@ -657,7 +673,15 @@ Namespace DNE.JikJikoo
             Dim port As Integer = 80
 
             ' Retrieve IP from host name
-            Dim hostEntry As IPHostEntry = Dns.GetHostEntry(host)
+            Dim hostEntry As IPHostEntry = Nothing 'Dns.GetHostEntry(host)
+            Try
+                hostEntry = Dns.GetHostEntry(host)
+
+            Catch ex As SocketException
+                RaiseEvent HttpError(Me, New HttpExEventArgs(ex, url))
+                Throw New DNE.JikJikoo.NoConnectionException()
+
+            End Try
             Dim address As IPAddress = hostEntry.AddressList(0)
             Dim ipe As New IPEndPoint(address, port)
 
@@ -675,31 +699,43 @@ Namespace DNE.JikJikoo
                 socket.ProxyUser = ""
                 socket.ProxyPass = ""
             End If
-            socket.Connect(ipe)
 
-            Dim request As String = ""
-            If method.ToLower = "get" Then request = GenerateGetRequest(host, url, query, mustAuthenticate)
-            If method.ToLower = "post" Then request = GeneratePostRequest(host, url, query, mustAuthenticate)
-
-
-            Dim bytesSent As [Byte]() = Encoding.ASCII.GetBytes(request)
-            Dim bytesReceived As [Byte]() = New [Byte](255) {}
-
-            RaiseEvent DownloadingDataStart(Nothing, Nothing)
-
-            ' send query
-            socket.Send(bytesSent, bytesSent.Length, 0)
-
-            ' get result
+            ' for result
             Dim bytes As Integer = 0
             Dim strOut As String = ""
-            Do
-                bytes = socket.Receive(bytesReceived, bytesReceived.Length, 0)
-                Thread.Sleep(25)
-                strOut += (Encoding.ASCII.GetString(bytesReceived, 0, bytes))
-            Loop While bytes > 0
+            Try
+                socket.Connect(ipe)
 
-            socket.Close()
+                Dim request As String = ""
+                If method.ToLower = "get" Then request = GenerateGetRequest(host, url, query, mustAuthenticate)
+                If method.ToLower = "post" Then request = GeneratePostRequest(host, url, query, mustAuthenticate)
+
+
+                Dim bytesSent As [Byte]() = Encoding.ASCII.GetBytes(request)
+                Dim bytesReceived As [Byte]() = New [Byte](255) {}
+
+                RaiseEvent DownloadingDataStart(Nothing, Nothing)
+
+                ' send query
+                socket.Send(bytesSent, bytesSent.Length, 0)
+
+                ' get result
+                Do
+                    bytes = socket.Receive(bytesReceived, bytesReceived.Length, 0)
+                    Thread.Sleep(25)
+                    strOut += (Encoding.ASCII.GetString(bytesReceived, 0, bytes))
+                Loop While bytes > 0
+
+                socket.Close()
+            Catch ex As SocketException
+                If socket.Connected Then
+                    socket.Disconnect(False)
+
+                End If
+                RaiseEvent HttpError(Me, New HttpExEventArgs(ex, url))
+
+            End Try
+
             RaiseEvent DownloadingDataEnd(Nothing, Nothing)
             If strOut.Length > 4 Then strOut = strOut.Substring(strOut.IndexOf(vbCrLf + vbCrLf) + 4)
             Return strOut
@@ -721,7 +757,16 @@ Namespace DNE.JikJikoo
             Dim port As Integer = 80
 
             ' Retrieve IP from host name
-            Dim hostEntry As IPHostEntry = Dns.GetHostEntry(host)
+            Dim hostEntry As IPHostEntry = Nothing 'Dns.GetHostEntry(host)
+            Try
+                hostEntry = Dns.GetHostEntry(host)
+
+            Catch ex As SocketException
+                RaiseEvent HttpError(Me, New HttpExEventArgs(ex, url))
+                Return Nothing
+
+            End Try
+
             Dim address As IPAddress = hostEntry.AddressList(0)
             Dim ipe As New IPEndPoint(address, port)
 
@@ -739,41 +784,47 @@ Namespace DNE.JikJikoo
                 socket.ProxyUser = ""
                 socket.ProxyPass = ""
             End If
-            socket.Connect(ipe)
 
-            Dim request As String = ""
-            If method.ToLower = "get" Then request = GenerateGetRequest(host, url, query)
-            If method.ToLower = "post" Then request = GeneratePostRequest(host, url, query)
-
-
-            Dim bytesSent As [Byte]() = Encoding.ASCII.GetBytes(request)
-            Dim bytesReceived As [Byte]() = New [Byte](255) {}
-
-            ' send query
-            socket.Send(bytesSent, bytesSent.Length, 0)
-            Dim ns As New NetworkStream(socket, True)
-            ns.ReadTimeout = 5000
-
-            ' get result
+            ' for result
             Dim bytes As Integer = 0
             Dim strOut As String = ""
             Dim ba As New ArrayList
-            Do
-                Try
+            Try
+                socket.Connect(ipe)
+
+                Dim request As String = ""
+                If method.ToLower = "get" Then request = GenerateGetRequest(host, url, query)
+                If method.ToLower = "post" Then request = GeneratePostRequest(host, url, query)
+
+
+                Dim bytesSent As [Byte]() = Encoding.ASCII.GetBytes(request)
+                Dim bytesReceived As [Byte]() = New [Byte](255) {}
+
+                ' send query
+                socket.Send(bytesSent, bytesSent.Length, 0)
+                Dim ns As New NetworkStream(socket, True)
+                ns.ReadTimeout = 5000
+
+
+                Do
                     bytes = ns.Read(bytesReceived, 0, bytesReceived.Length)
                     Thread.Sleep(25)
                     AddBytes(ba, bytesReceived, bytes)
 
-                Catch ex As Exception
-                    socket.Close()
-                    Return Nothing
-                End Try
-                'bytes = socket.Receive(bytesReceived, bytesReceived.Length, 0)
-                'Thread.Sleep(25)
-                'AddBytes(ba, bytesReceived, bytes)
-            Loop While ns.DataAvailable 'bytes > 0
+                    'bytes = socket.Receive(bytesReceived, bytesReceived.Length, 0)
+                    'Thread.Sleep(25)
+                    'AddBytes(ba, bytesReceived, bytes)
+                Loop While ns.DataAvailable 'bytes > 0
+                socket.Close()
 
-            socket.Close()
+            Catch ex As SocketException
+                If socket.Connected Then
+                    socket.Disconnect(False)
+
+                End If
+                RaiseEvent HttpError(Me, New HttpExEventArgs(ex, url))
+
+            End Try
 
             ' seeking end of header
             Dim b() As Byte = ba.ToArray(GetType(Byte))
@@ -1044,7 +1095,9 @@ Namespace DNE.JikJikoo
 
         Public Function GetImage(ByVal url As String) As Drawing.Image
             'If Me.ProxyType = ProxyTypes.Http Then
-            Return Image.FromStream(New IO.MemoryStream(DownloadFromHttp(url)))
+            Dim b() As Byte = DownloadFromHttp(url)
+            If b Is Nothing Then Return Nothing
+            Return Image.FromStream(New IO.MemoryStream(b))
 
             'Else
 
