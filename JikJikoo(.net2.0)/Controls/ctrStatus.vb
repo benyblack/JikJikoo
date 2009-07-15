@@ -89,6 +89,7 @@ Public Class ctrStatus
         If Me.InvokeRequired Then
             Me.Invoke(New MethodInvoker(AddressOf FormatUrls))
         Else
+            'from : http://regexlib.com/REDetails.aspx?regexp_id=96
             Dim urlpat As String = "(http|ftp|https):\/\/[\w\-_]+(\.[\w\-_]+)+([\w\-\.,@?^=%&amp;:/~\+#]*[\w\-\@?^=%&amp;/~\+#])?"
             Dim t As String = txtStatus.Text
             Dim mc As MatchCollection = Regex.Matches(t, urlpat)
@@ -109,6 +110,8 @@ Public Class ctrStatus
         If e.LinkText = "" Then Exit Sub
         Dim verb As String = e.LinkText.Split("#")(e.LinkText.Split("#").Length - 1)
         If verb.ToLower = "user" Then
+            mnuUsername.Show(txtStatus, 5, 5)
+
             RaiseEvent ReplyCommand(Me, New ReplyEventArgs(e.LinkText.Substring(0, e.LinkText.IndexOf("#"))))
 
         ElseIf verb.ToLower = "url" Then
@@ -121,6 +124,16 @@ Public Class ctrStatus
 
     Private Sub lnkSource_LinkClicked(ByVal sender As System.Object, ByVal e As System.Windows.Forms.LinkLabelLinkClickedEventArgs) Handles lnkSource.LinkClicked
         Process.Start(lnkSourceHref)
+
+    End Sub
+
+    Private Sub ReplyToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ReplyToolStripMenuItem.Click
+        MsgBox("reply")
+
+    End Sub
+
+    Private Sub RTToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles RTToolStripMenuItem.Click
+        MsgBox("RT " & Me.Status.Text)
 
     End Sub
 End Class

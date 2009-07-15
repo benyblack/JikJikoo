@@ -138,7 +138,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;picUser.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>4</value>
   </data>
   <data name="lblUserName.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -198,7 +198,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;lblTime.ZOrder" xml:space="preserve">
-    <value>0</value>
+    <value>1</value>
   </data>
   <data name="lnkSource.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -252,7 +252,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;txtStatus.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>3</value>
   </data>
   <data name="FlowLayoutPanel1.Location" type="System.Drawing.Point, System.Drawing">
     <value>56, 1</value>
@@ -273,7 +273,31 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;FlowLayoutPanel1.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>2</value>
+  </data>
+  <metadata name="mnuUsername.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
+  </metadata>
+  <data name="ReplyToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>152, 22</value>
+  </data>
+  <data name="ReplyToolStripMenuItem.Text" xml:space="preserve">
+    <value>&amp;Reply</value>
+  </data>
+  <data name="RTToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>152, 22</value>
+  </data>
+  <data name="RTToolStripMenuItem.Text" xml:space="preserve">
+    <value>RT</value>
+  </data>
+  <data name="mnuUsername.Size" type="System.Drawing.Size, System.Drawing">
+    <value>153, 70</value>
+  </data>
+  <data name="&gt;&gt;mnuUsername.Name" xml:space="preserve">
+    <value>mnuUsername</value>
+  </data>
+  <data name="&gt;&gt;mnuUsername.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ContextMenuStrip, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
@@ -283,6 +307,18 @@
   </data>
   <data name="$this.Size" type="System.Drawing.Size, System.Drawing">
     <value>350, 80</value>
+  </data>
+  <data name="&gt;&gt;ReplyToolStripMenuItem.Name" xml:space="preserve">
+    <value>ReplyToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;ReplyToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;RTToolStripMenuItem.Name" xml:space="preserve">
+    <value>RTToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;RTToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
     <value>ctrStatus</value>

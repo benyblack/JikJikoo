@@ -22,6 +22,7 @@ Partial Class ctrStatus
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        Me.components = New System.ComponentModel.Container
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(ctrStatus))
         Me.picUser = New System.Windows.Forms.PictureBox
         Me.lblUserName = New System.Windows.Forms.Label
@@ -29,8 +30,12 @@ Partial Class ctrStatus
         Me.lnkSource = New System.Windows.Forms.LinkLabel
         Me.txtStatus = New RichTextBoxLinks.RichTextBoxEx
         Me.FlowLayoutPanel1 = New System.Windows.Forms.FlowLayoutPanel
+        Me.mnuUsername = New System.Windows.Forms.ContextMenuStrip(Me.components)
+        Me.ReplyToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
+        Me.RTToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
         CType(Me.picUser, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.FlowLayoutPanel1.SuspendLayout()
+        Me.mnuUsername.SuspendLayout()
         Me.SuspendLayout()
         '
         'picUser
@@ -73,6 +78,22 @@ Partial Class ctrStatus
         resources.ApplyResources(Me.FlowLayoutPanel1, "FlowLayoutPanel1")
         Me.FlowLayoutPanel1.Name = "FlowLayoutPanel1"
         '
+        'mnuUsername
+        '
+        Me.mnuUsername.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ReplyToolStripMenuItem, Me.RTToolStripMenuItem})
+        Me.mnuUsername.Name = "ContextMenuStrip1"
+        resources.ApplyResources(Me.mnuUsername, "mnuUsername")
+        '
+        'ReplyToolStripMenuItem
+        '
+        Me.ReplyToolStripMenuItem.Name = "ReplyToolStripMenuItem"
+        resources.ApplyResources(Me.ReplyToolStripMenuItem, "ReplyToolStripMenuItem")
+        '
+        'RTToolStripMenuItem
+        '
+        Me.RTToolStripMenuItem.Name = "RTToolStripMenuItem"
+        resources.ApplyResources(Me.RTToolStripMenuItem, "RTToolStripMenuItem")
+        '
         'ctrStatus
         '
         resources.ApplyResources(Me, "$this")
@@ -86,6 +107,7 @@ Partial Class ctrStatus
         CType(Me.picUser, System.ComponentModel.ISupportInitialize).EndInit()
         Me.FlowLayoutPanel1.ResumeLayout(False)
         Me.FlowLayoutPanel1.PerformLayout()
+        Me.mnuUsername.ResumeLayout(False)
         Me.ResumeLayout(False)
 
     End Sub
@@ -95,5 +117,8 @@ Partial Class ctrStatus
     Friend WithEvents txtStatus As RichTextBoxLinks.RichTextBoxEx
     Friend WithEvents lnkSource As System.Windows.Forms.LinkLabel
     Friend WithEvents FlowLayoutPanel1 As System.Windows.Forms.FlowLayoutPanel
+    Friend WithEvents mnuUsername As System.Windows.Forms.ContextMenuStrip
+    Friend WithEvents ReplyToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents RTToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
 
 End Class

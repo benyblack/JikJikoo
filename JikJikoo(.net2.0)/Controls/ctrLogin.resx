@@ -342,7 +342,19 @@
   <data name="&gt;&gt;txtPwd.Name" xml:space="preserve">
     <value>txtPwd</value>
   </data>
-  <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+  <data name="$this.Localizable" type="System.Boolean, mscorlib">
     <value>True</value>
-  </metadata>
+  </data>
+  <data name="login" xml:space="preserve">
+    <value>Login</value>
+  </data>
+  <data name="LoginError" xml:space="preserve">
+    <value>Username not found</value>
+  </data>
+  <data name="logout" xml:space="preserve">
+    <value>Logout</value>
+  </data>
+  <data name="VeryfingError" xml:space="preserve">
+    <value>You must finish oAuth wizard</value>
+  </data>
 </root>
