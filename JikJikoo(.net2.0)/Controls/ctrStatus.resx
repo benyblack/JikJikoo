@@ -234,7 +234,7 @@
     <value>63, 19</value>
   </data>
   <data name="txtStatus.Size" type="System.Drawing.Size, System.Drawing">
-    <value>287, 48</value>
+    <value>287, 58</value>
   </data>
   <data name="txtStatus.TabIndex" type="System.Int32, mscorlib">
     <value>4</value>
@@ -275,6 +275,9 @@
   <data name="&gt;&gt;FlowLayoutPanel1.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
+  <metadata name="$this.Language" type="System.Globalization.CultureInfo, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>Persian (Iran)</value>
+  </metadata>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
@@ -282,7 +285,7 @@
     <value>6, 13</value>
   </data>
   <data name="$this.Size" type="System.Drawing.Size, System.Drawing">
-    <value>350, 70</value>
+    <value>350, 80</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
     <value>ctrStatus</value>

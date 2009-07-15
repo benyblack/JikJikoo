@@ -2052,7 +2052,7 @@
 </value>
   </data>
   <data name="NewUpdate" xml:space="preserve">
-    <value>وضعیت جدید</value>
+    <value>{0} وضعیت جدید</value>
   </data>
   <data name="AddStatusEnd" xml:space="preserve">
     <value>وضعیت ها اضافه شد</value>

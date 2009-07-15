@@ -47,4 +47,12 @@ Namespace DNE.JikJikoo
 
     End Enum
 
+    Public Enum TwitterXmlTypes
+        User = 0
+        Status = 1
+        DirectMessage = 2
+
+
+    End Enum
+
 End Namespace

@@ -77,6 +77,7 @@ Partial Class ctrStatus
         '
         resources.ApplyResources(Me, "$this")
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+        Me.BackColor = System.Drawing.Color.Transparent
         Me.Controls.Add(Me.lblTime)
         Me.Controls.Add(Me.FlowLayoutPanel1)
         Me.Controls.Add(Me.txtStatus)

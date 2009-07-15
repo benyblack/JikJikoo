@@ -13,9 +13,10 @@ Public Class frmMain
     Private NewUpdate As Int32 = 0
     Private WaitingForCleanRefresh As Boolean = False
 
-    Private Sub TwitterApiHttpErro(ByVal sender As Object, ByVal hea As DNE.JikJikoo.HttpExEventArgs)
-        MsgBox("Error in downloading from " & hea.Url)
-
+    Private Sub TwitterApiHttpError(ByVal sender As Object, ByVal hea As DNE.JikJikoo.HttpExEventArgs)
+        ' MsgBox("Error in downloading from " & hea.Url)
+        ' MsgBox(hea.Message & vbCrLf & New Uri(hea.Url).Host)
+        ShowMessage("Error in connection", hea.Message & vbCrLf & New Uri(hea.Url).Host, True)
 
     End Sub
 
@@ -29,7 +30,7 @@ Public Class frmMain
                 SetCurrentUser()
             End If
             If Not CurrentUser Is Nothing Then
-                TimerRefresh.Enabled = False
+                ' TimerRefresh.Enabled = False
                 Dim sts As Collections.ObjectModel.Collection(Of DNE.Twitter.Status) = Nothing
                 If curSttsParams Is Nothing OrElse curSttsParams.Length = 0 OrElse curSttsParams(0) = "" Then stlMain.Clear()
 
@@ -65,16 +66,18 @@ Public Class frmMain
 
 
         Catch ex As DNE.JikJikoo.NoConnectionException
-            MsgBox("Not Connected. check your internet connection")
+            TimerRefresh.Enabled = True
+            ShowMessage("Error in connection", "Not Connected. check your internet connection", True)
+            'MsgBox("Not Connected. check your internet connection")
 
         End Try
         TimerRefresh.Enabled = True
         IsBinding = False
 
         If NewUpdate = 0 Then Exit Sub
-        NotifyIcon1.BalloonTipText = NewUpdate.ToString & " " & rm.GetString("NewUpdate", (New JikConfigManager()).CultureInfo)
-        NotifyIcon1.BalloonTipIcon = ToolTipIcon.Info
-        NotifyIcon1.ShowBalloonTip(1000)
+        ShowMessage("Alert", String.Format(rm.GetString("NewUpdate", (New JikConfigManager()).CultureInfo), NewUpdate), False)
+        NewUpdate = 0
+
 
     End Sub
 
@@ -113,6 +116,11 @@ Public Class frmMain
 
     End Sub
 
+    Private Sub ShowMessage(ByVal title As String, ByVal msg As String, ByVal err As Boolean)
+        NotifyIcon1.ShowBalloonTip(30, title, msg, IIf(err, ToolTipIcon.Error, ToolTipIcon.Info))
+
+    End Sub
+
 #Region " Form Events "
 
     Private Sub btnConfig_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnConfig.Click
@@ -136,7 +144,7 @@ Public Class frmMain
     Private Sub frmMain_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
         ReloadConfig()
         jikLogin.LoadLogin()
-        AddHandler twa.HttpError, AddressOf TwitterApiHttpErro
+        AddHandler twa.HttpError, AddressOf TwitterApiHttpError
 
 
     End Sub
@@ -149,7 +157,6 @@ Public Class frmMain
     End Sub
 
     Private Sub CtrlUpdateStatus1_UpdateStarted(ByVal sender As Object, ByVal e As System.EventArgs) Handles jikUpdate.UpdateStarted
-        TimerRefresh.Enabled = False
 
     End Sub
 
@@ -186,7 +193,7 @@ Public Class frmMain
 
     Private Sub SetCurrentUser()
         If Me.InvokeRequired Then
-            Me.Invoke(New MethodInvoker(AddressOf EndAddStatuses))
+            Me.Invoke(New MethodInvoker(AddressOf SetCurrentUser))
         Else
             Dim u As DNE.Twitter.User = Nothing
             Try
@@ -198,7 +205,8 @@ Public Class frmMain
                 SetLastUpdateText(CurrentUser.Status.Text)
 
             Catch ex As DNE.JikJikoo.NoConnectionException
-                MsgBox("Not Connected")
+                ShowMessage("Error in connection", "Not Connected. Can not receive user information.", True)
+                '("Not Connected")
                 Exit Sub
             End Try
 
@@ -206,22 +214,21 @@ Public Class frmMain
 
     End Sub
 
-    Private Sub CtrLogin1_Login(ByVal sender As Object, ByVal e As System.EventArgs) Handles jikLogin.Login
+    Private Sub jikLogin_Login(ByVal sender As Object, ByVal e As System.EventArgs) Handles jikLogin.Login
         Dim ace As New AppConfig()
         SetUiEnable(True)
         ReloadConfig()
         SetCurrentUser()
-        If CurrentUser Is Nothing Then Exit Sub
+        ' If CurrentUser Is Nothing Then Exit Sub
 
         Application.DoEvents()
         TimerRefresh_Tick(Me, Nothing)
-
         TimerRefresh.Interval = CInt(ace.GetValue("refresh")) * 1000
-        TimerRefresh.Enabled = False
+        TimerRefresh.Enabled = True
 
     End Sub
 
-    Private Sub CtrLogin1_Logout(ByVal sender As Object, ByVal e As System.EventArgs) Handles jikLogin.Logout
+    Private Sub jikLogin_Logout(ByVal sender As Object, ByVal e As System.EventArgs) Handles jikLogin.Logout
         TimerRefresh.Enabled = False
         SetUiEnable(False)
         stlMain.Clear()
@@ -286,7 +293,6 @@ Public Class frmMain
             Me.Invoke(New MethodInvoker(AddressOf DownloadEnd))
         Else
             Me.Text = "JikJikoo - " & rm.GetString("DownloadDataEnd")
-            Timer1.Start()
         End If
     End Sub
 
@@ -308,7 +314,6 @@ Public Class frmMain
 
     Private Sub EndAddStatuses()
         Me.Text = "JikJikoo"
-        TimerRefresh.Enabled = True
 
     End Sub
 

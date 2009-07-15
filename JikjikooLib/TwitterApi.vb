@@ -634,7 +634,7 @@ Namespace DNE.JikJikoo
                 '
                 ' Handle HTTP 404 errors gracefully and return a null string to indicate there is no content.
                 '
-                RaiseEvent HttpError(Me, New HttpExEventArgs(ex, url))
+                RaiseEvent HttpError(Me, New HttpExEventArgs(ex, url, "Server Not Responsing or Url Not Found"))
                 If TypeOf ex.Response Is HttpWebResponse Then
                     If TryCast(ex.Response, HttpWebResponse).StatusCode = HttpStatusCode.NotFound Then
                         Return Nothing
@@ -678,7 +678,7 @@ Namespace DNE.JikJikoo
                 hostEntry = Dns.GetHostEntry(host)
 
             Catch ex As SocketException
-                RaiseEvent HttpError(Me, New HttpExEventArgs(ex, url))
+                RaiseEvent HttpError(Me, New HttpExEventArgs(ex, url, "Can not resolve host"))
                 Throw New DNE.JikJikoo.NoConnectionException()
 
             End Try
@@ -732,7 +732,7 @@ Namespace DNE.JikJikoo
                     socket.Disconnect(False)
 
                 End If
-                RaiseEvent HttpError(Me, New HttpExEventArgs(ex, url))
+                RaiseEvent HttpError(Me, New HttpExEventArgs(ex, url, "We got a error while downloading data"))
 
             End Try
 
@@ -762,7 +762,7 @@ Namespace DNE.JikJikoo
                 hostEntry = Dns.GetHostEntry(host)
 
             Catch ex As SocketException
-                RaiseEvent HttpError(Me, New HttpExEventArgs(ex, url))
+                RaiseEvent HttpError(Me, New HttpExEventArgs(ex, url, "Can not resolve host"))
                 Return Nothing
 
             End Try
@@ -822,7 +822,7 @@ Namespace DNE.JikJikoo
                     socket.Disconnect(False)
 
                 End If
-                RaiseEvent HttpError(Me, New HttpExEventArgs(ex, url))
+                RaiseEvent HttpError(Me, New HttpExEventArgs(ex, url, "We got a error while downloading data"))
 
             End Try
 
@@ -903,6 +903,25 @@ Namespace DNE.JikJikoo
 #End Region
 
 #Region " Util "
+
+        Private Function ParsTwitterXML(Of T)(ByVal sXml As String, ByVal xt As TwitterXmlTypes) As T
+            If sXml = "" Then
+                Throw New Exception("Server Return Nothing")
+
+            End If
+            Dim o As Object = Nothing
+            If xt = TwitterXmlTypes.User Then
+                o = ParsUserXML(sXml)
+
+            ElseIf xt = TwitterXmlTypes.Status Then
+                o = ParsStatusXML(sXml)
+
+            ElseIf xt = TwitterXmlTypes.DirectMessage Then
+                o = ParsDirectmessageXML(sXml)
+            End If
+            Return CType(o, T)
+
+        End Function
 
         Private Function ParsStatusXML(ByVal s As String) As ObjectModel.Collection(Of DNE.Twitter.Status)
             Dim xdoc As New XmlDocument()

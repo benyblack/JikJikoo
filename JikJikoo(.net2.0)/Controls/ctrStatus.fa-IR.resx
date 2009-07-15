@@ -155,10 +155,16 @@
   <data name="txtStatus.Location" type="System.Drawing.Point, System.Drawing">
     <value>5, 20</value>
   </data>
+  <data name="txtStatus.Size" type="System.Drawing.Size, System.Drawing">
+    <value>287, 57</value>
+  </data>
   <data name="FlowLayoutPanel1.RightToLeft" type="System.Windows.Forms.RightToLeft, System.Windows.Forms">
     <value>Yes</value>
   </data>
   <data name="FlowLayoutPanel1.Size" type="System.Drawing.Size, System.Drawing">
     <value>236, 17</value>
+  </data>
+  <data name="$this.Size" type="System.Drawing.Size, System.Drawing">
+    <value>350, 80</value>
   </data>
 </root>

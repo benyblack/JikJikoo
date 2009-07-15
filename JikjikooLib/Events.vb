@@ -26,15 +26,28 @@
             End Set
         End Property
 
+        Private _message As String = ""
+        Public Property Message() As String
+            Get
+                Return _message
+            End Get
+            Set(ByVal value As String)
+                _message = value
+            End Set
+        End Property
+
         ''' <summary>
         ''' 
         ''' </summary>
         ''' <param name="ex">Exception Object</param>
         ''' <param name="urlex">Url that exception happend for it</param>
+        ''' <param name="msg">Message about this exception</param>
         ''' <remarks></remarks>
-        Public Sub New(ByVal ex As Exception, ByVal urlex As String)
+        Public Sub New(ByVal ex As Exception, ByVal urlex As String, ByVal msg As String)
             _url = urlex
             _ex = ex
+            _message = msg
+
         End Sub
     End Class
 

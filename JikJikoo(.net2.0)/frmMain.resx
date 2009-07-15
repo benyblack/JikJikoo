@@ -2407,7 +2407,7 @@
     <value>True</value>
   </data>
   <data name="NewUpdate" xml:space="preserve">
-    <value>New Update(s)</value>
+    <value>{0} New Update(s)</value>
   </data>
   <data name="&gt;&gt;pnlMenu.ZOrder" xml:space="preserve">
     <value>1</value>
@@ -2487,19 +2487,19 @@
   <data name="lnkFriendsTimeLine.TabIndex" type="System.Int32, mscorlib">
     <value>16</value>
   </data>
-  <metadata name="ContextMenuStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+  <data name="ContextMenuStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing">
     <value>344, 17</value>
-  </metadata>
-  <metadata name="Timer1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+  </data>
+  <data name="Timer1.TrayLocation" type="System.Drawing.Point, System.Drawing">
     <value>17, 17</value>
-  </metadata>
-  <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+  </data>
+  <data name="$this.Localizable" type="System.Boolean, mscorlib">
     <value>True</value>
-  </metadata>
-  <metadata name="TimerRefresh.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+  </data>
+  <data name="TimerRefresh.TrayLocation" type="System.Drawing.Point, System.Drawing">
     <value>106, 17</value>
-  </metadata>
-  <metadata name="NotifyIcon1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+  </data>
+  <data name="NotifyIcon1.TrayLocation" type="System.Drawing.Point, System.Drawing">
     <value>229, 17</value>
-  </metadata>
+  </data>
 </root>
