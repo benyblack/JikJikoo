@@ -286,9 +286,10 @@ Namespace DNE.JikJikoo
         ''' </summary>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Function GetPublicTimeLine() As ObjectModel.Collection(Of DNE.Twitter.Status)
+        Public Function GetPublicTimeLine() As Collection(Of DNE.Twitter.Status)
             Dim s As String = HttpRequest("GET", publictimelineurl, "")
-            Return ParsStatusXML(s)
+            'ParsStatusXML(s)
+            Return ParsTwitterXML(Of Collection(Of DNE.Twitter.Status))(s, TwitterXmlTypes.Status)
 
         End Function
 
@@ -325,7 +326,8 @@ Namespace DNE.JikJikoo
             Dim query As String = ""
             If since_id <> "" Then query = "since_id=" & since_id
             Dim s As String = HttpRequest("GET", friendtimelineurl, query)
-            Return ParsStatusXML(s)
+            Return ParsTwitterXML(Of Collection(Of DNE.Twitter.Status))(s, TwitterXmlTypes.Status)
+            'Return ParsStatusXML(s)
 
         End Function
 
@@ -337,7 +339,8 @@ Namespace DNE.JikJikoo
         ''' <remarks></remarks>
         Public Function GetUserTimeLine() As ObjectModel.Collection(Of DNE.Twitter.Status)
             Dim s As String = HttpRequest("GET", usertimelineurl, "")
-            Return ParsStatusXML(s)
+            Return ParsTwitterXML(Of Collection(Of DNE.Twitter.Status))(s, TwitterXmlTypes.Status)
+            'Return ParsStatusXML(s)
 
         End Function
 
@@ -351,7 +354,8 @@ Namespace DNE.JikJikoo
             Dim query As String = ""
             If since_id <> "" Then query = "since_id=" & since_id
             Dim s As String = HttpRequest("GET", usertimelineurl, query)
-            Return ParsStatusXML(s)
+            Return ParsTwitterXML(Of Collection(Of DNE.Twitter.Status))(s, TwitterXmlTypes.Status)
+            'Return ParsStatusXML(s)
 
         End Function
 
@@ -367,7 +371,8 @@ Namespace DNE.JikJikoo
             Dim query As String = ""
             If since_id <> "" Then query = "since_id=" & since_id
             Dim s As String = HttpRequest("GET", String.Format(usertimelineurl2, screenname), query)
-            Return ParsStatusXML(s)
+            Return ParsTwitterXML(Of Collection(Of DNE.Twitter.Status))(s, TwitterXmlTypes.Status)
+            'Return ParsStatusXML(s)
 
         End Function
 
@@ -379,7 +384,8 @@ Namespace DNE.JikJikoo
         ''' <remarks></remarks>
         Public Function GetMentions() As ObjectModel.Collection(Of DNE.Twitter.Status)
             Dim s As String = HttpRequest("GET", mentionsurl, "")
-            Return ParsStatusXML(s)
+            Return ParsTwitterXML(Of Collection(Of DNE.Twitter.Status))(s, TwitterXmlTypes.Status)
+            'Return ParsStatusXML(s)
 
         End Function
 
@@ -394,7 +400,8 @@ Namespace DNE.JikJikoo
             Dim query As String = ""
             If since_id <> "" Then query = "since_id=" & since_id
             Dim s As String = HttpRequest("GET", mentionsurl, query)
-            Return ParsStatusXML(s)
+            Return ParsTwitterXML(Of Collection(Of DNE.Twitter.Status))(s, TwitterXmlTypes.Status)
+            'Return ParsStatusXML(s)
 
         End Function
 
@@ -410,7 +417,8 @@ Namespace DNE.JikJikoo
         ''' <remarks></remarks>
         Public Function ShowStatus(ByVal statusid As String) As DNE.Twitter.Status
             Dim s As String = HttpRequest("GET", showstatusurl, "")
-            Return ParsStatusXML(s)(0)
+            Return ParsTwitterXML(Of Collection(Of DNE.Twitter.Status))(s, TwitterXmlTypes.Status)(0)
+            'Return ParsStatusXML(s)(0)
 
         End Function
 
@@ -465,7 +473,8 @@ Namespace DNE.JikJikoo
             Dim query As String = ""
             If since_id <> "" Then query = "since_id=" & since_id
             Dim s As String = HttpRequest("GET", directmessageurl, query)
-            Return ParsDirectmessageXML(s)
+            Return ParsTwitterXML(Of Collection(Of DNE.Twitter.DirectMessage))(s, TwitterXmlTypes.DirectMessage)
+            'Return ParsDirectmessageXML(s)
 
         End Function
 
@@ -492,7 +501,8 @@ Namespace DNE.JikJikoo
         ''' <remarks></remarks>
         Public Function VerifyCredentials() As DNE.Twitter.User
             Dim s As String = HttpRequest("GET", accountverifycredentialsurl, "")
-            Return ParsUserXML(s)
+            Return ParsTwitterXML(Of DNE.Twitter.User)(s, TwitterXmlTypes.User)
+            'Return ParsUserXML(s)
 
         End Function
 
@@ -509,7 +519,8 @@ Namespace DNE.JikJikoo
         ''' <remarks></remarks>
         Public Function UserShow(ByVal screenname As String) As DNE.Twitter.User
             Dim s As String = HttpRequest("GET", showuserurl, "screen_name=" & screenname)
-            Return ParsUserXML(s)
+            Return ParsTwitterXML(Of DNE.Twitter.User)(s, TwitterXmlTypes.User)
+            'Return ParsUserXML(s)
         End Function
 
 #End Region
@@ -518,7 +529,8 @@ Namespace DNE.JikJikoo
 
         Public Function Favorites(ByVal screenname As String) As Collection(Of DNE.Twitter.Status)
             Dim s As String = HttpRequest("GET", String.Format(favoritesurl, screenname), "")
-            Return ParsStatusXML(s)
+            Return ParsTwitterXML(Of Collection(Of DNE.Twitter.Status))(s, TwitterXmlTypes.Status)
+            'Return ParsStatusXML(s)
         End Function
 
 #End Region
@@ -907,6 +919,7 @@ Namespace DNE.JikJikoo
         Private Function ParsTwitterXML(Of T)(ByVal sXml As String, ByVal xt As TwitterXmlTypes) As T
             If sXml = "" Then
                 Throw New Exception("Server Return Nothing")
+                Return Nothing
 
             End If
             Dim o As Object = Nothing
