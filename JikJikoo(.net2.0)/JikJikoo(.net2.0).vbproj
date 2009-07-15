@@ -210,9 +210,6 @@
     <EmbeddedResource Include="Controls\ctrLogin.fa-IR.resx">
       <DependentUpon>ctrLogin.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\ctrLogin.fr-FR.resx">
-      <DependentUpon>ctrLogin.vb</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Controls\ctrlUpdateStatus.fa-IR.resx">
       <DependentUpon>ctrlUpdateStatus.vb</DependentUpon>
     </EmbeddedResource>

@@ -20,7 +20,14 @@ Public Class ctrLogin
             Dim jc As New JikConfigManager()
             Dim tw As New DNE.JikJikoo.TwitterApi()
             tw.ConfigProxy(jc.proxytype, jc.proxyport, jc.proxyserver, jc.proxyuser, jc.proxypass)
-            Dim u As DNE.Twitter.User = tw.UserShow(txtUid.Text) 'tw.VerifyCredentials()
+            Dim u As DNE.Twitter.User = Nothing
+            Try
+                u = tw.UserShow(txtUid.Text) 'tw.VerifyCredentials()
+
+            Catch ex As Exception
+
+                Exit Sub
+            End Try
             If u Is Nothing Then
                 MsgBox(rm.GetString("LoginError"), MsgBoxStyle.Critical)
                 Exit Sub

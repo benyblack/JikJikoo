@@ -13,41 +13,61 @@ Public Class frmMain
     Private NewUpdate As Int32 = 0
     Private WaitingForCleanRefresh As Boolean = False
 
+    Private Sub TwitterApiHttpErro(ByVal sender As Object, ByVal hea As DNE.JikJikoo.HttpExEventArgs)
+        MsgBox("Error in downloading from " & hea.Url)
+
+
+    End Sub
+
     Private Sub Bind()
         IsBinding = True
-        Thread.Sleep(50)
-        TimerRefresh.Enabled = False
-        Dim sts As Collections.ObjectModel.Collection(Of DNE.Twitter.Status) = Nothing
-        If curSttsParams Is Nothing OrElse curSttsParams.Length = 0 OrElse curSttsParams(0) = "" Then stlMain.Clear()
+        Try
+            Thread.Sleep(50)
+            ' check current user
+            ' if currentuser is nothing this mean app not connected yet
+            If CurrentUser Is Nothing Then
+                SetCurrentUser()
+            End If
+            If Not CurrentUser Is Nothing Then
+                TimerRefresh.Enabled = False
+                Dim sts As Collections.ObjectModel.Collection(Of DNE.Twitter.Status) = Nothing
+                If curSttsParams Is Nothing OrElse curSttsParams.Length = 0 OrElse curSttsParams(0) = "" Then stlMain.Clear()
 
-        If curSttsType = DNE.JikJikoo.StatusListType.FriendsTimeLine Then
-            sts = twa.GetFriendsTimeLine(stlMain.LastId)
-            NewUpdate = sts.Count
+                If curSttsType = DNE.JikJikoo.StatusListType.FriendsTimeLine Then
+                    sts = twa.GetFriendsTimeLine(stlMain.LastId)
+                    NewUpdate = sts.Count
 
-        ElseIf curSttsType = DNE.JikJikoo.StatusListType.Mentions Then
-            sts = twa.GetMentions(stlMain.LastId)
-
-
-        ElseIf curSttsType = DNE.JikJikoo.StatusListType.Favorites Then
-            sts = twa.Favorites(stlMain.LastId)
-
-
-        ElseIf curSttsType = DNE.JikJikoo.StatusListType.MyUpdates Then
-            sts = twa.GetUserTimeLine(stlMain.LastId)
-
-        ElseIf curSttsType = DNE.JikJikoo.StatusListType.UserUpdates Then
-            sts = twa.GetUserTimeLine(curSttsParams(1), stlMain.LastId)
-
-        ElseIf curSttsType = DNE.JikJikoo.StatusListType.DirectMessages Then
-            sts = Util.DirectMessage2Status(twa.DirectMessages(stlMain.LastId))
+                ElseIf curSttsType = DNE.JikJikoo.StatusListType.Mentions Then
+                    sts = twa.GetMentions(stlMain.LastId)
 
 
-        End If
-        stlMain.AddStatuses(sts)
-        curSttsParams = New String() {stlMain.LastStatusId}
-        'Update prev controls datetime
-        stlMain.DateTimesUpdate()
+                ElseIf curSttsType = DNE.JikJikoo.StatusListType.Favorites Then
+                    sts = twa.Favorites(stlMain.LastId)
 
+
+                ElseIf curSttsType = DNE.JikJikoo.StatusListType.MyUpdates Then
+                    sts = twa.GetUserTimeLine(stlMain.LastId)
+
+                ElseIf curSttsType = DNE.JikJikoo.StatusListType.UserUpdates Then
+                    sts = twa.GetUserTimeLine(curSttsParams(1), stlMain.LastId)
+
+                ElseIf curSttsType = DNE.JikJikoo.StatusListType.DirectMessages Then
+                    sts = Util.DirectMessage2Status(twa.DirectMessages(stlMain.LastId))
+
+
+                End If
+                stlMain.AddStatuses(sts)
+                curSttsParams = New String() {stlMain.LastStatusId}
+                'Update prev controls datetime
+                stlMain.DateTimesUpdate()
+
+            End If
+
+
+        Catch ex As DNE.JikJikoo.NoConnectionException
+            MsgBox("Not Connected. check your internet connection")
+
+        End Try
         TimerRefresh.Enabled = True
         IsBinding = False
 
@@ -81,6 +101,18 @@ Public Class frmMain
 
     End Sub
 
+    Private Sub SetLastUpdateText(ByVal s As String)
+        If Util.ContainRtlChars(s) Then
+            txtStatus.RightToLeft = Windows.Forms.RightToLeft.Yes
+
+        Else
+            txtStatus.RightToLeft = Windows.Forms.RightToLeft.No
+
+        End If
+        txtStatus.Text = s
+
+    End Sub
+
 #Region " Form Events "
 
     Private Sub btnConfig_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnConfig.Click
@@ -104,6 +136,8 @@ Public Class frmMain
     Private Sub frmMain_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
         ReloadConfig()
         jikLogin.LoadLogin()
+        AddHandler twa.HttpError, AddressOf TwitterApiHttpErro
+
 
     End Sub
 
@@ -141,23 +175,45 @@ Public Class frmMain
 
     End Sub
 
+    Private Sub frmMain_Resize(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Resize
+        jikLogin.SetSize()
+
+    End Sub
+
 #End Region
 
 #Region " Login Events "
+
+    Private Sub SetCurrentUser()
+        If Me.InvokeRequired Then
+            Me.Invoke(New MethodInvoker(AddressOf EndAddStatuses))
+        Else
+            Dim u As DNE.Twitter.User = Nothing
+            Try
+                u = twa.UserShow(jikLogin.txtUid.Text)
+                CurrentUser = u
+                picUser.Image = twa.GetImage(CurrentUser.Profile_image_url)
+                lblUser.Text = CurrentUser.Screen_Name
+                lnkMentions.Text = "@" & CurrentUser.Screen_Name
+                SetLastUpdateText(CurrentUser.Status.Text)
+
+            Catch ex As DNE.JikJikoo.NoConnectionException
+                MsgBox("Not Connected")
+                Exit Sub
+            End Try
+
+        End If
+
+    End Sub
 
     Private Sub CtrLogin1_Login(ByVal sender As Object, ByVal e As System.EventArgs) Handles jikLogin.Login
         Dim ace As New AppConfig()
         SetUiEnable(True)
         ReloadConfig()
-        Dim u As DNE.Twitter.User = twa.UserShow(jikLogin.txtUid.Text)
-        CurrentUser = u
-        picUser.Image = twa.GetImage(CurrentUser.Profile_image_url)
-        lblUser.Text = CurrentUser.Screen_Name
-        lnkMentions.Text = "@" & CurrentUser.Screen_Name
-        SetLastUpdateText(CurrentUser.Status.Text)
+        SetCurrentUser()
+        If CurrentUser Is Nothing Then Exit Sub
 
         Application.DoEvents()
-
         TimerRefresh_Tick(Me, Nothing)
 
         TimerRefresh.Interval = CInt(ace.GetValue("refresh")) * 1000
@@ -270,10 +326,7 @@ Public Class frmMain
 
 #End Region
 
-    Private Sub frmMain_Resize(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Resize
-        jikLogin.SetSize()
-
-    End Sub
+#Region " LinkButtons "
 
     Private Sub lnkFriendsTimeLine_LinkClicked(ByVal sender As System.Object, ByVal e As System.Windows.Forms.LinkLabelLinkClickedEventArgs) Handles lnkFriendsTimeLine.LinkClicked
         If curSttsType <> DNE.JikJikoo.StatusListType.FriendsTimeLine Then
@@ -330,6 +383,10 @@ Public Class frmMain
 
     End Sub
 
+#End Region
+
+#Region " NotifyIcon & Context Menu"
+
     Private Sub NotifyIcon1_MouseDoubleClick(ByVal sender As System.Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles NotifyIcon1.MouseDoubleClick
         If Me.Visible Then
             Me.Hide()
@@ -338,18 +395,6 @@ Public Class frmMain
             Me.Show()
 
         End If
-
-    End Sub
-
-    Private Sub SetLastUpdateText(ByVal s As String)
-        If Util.ContainRtlChars(s) Then
-            txtStatus.RightToLeft = Windows.Forms.RightToLeft.Yes
-
-        Else
-            txtStatus.RightToLeft = Windows.Forms.RightToLeft.No
-
-        End If
-        txtStatus.Text = s
 
     End Sub
 
@@ -379,5 +424,8 @@ Public Class frmMain
         Application.Exit()
 
     End Sub
+
+#End Region
+
 
 End Class
