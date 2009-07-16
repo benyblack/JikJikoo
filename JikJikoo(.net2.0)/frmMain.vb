@@ -241,7 +241,7 @@ Public Class frmMain
 
 #Region " Status List Events "
 
-    Private Sub CtrStatusList1_EndAddStatuses(ByVal sender As Object, ByVal e As System.EventArgs) Handles stlMain.EndAddStatuses
+    Private Sub stlMain_EndAddStatuses(ByVal sender As Object, ByVal e As System.EventArgs) Handles stlMain.EndAddStatuses
         If Me.InvokeRequired Then
             Me.Invoke(New MethodInvoker(AddressOf EndAddStatuses))
         Else
@@ -249,7 +249,7 @@ Public Class frmMain
         End If
     End Sub
 
-    Private Sub CtrStatusList1_EndCachingImages(ByVal sender As Object, ByVal e As System.EventArgs) Handles stlMain.EndCachingImages
+    Private Sub stlMain_EndCachingImages(ByVal sender As Object, ByVal e As System.EventArgs) Handles stlMain.EndCachingImages
         If Me.InvokeRequired Then
             Me.Invoke(New MethodInvoker(AddressOf EndCachingImages))
         Else
@@ -257,11 +257,20 @@ Public Class frmMain
         End If
     End Sub
 
-    Private Sub CtrStatusList1_ReplyCommand(ByVal sender As Object, ByVal rea As ReplyEventArgs) Handles stlMain.ReplyCommand
-        jikUpdate.txtStatus.Text = "@" & rea.ReplyTo
+    Private Sub stlMain_TwitCommand(ByVal sender As Object, ByVal t As TwitEventArgs) Handles stlMain.TwitCommand
+        If t.TwitEvent = TwitEvents.Use_ScreenName Then
+            jikUpdate.txtStatus.Paste("@" & t.Text)
+
+        ElseIf t.TwitEvent = TwitEvents.RT Then
+            jikUpdate.txtStatus.Text = "RT " & t.Text
+
+        ElseIf t.TwitEvent = TwitEvents.Reply Then
+
+
+        End If
     End Sub
 
-    Private Sub CtrStatusList1_StartAddStatuses(ByVal sender As Object, ByVal e As System.EventArgs) Handles stlMain.StartAddStatuses
+    Private Sub stlMain_StartAddStatuses(ByVal sender As Object, ByVal e As System.EventArgs) Handles stlMain.StartAddStatuses
         If Me.InvokeRequired Then
             Me.Invoke(New MethodInvoker(AddressOf StartAddStatuses))
         Else
@@ -269,7 +278,7 @@ Public Class frmMain
         End If
     End Sub
 
-    Private Sub CtrStatusList1_StartCachingImages(ByVal sender As Object, ByVal e As System.EventArgs) Handles stlMain.StartCachingImages
+    Private Sub stlMain_StartCachingImages(ByVal sender As Object, ByVal e As System.EventArgs) Handles stlMain.StartCachingImages
         If Me.InvokeRequired Then
             Me.Invoke(New MethodInvoker(AddressOf StartCachingImages))
         Else

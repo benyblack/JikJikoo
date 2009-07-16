@@ -31,6 +31,7 @@ Partial Class ctrStatus
         Me.txtStatus = New RichTextBoxLinks.RichTextBoxEx
         Me.FlowLayoutPanel1 = New System.Windows.Forms.FlowLayoutPanel
         Me.mnuUsername = New System.Windows.Forms.ContextMenuStrip(Me.components)
+        Me.UseToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
         Me.ReplyToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
         Me.RTToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
         CType(Me.picUser, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -47,6 +48,7 @@ Partial Class ctrStatus
         'lblUserName
         '
         resources.ApplyResources(Me.lblUserName, "lblUserName")
+        Me.lblUserName.Cursor = System.Windows.Forms.Cursors.Hand
         Me.lblUserName.Name = "lblUserName"
         '
         'lblTime
@@ -80,9 +82,14 @@ Partial Class ctrStatus
         '
         'mnuUsername
         '
-        Me.mnuUsername.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ReplyToolStripMenuItem, Me.RTToolStripMenuItem})
+        Me.mnuUsername.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.UseToolStripMenuItem, Me.ReplyToolStripMenuItem, Me.RTToolStripMenuItem})
         Me.mnuUsername.Name = "ContextMenuStrip1"
         resources.ApplyResources(Me.mnuUsername, "mnuUsername")
+        '
+        'UseToolStripMenuItem
+        '
+        Me.UseToolStripMenuItem.Name = "UseToolStripMenuItem"
+        resources.ApplyResources(Me.UseToolStripMenuItem, "UseToolStripMenuItem")
         '
         'ReplyToolStripMenuItem
         '
@@ -120,5 +127,6 @@ Partial Class ctrStatus
     Friend WithEvents mnuUsername As System.Windows.Forms.ContextMenuStrip
     Friend WithEvents ReplyToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents RTToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents UseToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
 
 End Class

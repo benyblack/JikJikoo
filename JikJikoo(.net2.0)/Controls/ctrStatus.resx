@@ -278,26 +278,32 @@
   <metadata name="mnuUsername.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>
-  <data name="ReplyToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>152, 22</value>
-  </data>
-  <data name="ReplyToolStripMenuItem.Text" xml:space="preserve">
-    <value>&amp;Reply</value>
-  </data>
-  <data name="RTToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>152, 22</value>
-  </data>
-  <data name="RTToolStripMenuItem.Text" xml:space="preserve">
-    <value>RT</value>
-  </data>
   <data name="mnuUsername.Size" type="System.Drawing.Size, System.Drawing">
-    <value>153, 70</value>
+    <value>104, 70</value>
   </data>
   <data name="&gt;&gt;mnuUsername.Name" xml:space="preserve">
     <value>mnuUsername</value>
   </data>
   <data name="&gt;&gt;mnuUsername.Type" xml:space="preserve">
     <value>System.Windows.Forms.ContextMenuStrip, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="UseToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>103, 22</value>
+  </data>
+  <data name="UseToolStripMenuItem.Text" xml:space="preserve">
+    <value>Use</value>
+  </data>
+  <data name="ReplyToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>103, 22</value>
+  </data>
+  <data name="ReplyToolStripMenuItem.Text" xml:space="preserve">
+    <value>&amp;Reply</value>
+  </data>
+  <data name="RTToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>103, 22</value>
+  </data>
+  <data name="RTToolStripMenuItem.Text" xml:space="preserve">
+    <value>RT</value>
   </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
@@ -307,6 +313,12 @@
   </data>
   <data name="$this.Size" type="System.Drawing.Size, System.Drawing">
     <value>350, 80</value>
+  </data>
+  <data name="&gt;&gt;UseToolStripMenuItem.Name" xml:space="preserve">
+    <value>UseToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;UseToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;ReplyToolStripMenuItem.Name" xml:space="preserve">
     <value>ReplyToolStripMenuItem</value>

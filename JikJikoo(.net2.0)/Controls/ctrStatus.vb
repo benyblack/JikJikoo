@@ -2,7 +2,7 @@
 
 Public Class ctrStatus
 
-    Public Event ReplyCommand As ReplyEventHandler
+    Public Event TwitEvent As TwitEventHandler
 
     Private _status As DNE.Twitter.Status
     Public Property Status() As DNE.Twitter.Status
@@ -27,6 +27,8 @@ Public Class ctrStatus
         End Set
     End Property
 
+    Private mousexyOntxtstatus As Point = Nothing
+
     Public Sub DateTimeUpdate()
         If Me.InvokeRequired Then
             Me.Invoke(New MethodInvoker(AddressOf DateTimeUpdate))
@@ -34,11 +36,6 @@ Public Class ctrStatus
             If Me.Status Is Nothing Then Exit Sub
             lblTime.Text = Util.GetPrettyDate(Status.CreatedAt, IIf(jc.lang.ToLower = "fa", Language.Farsi, Language.English))
         End If
-
-    End Sub
-
-
-    Private Sub ctrStatus_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
 
     End Sub
 
@@ -106,13 +103,15 @@ Public Class ctrStatus
 
     End Sub
 
+
+    Private whatisClickedInTxtStatus As String = ""
     Private Sub txtStatus_LinkClicked(ByVal sender As Object, ByVal e As System.Windows.Forms.LinkClickedEventArgs) Handles txtStatus.LinkClicked
         If e.LinkText = "" Then Exit Sub
-        Dim verb As String = e.LinkText.Split("#")(e.LinkText.Split("#").Length - 1)
+        Dim txt As String = e.LinkText
+        Dim verb As String = txt.Split("#")(txt.Split("#").Length - 1)
         If verb.ToLower = "user" Then
-            mnuUsername.Show(txtStatus, 5, 5)
-
-            RaiseEvent ReplyCommand(Me, New ReplyEventArgs(e.LinkText.Substring(0, e.LinkText.IndexOf("#"))))
+            whatisClickedInTxtStatus = txt.Substring(0, txt.Length - 5)
+            mnuUsername.Show(txtStatus, New Point(mousexyOntxtstatus.X - 2, mousexyOntxtstatus.Y - 2))
 
         ElseIf verb.ToLower = "url" Then
             Process.Start(e.LinkText.Substring(0, e.LinkText.Length - 4)) ' 4= "#url".lenght
@@ -128,12 +127,28 @@ Public Class ctrStatus
     End Sub
 
     Private Sub ReplyToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ReplyToolStripMenuItem.Click
-        MsgBox("reply")
+        RaiseEvent TwitEvent(Me, New TwitEventArgs(Status.Id, TwitEvents.Reply))
 
     End Sub
 
     Private Sub RTToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles RTToolStripMenuItem.Click
-        MsgBox("RT " & Me.Status.Text)
+        RaiseEvent TwitEvent(Me, New TwitEventArgs(Status.Text, TwitEvents.RT))
+
+    End Sub
+
+    Private Sub txtStatus_MouseMove(ByVal sender As System.Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles txtStatus.MouseMove
+        mousexyOntxtstatus = e.Location
+
+    End Sub
+
+    Private Sub UseToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles UseToolStripMenuItem.Click
+        RaiseEvent TwitEvent(Me, New TwitEventArgs(whatisClickedInTxtStatus, TwitEvents.Use_ScreenName))
+
+    End Sub
+
+    Private Sub lblUserName_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles lblUserName.Click
+        whatisClickedInTxtStatus = lblUserName.Text
+        mnuUsername.Show(lblUserName, 5, 5)
 
     End Sub
 End Class

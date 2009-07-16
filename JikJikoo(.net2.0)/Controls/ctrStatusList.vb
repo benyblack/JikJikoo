@@ -8,7 +8,7 @@ Public Class ctrStatusList
     Public Event EndCachingImages As EventHandler
     Public Event StartAddStatuses As EventHandler
     Public Event EndAddStatuses As EventHandler
-    Public Event ReplyCommand As ReplyEventHandler
+    Public Event TwitCommand As TwitEventHandler
 
 
     Private _statuses As Collection(Of Status)
@@ -126,7 +126,7 @@ Public Class ctrStatusList
                 c.picUser.Image = img
 
             End If
-            AddHandler c.ReplyCommand, AddressOf Reply
+            AddHandler c.TwitEvent, AddressOf TwitEvent
             Me.pnlMain.Controls.Add(c)
             If c.Status.numId > _laststatusId Then
                 _laststatusId = c.Status.numId
@@ -149,7 +149,7 @@ Public Class ctrStatusList
             c.picUser.ImageLocation = st.User.Profile_image_url
 
         End If
-        AddHandler c.ReplyCommand, AddressOf Reply
+        AddHandler c.TwitEvent, AddressOf TwitEvent
         Me.pnlMain.Controls.Add(c)
         If c.Status.numId > _laststatusId Then
             _laststatusId = c.Status.numId
@@ -174,11 +174,6 @@ Public Class ctrStatusList
 
     End Sub
 
-    Private Sub Reply(ByVal sender As Object, ByVal e As ReplyEventArgs)
-        RaiseEvent ReplyCommand(sender, e)
-
-    End Sub
-
     Public Sub DateTimesUpdate()
         For Each c As ctrStatus In Me.pnlMain.Controls
             c.DateTimeUpdate()
@@ -199,5 +194,10 @@ Public Class ctrStatusList
 
         Next
     End Sub
+
+    Private Sub TwitEvent(ByVal sender As Object, ByVal t As TwitEventArgs)
+        RaiseEvent TwitCommand(sender, t)
+    End Sub
+
 End Class
 

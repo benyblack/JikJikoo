@@ -50,7 +50,6 @@ Namespace DNE.JikJikoo
 
         End Sub
 
-
         ''' <summary>
         ''' Config Proxy.
         ''' Default Settings is : SOCKS4A,127.0.0.1,1080,"","" 
@@ -429,8 +428,10 @@ Namespace DNE.JikJikoo
         ''' <param name="status">Text of new status</param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Function UpdateStatus(ByVal status As String) As String
-            Return HttpRequest("POST", updatestatusurl, "status=" & HttpUtility.UrlEncode(status))
+        Public Function UpdateStatus(ByVal status As String, ByVal in_reply_to_status_id As String) As String
+            Dim query As String = String.Format("status={0}", HttpUtility.UrlEncode(status))
+            If in_reply_to_status_id <> "" Then query += String.Format("&in_reply_to_status_id={0}", in_reply_to_status_id)
+            Return HttpRequest("POST", updatestatusurl, query)
 
         End Function
 
@@ -1154,7 +1155,6 @@ Namespace DNE.JikJikoo
             Return ""
 
         End Function
-
 
         Private Sub AddBytes(ByRef al As ArrayList, ByVal b As Byte(), ByVal count As Int32)
             For i As Int32 = 0 To count - 1
