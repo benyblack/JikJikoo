@@ -265,6 +265,8 @@ Public Class frmMain
             jikUpdate.txtStatus.Text = "RT " & t.Text
 
         ElseIf t.TwitEvent = TwitEvents.Reply Then
+            jikUpdate.in_reply_to_status_id = t.Text
+
 
 
         End If

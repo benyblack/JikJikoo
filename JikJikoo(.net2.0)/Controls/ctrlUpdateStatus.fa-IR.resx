@@ -130,4 +130,7 @@
   <data name="$this.Font" type="System.Drawing.Font, System.Drawing">
     <value>Tahoma, 8.25pt</value>
   </data>
+  <data name="ReplyButton" xml:space="preserve">
+    <value>پاسخ</value>
+  </data>
 </root>

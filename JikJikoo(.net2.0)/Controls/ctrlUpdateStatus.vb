@@ -10,8 +10,19 @@
         End Get
         Set(ByVal value As String)
             _in_reply_to_status_id = value
+            SetButtonText()
+
         End Set
     End Property
+
+    Private Sub SetButtonText()
+        Dim rm As New System.ComponentModel.ComponentResourceManager(Me.GetType)
+        If _in_reply_to_status_id <> "" Then
+            btnUpdate.Text = rm.GetString("ReplyButton")
+        Else
+            btnUpdate.Text = rm.GetString("btnUpdate.Text")
+        End If
+    End Sub
 
     Private Sub btnUpdate_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnUpdate.Click
         RaiseEvent UpdateStarted(Nothing, Nothing)
