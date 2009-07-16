@@ -2,13 +2,14 @@
 Imports System.Configuration.ConfigurationManager
 Imports System.Xml
 Imports System.ComponentModel
+Imports System.Collections.ObjectModel
 
 Public Class frmMain
 
     Private t As Thread = Nothing
     Private rm As New System.ComponentModel.ComponentResourceManager(Me.GetType)
     Private curSttsType As DNE.JikJikoo.StatusListType = DNE.JikJikoo.StatusListType.FriendsTimeLine
-    Private curSttsParams() As String = {""}
+    Private curSttsParams As New DictionaryEntry("", "")
     Private IsBinding As Boolean = False
     Private NewUpdate As Int32 = 0
     Private WaitingForCleanRefresh As Boolean = False
@@ -32,21 +33,14 @@ Public Class frmMain
             If Not CurrentUser Is Nothing Then
                 ' TimerRefresh.Enabled = False
                 Dim sts As Collections.ObjectModel.Collection(Of DNE.Twitter.Status) = Nothing
-                If curSttsParams Is Nothing OrElse curSttsParams.Length = 0 OrElse curSttsParams(0) = "" Then stlMain.Clear()
+                If curSttsParams.Key.ToString().Length = 0 OrElse curSttsParams.Key.ToString() = "" Then stlMain.Clear()
 
                 If curSttsType = DNE.JikJikoo.StatusListType.FriendsTimeLine Then
                     sts = twa.GetFriendsTimeLine(stlMain.LastId)
                     NewUpdate = sts.Count
 
                 ElseIf curSttsType = DNE.JikJikoo.StatusListType.Mentions Then
-                    If curSttsParams(1) = "" Then
-                        sts = twa.GetMentions(stlMain.LastId)
-
-                    Else
-                        sts = twa.GetUserTimeLine(curSttsParams(1), stlMain.LastId)
-
-                    End If
-
+                    sts = twa.GetMentions(stlMain.LastId)
 
                 ElseIf curSttsType = DNE.JikJikoo.StatusListType.Favorites Then
                     sts = twa.Favorites(stlMain.LastId)
@@ -56,7 +50,7 @@ Public Class frmMain
                     sts = twa.GetUserTimeLine(stlMain.LastId)
 
                 ElseIf curSttsType = DNE.JikJikoo.StatusListType.UserUpdates Then
-                    sts = twa.GetUserTimeLine(curSttsParams(1), stlMain.LastId)
+                    sts = twa.GetUserTimeLine(curSttsParams.Value, stlMain.LastId)
 
                 ElseIf curSttsType = DNE.JikJikoo.StatusListType.DirectMessages Then
                     sts = Util.DirectMessage2Status(twa.DirectMessages(stlMain.LastId))
@@ -64,7 +58,7 @@ Public Class frmMain
 
                 End If
                 stlMain.AddStatuses(sts)
-                curSttsParams = New String() {stlMain.LastStatusId}
+                curSttsParams.Key = stlMain.LastStatusId
                 'Update prev controls datetime
                 stlMain.DateTimesUpdate()
                 stlMain.FormatStatusText()
@@ -176,7 +170,8 @@ Public Class frmMain
         Dim jc As New JikConfigManager()
         TimerRefresh.Interval = jc.refresh * 1000
         If WaitingForCleanRefresh Then
-            curSttsParams = New String() {""}
+            curSttsParams.Key = ""
+            'curSttsParams.Value = ""
             WaitingForCleanRefresh = False
         End If
         t = New Thread(AddressOf Bind)
@@ -279,12 +274,11 @@ Public Class frmMain
             jikUpdate.txtStatus.Text = "@" & t.Status.User.Screen_Name
 
         ElseIf t.TwitEvent = TwitEvents.UserStatuses Then
-            If curSttsType <> DNE.JikJikoo.StatusListType.Mentions Then
-                curSttsParams = New String() {"", t.Text}
-                WaitingForCleanRefresh = True
+            curSttsParams.Value = t.Text
+            curSttsParams.Key = ""
+            WaitingForCleanRefresh = True
 
-            End If
-            curSttsType = DNE.JikJikoo.StatusListType.Mentions
+            curSttsType = DNE.JikJikoo.StatusListType.UserUpdates
             TimerRefresh_Tick(Me, Nothing)
 
         End If
@@ -364,7 +358,7 @@ Public Class frmMain
 
     Private Sub lnkFriendsTimeLine_LinkClicked(ByVal sender As System.Object, ByVal e As System.Windows.Forms.LinkLabelLinkClickedEventArgs) Handles lnkFriendsTimeLine.LinkClicked
         If curSttsType <> DNE.JikJikoo.StatusListType.FriendsTimeLine Then
-            curSttsParams = New String() {""}
+            curSttsParams = New DictionaryEntry("", "")
             WaitingForCleanRefresh = True
 
         End If
@@ -375,7 +369,7 @@ Public Class frmMain
 
     Private Sub lnkMentions_LinkClicked(ByVal sender As System.Object, ByVal e As System.Windows.Forms.LinkLabelLinkClickedEventArgs) Handles lnkMentions.LinkClicked
         If curSttsType <> DNE.JikJikoo.StatusListType.Mentions Then
-            curSttsParams = New String() {"", ""}
+            curSttsParams = New DictionaryEntry("", "")
             WaitingForCleanRefresh = True
 
         End If
@@ -386,7 +380,7 @@ Public Class frmMain
 
     Private Sub lnkMessages_LinkClicked(ByVal sender As System.Object, ByVal e As System.Windows.Forms.LinkLabelLinkClickedEventArgs) Handles lnkMessages.LinkClicked
         If curSttsType <> DNE.JikJikoo.StatusListType.DirectMessages Then
-            curSttsParams = New String() {""}
+            curSttsParams = New DictionaryEntry("", "")
             WaitingForCleanRefresh = True
 
         End If
@@ -397,7 +391,7 @@ Public Class frmMain
 
     Private Sub lnkFavorites_LinkClicked(ByVal sender As System.Object, ByVal e As System.Windows.Forms.LinkLabelLinkClickedEventArgs) Handles lnkFavorites.LinkClicked
         If curSttsType <> DNE.JikJikoo.StatusListType.Favorites Then
-            curSttsParams = New String() {""}
+            curSttsParams = New DictionaryEntry("", "")
             WaitingForCleanRefresh = True
 
         End If
@@ -408,7 +402,7 @@ Public Class frmMain
 
     Private Sub lnkMyUpdates_LinkClicked(ByVal sender As System.Object, ByVal e As System.Windows.Forms.LinkLabelLinkClickedEventArgs) Handles lnkMyUpdates.LinkClicked
         If curSttsType <> DNE.JikJikoo.StatusListType.MyUpdates Then
-            curSttsParams = New String() {""}
+            curSttsParams = New DictionaryEntry("", "")
             WaitingForCleanRefresh = True
 
         End If
