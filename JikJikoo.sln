@@ -1,0 +1,35 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "JikjikooLib", "JikjikooLib\JikjikooLib.vbproj", "{A15DD249-8D7B-4DE8-A382-5A8E12B55AEB}"
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "JikJikoo(.net2.0)", "JikJikoo(.net2.0)\JikJikoo(.net2.0).vbproj", "{C00938A6-16E1-42AF-933B-5DF8EE5D1E6B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SocksProxy", "SocksProxy\SocksProxy.csproj", "{AD6738D4-105E-447A-8C4E-3913177D2C3B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A15DD249-8D7B-4DE8-A382-5A8E12B55AEB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A15DD249-8D7B-4DE8-A382-5A8E12B55AEB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A15DD249-8D7B-4DE8-A382-5A8E12B55AEB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A15DD249-8D7B-4DE8-A382-5A8E12B55AEB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C00938A6-16E1-42AF-933B-5DF8EE5D1E6B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C00938A6-16E1-42AF-933B-5DF8EE5D1E6B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C00938A6-16E1-42AF-933B-5DF8EE5D1E6B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C00938A6-16E1-42AF-933B-5DF8EE5D1E6B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AD6738D4-105E-447A-8C4E-3913177D2C3B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AD6738D4-105E-447A-8C4E-3913177D2C3B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AD6738D4-105E-447A-8C4E-3913177D2C3B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AD6738D4-105E-447A-8C4E-3913177D2C3B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		VisualSVNWorkingCopyRoot = .
+	EndGlobalSection
+EndGlobal
