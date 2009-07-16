@@ -11,7 +11,16 @@
         Set(ByVal value As String)
             _in_reply_to_status_id = value
             SetButtonText()
+        End Set
+    End Property
 
+    Private _in_reply_to_screen_name As String = ""
+    Public Property in_reply_to_screen_name() As String
+        Get
+            Return _in_reply_to_screen_name
+        End Get
+        Set(ByVal value As String)
+            _in_reply_to_screen_name = value
         End Set
     End Property
 
@@ -47,5 +56,15 @@
     Private Sub ctrlUpdateStatus_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
         cboShorten.SelectedIndex = 0
 
+    End Sub
+
+    Private Sub txtStatus_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles txtStatus.TextChanged
+        If in_reply_to_status_id = "" Then Exit Sub
+        If Not txtStatus.Text.Contains("@" & in_reply_to_screen_name) Then
+            in_reply_to_status_id = ""
+            in_reply_to_screen_name = ""
+            SetButtonText()
+
+        End If
     End Sub
 End Class

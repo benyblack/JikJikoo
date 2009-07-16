@@ -20,6 +20,16 @@ Public Class TwitEventArgs
         End Set
     End Property
 
+    Private _status As DNE.Twitter.Status = Nothing
+    Public Property [Status]() As DNE.Twitter.Status
+        Get
+            Return _status
+        End Get
+        Set(ByVal value As DNE.Twitter.Status)
+            _status = value
+        End Set
+    End Property
+
     Private _twitevent As TwitEvents
     Public Property TwitEvent() As TwitEvents
         Get
@@ -30,9 +40,10 @@ Public Class TwitEventArgs
         End Set
     End Property
 
-    Public Sub New(ByVal Message As String, ByVal WhatHappend As TwitEvents)
+    Public Sub New(ByVal stts As DNE.Twitter.Status, ByVal txt As String, ByVal WhatHappend As TwitEvents)
         _twitevent = WhatHappend
-        _text = Message
+        _text = txt
+        _status = stts
 
     End Sub
 
@@ -42,6 +53,7 @@ Public Enum TwitEvents
     Use_ScreenName = 0
     RT = 1
     Reply = 2
+    UserStatuses = 3
 
 End Enum
 

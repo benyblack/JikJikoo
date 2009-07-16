@@ -32,62 +32,39 @@ Partial Class ctrlUpdateStatus
         '
         'txtStatus
         '
-        Me.txtStatus.AccessibleDescription = Nothing
-        Me.txtStatus.AccessibleName = Nothing
         resources.ApplyResources(Me.txtStatus, "txtStatus")
-        Me.txtStatus.BackgroundImage = Nothing
-        Me.txtStatus.Font = Nothing
         Me.txtStatus.Name = "txtStatus"
         '
         'btnUpdate
         '
-        Me.btnUpdate.AccessibleDescription = Nothing
-        Me.btnUpdate.AccessibleName = Nothing
         resources.ApplyResources(Me.btnUpdate, "btnUpdate")
-        Me.btnUpdate.BackgroundImage = Nothing
-        Me.btnUpdate.Font = Nothing
         Me.btnUpdate.ForeColor = System.Drawing.Color.Black
         Me.btnUpdate.Name = "btnUpdate"
         Me.btnUpdate.UseVisualStyleBackColor = True
         '
         'txtShorten
         '
-        Me.txtShorten.AccessibleDescription = Nothing
-        Me.txtShorten.AccessibleName = Nothing
         resources.ApplyResources(Me.txtShorten, "txtShorten")
-        Me.txtShorten.BackgroundImage = Nothing
-        Me.txtShorten.Font = Nothing
         Me.txtShorten.Name = "txtShorten"
         '
         'cboShorten
         '
-        Me.cboShorten.AccessibleDescription = Nothing
-        Me.cboShorten.AccessibleName = Nothing
         resources.ApplyResources(Me.cboShorten, "cboShorten")
-        Me.cboShorten.BackgroundImage = Nothing
-        Me.cboShorten.Font = Nothing
         Me.cboShorten.FormattingEnabled = True
         Me.cboShorten.Items.AddRange(New Object() {resources.GetString("cboShorten.Items")})
         Me.cboShorten.Name = "cboShorten"
         '
         'btnShorten
         '
-        Me.btnShorten.AccessibleDescription = Nothing
-        Me.btnShorten.AccessibleName = Nothing
         resources.ApplyResources(Me.btnShorten, "btnShorten")
-        Me.btnShorten.BackgroundImage = Nothing
-        Me.btnShorten.Font = Nothing
         Me.btnShorten.ForeColor = System.Drawing.Color.Black
         Me.btnShorten.Name = "btnShorten"
         Me.btnShorten.UseVisualStyleBackColor = True
         '
         'ctrlUpdateStatus
         '
-        Me.AccessibleDescription = Nothing
-        Me.AccessibleName = Nothing
         resources.ApplyResources(Me, "$this")
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.BackgroundImage = Nothing
         Me.Controls.Add(Me.btnShorten)
         Me.Controls.Add(Me.cboShorten)
         Me.Controls.Add(Me.txtShorten)

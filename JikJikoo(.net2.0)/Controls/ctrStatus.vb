@@ -111,7 +111,8 @@ Public Class ctrStatus
         Dim verb As String = txt.Split("#")(txt.Split("#").Length - 1)
         If verb.ToLower = "user" Then
             whatisClickedInTxtStatus = txt.Substring(0, txt.Length - 5)
-            mnuUsername.Show(txtStatus, New Point(mousexyOntxtstatus.X - 2, mousexyOntxtstatus.Y - 2))
+            RaiseEvent TwitEvent(Me, New TwitEventArgs(Status, whatisClickedInTxtStatus, TwitEvents.UserStatuses))
+            ' mnuUsername.Show(txtStatus, New Point(mousexyOntxtstatus.X - 2, mousexyOntxtstatus.Y - 2))
 
         ElseIf verb.ToLower = "url" Then
             Process.Start(e.LinkText.Substring(0, e.LinkText.Length - 4)) ' 4= "#url".lenght
@@ -127,12 +128,12 @@ Public Class ctrStatus
     End Sub
 
     Private Sub ReplyToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ReplyToolStripMenuItem.Click
-        RaiseEvent TwitEvent(Me, New TwitEventArgs(Status.Id, TwitEvents.Reply))
+        RaiseEvent TwitEvent(Me, New TwitEventArgs(Status, whatisClickedInTxtStatus, TwitEvents.Reply))
 
     End Sub
 
     Private Sub RTToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles RTToolStripMenuItem.Click
-        RaiseEvent TwitEvent(Me, New TwitEventArgs(Status.Text, TwitEvents.RT))
+        RaiseEvent TwitEvent(Me, New TwitEventArgs(Status, whatisClickedInTxtStatus, TwitEvents.RT))
 
     End Sub
 
@@ -142,7 +143,7 @@ Public Class ctrStatus
     End Sub
 
     Private Sub UseToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles UseToolStripMenuItem.Click
-        RaiseEvent TwitEvent(Me, New TwitEventArgs(whatisClickedInTxtStatus, TwitEvents.Use_ScreenName))
+        RaiseEvent TwitEvent(Me, New TwitEventArgs(Status, whatisClickedInTxtStatus, TwitEvents.Use_ScreenName))
 
     End Sub
 

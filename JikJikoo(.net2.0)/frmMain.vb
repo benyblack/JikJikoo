@@ -39,7 +39,13 @@ Public Class frmMain
                     NewUpdate = sts.Count
 
                 ElseIf curSttsType = DNE.JikJikoo.StatusListType.Mentions Then
-                    sts = twa.GetMentions(stlMain.LastId)
+                    If curSttsParams(1) = "" Then
+                        sts = twa.GetMentions(stlMain.LastId)
+
+                    Else
+                        sts = twa.GetUserTimeLine(curSttsParams(1), stlMain.LastId)
+
+                    End If
 
 
                 ElseIf curSttsType = DNE.JikJikoo.StatusListType.Favorites Then
@@ -260,16 +266,26 @@ Public Class frmMain
     End Sub
 
     Private Sub stlMain_TwitCommand(ByVal sender As Object, ByVal t As TwitEventArgs) Handles stlMain.TwitCommand
+        jikUpdate.in_reply_to_status_id = ""
         If t.TwitEvent = TwitEvents.Use_ScreenName Then
             jikUpdate.txtStatus.Paste("@" & t.Text)
 
         ElseIf t.TwitEvent = TwitEvents.RT Then
-            jikUpdate.txtStatus.Text = "RT " & t.Text
+            jikUpdate.txtStatus.Text = "RT " & t.Status.Text
 
         ElseIf t.TwitEvent = TwitEvents.Reply Then
-            jikUpdate.in_reply_to_status_id = t.Text
+            jikUpdate.in_reply_to_status_id = t.Status.Id
+            jikUpdate.in_reply_to_screen_name = t.Status.User.Screen_Name
+            jikUpdate.txtStatus.Text = "@" & t.Status.User.Screen_Name
 
+        ElseIf t.TwitEvent = TwitEvents.UserStatuses Then
+            If curSttsType <> DNE.JikJikoo.StatusListType.Mentions Then
+                curSttsParams = New String() {"", t.Text}
+                WaitingForCleanRefresh = True
 
+            End If
+            curSttsType = DNE.JikJikoo.StatusListType.Mentions
+            TimerRefresh_Tick(Me, Nothing)
 
         End If
     End Sub
@@ -359,7 +375,7 @@ Public Class frmMain
 
     Private Sub lnkMentions_LinkClicked(ByVal sender As System.Object, ByVal e As System.Windows.Forms.LinkLabelLinkClickedEventArgs) Handles lnkMentions.LinkClicked
         If curSttsType <> DNE.JikJikoo.StatusListType.Mentions Then
-            curSttsParams = New String() {""}
+            curSttsParams = New String() {"", ""}
             WaitingForCleanRefresh = True
 
         End If
