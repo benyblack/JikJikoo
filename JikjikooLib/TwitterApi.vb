@@ -950,7 +950,8 @@ Namespace DNE.JikJikoo
 
         Private Function ParsTwitterXML(Of T)(ByVal sXml As String, ByVal xt As TwitterXmlTypes) As T
             If sXml = "" Then
-                Throw New Exception("Server Return Nothing")
+                'Throw New Exception("Server Return Nothing")
+                RaiseEvent HttpError(Me, New HttpExEventArgs(Nothing, "", "Server Return Nothing!"))
                 Return Nothing
 
             End If

@@ -14,7 +14,9 @@ Public Class frmMain
     Private WaitingForCleanRefresh As Boolean = False
 
     Private Sub TwitterApiHttpError(ByVal sender As Object, ByVal hea As DNE.JikJikoo.HttpExEventArgs)
-        ShowMessage("Error in connection", hea.Message & vbCrLf & New Uri(hea.Url).Host, True)
+        Dim host As String = ""
+        If hea.Url <> "" Then host = New Uri(hea.Url).Host
+        ShowMessage("Error in connection", hea.Message & vbCrLf & host, True)
 
     End Sub
 
