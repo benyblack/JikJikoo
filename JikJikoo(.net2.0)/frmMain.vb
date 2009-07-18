@@ -271,9 +271,10 @@ Public Class frmMain
             curSttsParams.Value = "%23" & t.Text
             curSttsParams.Key = ""
             WaitingForCleanRefresh = True
-
+            txtSearch.Text = "#" & t.Text
             curSttsType = DNE.JikJikoo.StatusListType.SearchResults
             TimerRefresh_Tick(Me, Nothing)
+            lnkSearchLinks_LinkClicked(Nothing, Nothing)
 
         End If
     End Sub

@@ -558,7 +558,9 @@ Namespace DNE.JikJikoo
         ''' <returns></returns>
         ''' <remarks></remarks>
         Public Function UserShow(ByVal screenname As String) As DNE.Twitter.User
-            Dim s As String = HttpRequest("GET", showuserurl, "screen_name=" & screenname)
+            Dim query As String = ""
+            query = String.Format("screen_name={0}", screenname)
+            Dim s As String = HttpRequest("GET", showuserurl, query)
             Return ParsTwitterXML(Of DNE.Twitter.User)(s, TwitterXmlTypes.User)
             'Return ParsUserXML(s)
         End Function

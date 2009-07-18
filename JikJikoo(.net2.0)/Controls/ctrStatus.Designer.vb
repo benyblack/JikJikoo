@@ -34,6 +34,7 @@ Partial Class ctrStatus
         Me.UseToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
         Me.ReplyToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
         Me.RTToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
+        Me.MentionsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
         CType(Me.picUser, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.FlowLayoutPanel1.SuspendLayout()
         Me.mnuUsername.SuspendLayout()
@@ -82,7 +83,7 @@ Partial Class ctrStatus
         '
         'mnuUsername
         '
-        Me.mnuUsername.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.UseToolStripMenuItem, Me.ReplyToolStripMenuItem, Me.RTToolStripMenuItem})
+        Me.mnuUsername.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.UseToolStripMenuItem, Me.ReplyToolStripMenuItem, Me.RTToolStripMenuItem, Me.MentionsToolStripMenuItem})
         Me.mnuUsername.Name = "ContextMenuStrip1"
         resources.ApplyResources(Me.mnuUsername, "mnuUsername")
         '
@@ -100,6 +101,11 @@ Partial Class ctrStatus
         '
         Me.RTToolStripMenuItem.Name = "RTToolStripMenuItem"
         resources.ApplyResources(Me.RTToolStripMenuItem, "RTToolStripMenuItem")
+        '
+        'MentionsToolStripMenuItem
+        '
+        Me.MentionsToolStripMenuItem.Name = "MentionsToolStripMenuItem"
+        resources.ApplyResources(Me.MentionsToolStripMenuItem, "MentionsToolStripMenuItem")
         '
         'ctrStatus
         '
@@ -128,5 +134,6 @@ Partial Class ctrStatus
     Friend WithEvents ReplyToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents RTToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents UseToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents MentionsToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
 
 End Class

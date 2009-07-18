@@ -183,4 +183,11 @@ Public Class ctrStatus
         mnuUsername.Show(lblUserName, 5, 5)
 
     End Sub
+
+    Private Sub MentionsToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MentionsToolStripMenuItem.Click
+        whatisClickedInTxtStatus = Status.User.Screen_Name
+        RaiseEvent TwitEvent(Me, New TwitEventArgs(Status, whatisClickedInTxtStatus, TwitEvents.UserStatuses))
+
+    End Sub
+
 End Class
