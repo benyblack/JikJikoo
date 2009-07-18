@@ -44,6 +44,7 @@ Namespace DNE.JikJikoo
         Favorites
         Mentions
         MyUpdates
+        SearchResults
 
     End Enum
 

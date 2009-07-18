@@ -75,6 +75,28 @@ Public Class Util
 
     End Function
 
+    ''' <summary>
+    ''' temporary method. must be removed.
+    ''' </summary>
+    ''' <param name="sr"></param>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    Public Shared Function SearchResults2Status(ByVal sr As DNE.Twitter.SearchResults) As Collection(Of Status)
+        Dim sc As New Collection(Of Status)
+        For i As Int32 = 0 To sr.results.Length - 1
+            Dim st As New Status()
+            st.Id = sr.results(i).id
+            st.Created_At = sr.results(i).created_at
+            st.Text = sr.results(i).text
+            st.User.Screen_Name = sr.results(i).from_user
+
+            sc.Add(st)
+
+        Next
+        Return sc
+
+    End Function
+
     Public Shared Function ContainRtlChars(ByVal s As String) As Boolean
       For i As Int32 = 0 To s.Length - 1
             Dim ii As Int32 = AscW(s.ToCharArray()(i))

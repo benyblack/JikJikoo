@@ -9,6 +9,7 @@ Imports System.Drawing
 Imports System.Collections.ObjectModel
 
 Imports Org.Mentalis.Network.ProxySocket
+Imports Newtonsoft.Json
 
 Namespace DNE.JikJikoo
 
@@ -166,6 +167,12 @@ Namespace DNE.JikJikoo
         Private favoritescreateurl As String = "/favorites/create/id.xml"
         Private favoritesdestroyurl As String = "/favorites/destroy/id.xml"
 
+        'search
+        Private searchurl As String = "http://search.twitter.com/search.json"
+        Private trendsurl As String = "http://search.twitter.com/trends.json"
+        Private trendscurrenturl As String = "http://search.twitter.com/trends/current.json"
+        Private trendsdailyurl As String = "http://search.twitter.com/trends/daily.json"
+        Private trendsweeklyurl As String = "http://search.twitter.com/trends/weekly.json"
 
 #End Region
 
@@ -566,6 +573,91 @@ Namespace DNE.JikJikoo
         End Function
 
 #End Region
+
+#End Region
+
+#Region " Search Api "
+
+        ''' <summary>
+        ''' Search
+        ''' </summary>
+        ''' <param name="q">Query</param>
+        ''' <returns></returns>
+        ''' <remarks></remarks>
+        Public Function Search(ByVal q As String) As DNE.Twitter.SearchResults
+            Return Search(q, "", 0, 1, "", "", False)
+
+        End Function
+
+        ''' <summary>
+        ''' Search
+        ''' </summary>
+        ''' <param name="q">Query</param>
+        ''' <param name="since_id">Optional. Returns tweets with status ids greater than the given id.</param>
+        ''' <returns></returns>
+        ''' <remarks></remarks>
+        Public Function Search(ByVal q As String, ByVal since_id As String) As DNE.Twitter.SearchResults
+            Return Search(q, "", 0, 1, since_id, "", False)
+
+        End Function
+
+        ''' <summary>
+        ''' Search
+        ''' </summary>
+        ''' <param name="q">Query</param>
+        ''' <param name="page">Optional. The page number (starting at 1) to return, up to a max of roughly 1500 results (based on rpp * page). </param>
+        ''' <param name="since_id">Optional. Returns tweets with status ids greater than the given id.</param>
+        ''' <returns></returns>
+        ''' <remarks></remarks>
+        Public Function Search(ByVal q As String, ByVal page As Int32, ByVal since_id As String) As DNE.Twitter.SearchResults
+            Return Search(q, "", 0, page, since_id, "", False)
+
+        End Function
+
+
+
+        ''' <summary>
+        ''' Search
+        ''' </summary>
+        ''' <param name="q">Query</param>
+        ''' <param name="lang">Optional: Restricts tweets to the given language, 
+        ''' given by an <a href="http://en.wikipedia.org/wiki/List_of_ISO_639-1_codes">ISO 639-1 code</a>.</param>
+        ''' <param name="rpp">Optional. The number of tweets to return per page, up to a max of 100.</param>
+        ''' <param name="page">Optional. The page number (starting at 1) to return, up to a max of roughly 1500 results (based on rpp * page). </param>
+        ''' <param name="since_id">Optional. Returns tweets with status ids greater than the given id.</param>
+        ''' <param name="geocode">Optional. Returns tweets by users located within a given radius of the given latitude/longitude, 
+        ''' where the user's location is taken from their Twitter profile. 
+        ''' The parameter value is specified by "latitide,longitude,radius", 
+        ''' where radius units must be specified as either "mi" (miles) or "km" (kilometers). 
+        ''' Note that you cannot use the near operator via the API to geocode arbitrary locations; 
+        ''' however you can use this geocode parameter to search near geocodes directly.
+        ''' Example: <example>http://search.twitter.com/search.atom?geocode=40.757929%2C-73.985506%2C25km</example> </param>
+        ''' <param name="show_user"> Optional. When true, prepends user tag to the beginning of the tweet. This is useful for readers that do not display Atom's author field. The default is false.
+        ''' </param>
+        ''' <returns></returns>
+        ''' <remarks></remarks>
+        Public Function Search(ByVal q As String, ByVal lang As String, ByVal rpp As Int32, _
+                               ByVal page As Int32, ByVal since_id As String, ByVal geocode As String, ByVal show_user As Boolean) As DNE.Twitter.SearchResults
+            Dim query As String = "q=" & HttpUtility.HtmlEncode(q)
+            If lang <> "" Then query += "&lang=" & lang
+            If rpp > 0 Then query += "&rpp=" & rpp.ToString()
+            If page > 1 Then query += "&page=" & page.ToString()
+            If since_id <> "" Then query += "&since_id=" & since_id
+            If geocode <> "" Then query += "&geocode=" & geocode
+            If show_user Then query += "&show_user=true"
+            Dim s As String = HttpRequest("GET", searchurl, query)
+            Return ParsJsonSearchResults(s)
+
+        End Function
+
+        Private Function ParsJsonSearchResults(ByVal s As String) As DNE.Twitter.SearchResults
+            Dim j As New JsonSerializer()
+
+            Dim jr As New JsonReader(New IO.StringReader(s))
+            Dim o As DNE.Twitter.SearchResults = j.Deserialize(jr, GetType(DNE.Twitter.SearchResults))
+            Return o
+
+        End Function
 
 #End Region
 

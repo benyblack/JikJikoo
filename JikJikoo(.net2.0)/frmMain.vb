@@ -13,6 +13,7 @@ Public Class frmMain
     Private IsBinding As Boolean = False
     Private NewUpdate As Int32 = 0
     Private WaitingForCleanRefresh As Boolean = False
+    Private SearchQuery As String = ""
 
     Private Sub TwitterApiHttpError(ByVal sender As Object, ByVal hea As DNE.JikJikoo.HttpExEventArgs)
         Dim host As String = ""
@@ -37,7 +38,7 @@ Public Class frmMain
 
                 If curSttsType = DNE.JikJikoo.StatusListType.FriendsTimeLine Then
                     sts = twa.GetFriendsTimeLine(stlMain.LastId)
-                    NewUpdate = sts.Count
+                    If sts IsNot Nothing Then NewUpdate = sts.Count
 
                 ElseIf curSttsType = DNE.JikJikoo.StatusListType.Mentions Then
                     sts = twa.GetMentions(stlMain.LastId)
@@ -55,6 +56,8 @@ Public Class frmMain
                 ElseIf curSttsType = DNE.JikJikoo.StatusListType.DirectMessages Then
                     sts = Util.DirectMessage2Status(twa.DirectMessages(stlMain.LastId))
 
+                ElseIf curSttsType = DNE.JikJikoo.StatusListType.SearchResults Then
+                    sts = Util.SearchResults2Status(twa.Search(SearchQuery, stlMain.LastId))
 
                 End If
                 stlMain.AddStatuses(sts)
@@ -202,15 +205,16 @@ Public Class frmMain
             Try
                 u = twa.UserShow(jikLogin.txtUid.Text)
                 CurrentUser = u
-                picUser.Image = twa.GetImage(CurrentUser.Profile_image_url)
+                Dim img As Image = twa.GetImage(CurrentUser.Profile_image_url)
+                If img IsNot Nothing Then picUser.Image = img
                 lblUser.Text = CurrentUser.Screen_Name
                 lnkMentions.Text = "@" & CurrentUser.Screen_Name
                 SetLastUpdateText(CurrentUser.Status.Text)
 
             Catch ex As DNE.JikJikoo.NoConnectionException
                 ShowMessage("Error in connection", "Not Connected. Can not receive user information.", True)
-                '("Not Connected")
                 Exit Sub
+
             End Try
 
         End If
@@ -222,7 +226,6 @@ Public Class frmMain
         SetUiEnable(True)
         ReloadConfig()
         SetCurrentUser()
-        ' If CurrentUser Is Nothing Then Exit Sub
 
         Application.DoEvents()
         TimerRefresh_Tick(Me, Nothing)
