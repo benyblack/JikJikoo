@@ -120,11 +120,20 @@
   <data name="btnLogin.Text" xml:space="preserve">
     <value>ورود</value>
   </data>
+  <data name="login" xml:space="preserve">
+    <value>ورود</value>
+  </data>
+  <data name="LoginError" xml:space="preserve">
+    <value>نام کاربری معتبر نیست</value>
+  </data>
   <data name="logout" xml:space="preserve">
     <value>خروج کاربر</value>
   </data>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="txtUid.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
     <value>Right</value>
+  </data>
+  <data name="VeryfingError" xml:space="preserve">
+    <value>مراحل تأیید اعتبار باید تکمیل شود</value>
   </data>
 </root>

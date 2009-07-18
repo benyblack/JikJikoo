@@ -252,4 +252,7 @@
   <data name="logout" xml:space="preserve">
     <value>Logout</value>
   </data>
+  <data name="VeryfingError" xml:space="preserve">
+    <value>You must complete authentication</value>
+  </data>
 </root>
