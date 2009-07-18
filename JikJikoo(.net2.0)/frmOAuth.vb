@@ -57,6 +57,7 @@
 
         End If
         Dim ac As New AppConfig()
+
         ac.SetValue("Token", o.Token)
         ac.SetValue("TokenSecret", o.TokenSecret)
         ac.SetValue("TokenHash", Util.HashSHA1(_tempuser, o.Token, o.TokenSecret))

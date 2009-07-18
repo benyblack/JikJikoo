@@ -117,11 +117,12 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="&gt;&gt;txtUid.Parent" xml:space="preserve">
-    <value>pnl1</value>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="btnCancel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>422, 27</value>
   </data>
-  <data name="&gt;&gt;$this.Name" xml:space="preserve">
-    <value>ctrLogin</value>
+  <data name="&gt;&gt;Label2.Name" xml:space="preserve">
+    <value>Label2</value>
   </data>
   <data name="&gt;&gt;Label2.Type" xml:space="preserve">
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -139,12 +140,8 @@
   <data name="Label2.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <data name="&gt;&gt;chkSave.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="btnCancel.Location" type="System.Drawing.Point, System.Drawing">
-    <value>422, 27</value>
+  <data name="Label1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 6</value>
   </data>
   <data name="&gt;&gt;txtPwd.Parent" xml:space="preserve">
     <value>pnl1</value>
@@ -158,20 +155,24 @@
   <data name="&gt;&gt;txtUid.Name" xml:space="preserve">
     <value>txtUid</value>
   </data>
+  <data name="Label1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>57, 13</value>
+  </data>
   <data name="&gt;&gt;Label1.Type" xml:space="preserve">
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="btnLogin.Location" type="System.Drawing.Point, System.Drawing">
-    <value>445, 2</value>
+    <value>3, 1</value>
   </data>
   <data name="txtPwd.PasswordChar" type="System.Char, mscorlib" xml:space="preserve">
     <value>*</value>
   </data>
-  <data name="$this.Size" type="System.Drawing.Size, System.Drawing">
-    <value>501, 28</value>
-  </data>
   <data name="&gt;&gt;txtUid.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>1</value>
+  </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="pnl1.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Left, Right</value>
   </data>
   <data name="&gt;&gt;chkSave.Name" xml:space="preserve">
     <value>chkSave</value>
@@ -179,11 +180,14 @@
   <data name="Label2.Location" type="System.Drawing.Point, System.Drawing">
     <value>151, 6</value>
   </data>
+  <data name="Label1.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="chkSave.Size" type="System.Drawing.Size, System.Drawing">
     <value>101, 17</value>
   </data>
-  <data name="Label2.TabIndex" type="System.Int32, mscorlib">
-    <value>10</value>
+  <data name="chkSave.Location" type="System.Drawing.Point, System.Drawing">
+    <value>315, 4</value>
   </data>
   <data name="&gt;&gt;pnl1.Parent" xml:space="preserve">
     <value>$this</value>
@@ -192,7 +196,7 @@
     <value>0</value>
   </data>
   <data name="&gt;&gt;Label1.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>4</value>
   </data>
   <data name="btnCancel.TabIndex" type="System.Int32, mscorlib">
     <value>11</value>
@@ -200,11 +204,14 @@
   <data name="txtPwd.Size" type="System.Drawing.Size, System.Drawing">
     <value>100, 20</value>
   </data>
-  <data name="txtUid.Size" type="System.Drawing.Size, System.Drawing">
-    <value>84, 20</value>
+  <data name="Label2.TabIndex" type="System.Int32, mscorlib">
+    <value>10</value>
   </data>
-  <data name="pnl1.TabIndex" type="System.Int32, mscorlib">
-    <value>13</value>
+  <data name="txtUid.Size" type="System.Drawing.Size, System.Drawing">
+    <value>92, 20</value>
+  </data>
+  <data name="txtUid.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Left, Right</value>
   </data>
   <data name="&gt;&gt;btnCancel.Name" xml:space="preserve">
     <value>btnCancel</value>
@@ -218,8 +225,8 @@
   <data name="&gt;&gt;btnLogin.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
-  <data name="&gt;&gt;pnl1.Name" xml:space="preserve">
-    <value>pnl1</value>
+  <data name="&gt;&gt;$this.Type" xml:space="preserve">
+    <value>System.Windows.Forms.UserControl, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="btnLogin.Size" type="System.Drawing.Size, System.Drawing">
     <value>57, 25</value>
@@ -233,51 +240,44 @@
   <data name="&gt;&gt;btnCancel.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
-  <data name="btnCancel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>75, 23</value>
-  </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="btnLogin.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Right</value>
+  <data name="&gt;&gt;pnl1.ZOrder" xml:space="preserve">
+    <value>2</value>
   </data>
   <data name="chkSave.Text" xml:space="preserve">
     <value>Save Login Info</value>
   </data>
   <data name="&gt;&gt;Label2.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>2</value>
   </data>
-  <data name="&gt;&gt;btnLogin.ZOrder" xml:space="preserve">
-    <value>1</value>
+  <data name="&gt;&gt;chkSave.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="txtUid.TabIndex" type="System.Int32, mscorlib">
     <value>7</value>
   </data>
-  <data name="&gt;&gt;pnl1.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="&gt;&gt;$this.Type" xml:space="preserve">
-    <value>System.Windows.Forms.UserControl, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
   <data name="&gt;&gt;Label1.Parent" xml:space="preserve">
     <value>pnl1</value>
   </data>
-  <data name="Label1.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
+  <data name="pnl1.TabIndex" type="System.Int32, mscorlib">
+    <value>13</value>
   </data>
-  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
-    <value>6, 13</value>
+  <data name="&gt;&gt;txtPwd.Name" xml:space="preserve">
+    <value>txtPwd</value>
   </data>
-  <data name="&gt;&gt;Label2.Name" xml:space="preserve">
-    <value>Label2</value>
+  <data name="$this.Size" type="System.Drawing.Size, System.Drawing">
+    <value>223, 28</value>
+  </data>
+  <data name="btnCancel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>75, 23</value>
   </data>
   <data name="Label1.Text" xml:space="preserve">
-    <value>Username</value>
+    <value>UserName</value>
   </data>
   <data name="chkSave.TabIndex" type="System.Int32, mscorlib">
     <value>12</value>
   </data>
-  <data name="&gt;&gt;Label1.Name" xml:space="preserve">
-    <value>Label1</value>
+  <data name="&gt;&gt;btnLogin.ZOrder" xml:space="preserve">
+    <value>1</value>
   </data>
   <data name="&gt;&gt;chkSave.Parent" xml:space="preserve">
     <value>pnl1</value>
@@ -285,17 +285,20 @@
   <data name="Label2.Size" type="System.Drawing.Size, System.Drawing">
     <value>53, 13</value>
   </data>
+  <data name="&gt;&gt;Label1.Name" xml:space="preserve">
+    <value>Label1</value>
+  </data>
   <data name="btnLogin.Text" xml:space="preserve">
     <value>Login</value>
   </data>
   <data name="pnl1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>416, 27</value>
+    <value>154, 27</value>
   </data>
   <data name="txtPwd.Visible" type="System.Boolean, mscorlib">
     <value>False</value>
   </data>
   <data name="pnl1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 1</value>
+    <value>66, 1</value>
   </data>
   <data name="txtPwd.TabIndex" type="System.Int32, mscorlib">
     <value>8</value>
@@ -312,17 +315,17 @@
   <data name="chkSave.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <data name="chkSave.Location" type="System.Drawing.Point, System.Drawing">
-    <value>315, 4</value>
+  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
+    <value>6, 13</value>
   </data>
   <data name="&gt;&gt;txtPwd.ZOrder" xml:space="preserve">
-    <value>4</value>
+    <value>3</value>
   </data>
-  <data name="Label1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 6</value>
+  <data name="&gt;&gt;pnl1.Name" xml:space="preserve">
+    <value>pnl1</value>
   </data>
-  <data name="Label1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>55, 13</value>
+  <data name="&gt;&gt;$this.Name" xml:space="preserve">
+    <value>ctrLogin</value>
   </data>
   <data name="txtUid.Location" type="System.Drawing.Point, System.Drawing">
     <value>59, 2</value>
@@ -339,22 +342,13 @@
   <data name="btnCancel.Visible" type="System.Boolean, mscorlib">
     <value>False</value>
   </data>
-  <data name="&gt;&gt;txtPwd.Name" xml:space="preserve">
-    <value>txtPwd</value>
+  <data name="&gt;&gt;txtUid.Parent" xml:space="preserve">
+    <value>pnl1</value>
   </data>
-  <data name="$this.Localizable" type="System.Boolean, mscorlib">
+  <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
-  </data>
-  <data name="login" xml:space="preserve">
-    <value>Login</value>
-  </data>
-  <data name="LoginError" xml:space="preserve">
-    <value>Username not found</value>
-  </data>
-  <data name="logout" xml:space="preserve">
-    <value>Logout</value>
-  </data>
-  <data name="VeryfingError" xml:space="preserve">
-    <value>You must finish oAuth wizard</value>
-  </data>
+  </metadata>
+  <metadata name="$this.Language" type="System.Globalization.CultureInfo, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>French (France)</value>
+  </metadata>
 </root>

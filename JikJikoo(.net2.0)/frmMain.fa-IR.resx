@@ -2051,11 +2051,14 @@
         AADAHwAAAA8AAIAHAACABwAAgAcAAIADAACAAQAAgAEAAMAMAADgHAAA+HwAAP/+AAA=
 </value>
   </data>
+  <data name="$this.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>Inherit</value>
+  </data>
   <data name="NewUpdate" xml:space="preserve">
-    <value>{0} وضعیت جدید</value>
+    <value>وضعیت جدید {0}</value>
   </data>
   <data name="AddStatusEnd" xml:space="preserve">
-    <value>وضعیت ها اضافه شد</value>
+    <value>اضافه کردن وضعیت ها انجام شد</value>
   </data>
   <data name="AddStatusStart" xml:space="preserve">
     <value>اضافه کردن وضعیت ها ...</value>

@@ -150,7 +150,6 @@ Public Class frmMain
         jikLogin.LoadLogin()
         AddHandler twa.HttpError, AddressOf TwitterApiHttpError
 
-
     End Sub
 
     Private Sub jikUpdate_UpdateCompleted(ByVal sender As Object, ByVal e As System.EventArgs) Handles jikUpdate.UpdateCompleted
@@ -187,11 +186,6 @@ Public Class frmMain
 
     End Sub
 
-    Private Sub frmMain_Resize(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Resize
-        jikLogin.SetSize()
-
-    End Sub
-
 #End Region
 
 #Region " Login Events "
@@ -206,7 +200,7 @@ Public Class frmMain
                 CurrentUser = u
                 Dim img As Image = twa.GetImage(CurrentUser.Profile_image_url)
                 If img IsNot Nothing Then picUser.Image = img
-                lblUser.Text = CurrentUser.Screen_Name
+                'lblUser.Text = CurrentUser.Screen_Name
                 lnkMentions.Text = "@" & CurrentUser.Screen_Name
                 SetLastUpdateText(CurrentUser.Status.Text)
 
@@ -233,12 +227,12 @@ Public Class frmMain
 
     End Sub
 
-    Private Sub jikLogin_Logout(ByVal sender As Object, ByVal e As System.EventArgs) Handles jikLogin.Logout
+    Private Sub jikLogin_Logout(ByVal sender As Object, ByVal e As System.EventArgs)
         TimerRefresh.Enabled = False
         SetUiEnable(False)
         stlMain.Clear()
         picUser.Image = Nothing
-        lblUser.Text = ""
+        'lblUser.Text = ""
 
     End Sub
 

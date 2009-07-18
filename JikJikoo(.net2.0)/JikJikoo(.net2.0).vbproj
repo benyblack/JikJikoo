@@ -93,6 +93,12 @@
     <Compile Include="Controls\ctrLogin.vb">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="Controls\ctrLoginOAuth.Designer.vb">
+      <DependentUpon>ctrLoginOAuth.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ctrLoginOAuth.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="Controls\ctrlUpdateStatus.Designer.vb">
       <DependentUpon>ctrlUpdateStatus.vb</DependentUpon>
     </Compile>
@@ -209,6 +215,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\ctrLogin.fa-IR.resx">
       <DependentUpon>ctrLogin.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\ctrLoginOAuth.fa-IR.resx">
+      <DependentUpon>ctrLoginOAuth.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\ctrLoginOAuth.resx">
+      <DependentUpon>ctrLoginOAuth.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\ctrlUpdateStatus.fa-IR.resx">
       <DependentUpon>ctrlUpdateStatus.vb</DependentUpon>

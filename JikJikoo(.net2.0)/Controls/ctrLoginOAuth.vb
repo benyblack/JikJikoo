@@ -1,7 +1,4 @@
-﻿Imports System.Threading
-Imports System.Configuration.ConfigurationManager
-
-Public Class ctrLogin
+﻿Public Class ctrLoginOAuth
 
     Public Event Login As EventHandler
     Public Event Logout As EventHandler
@@ -56,37 +53,23 @@ Public Class ctrLogin
             End If
 
             username = txtUid.Text.Trim()
-            password = txtPwd.Text
-            txtPwd.Enabled = False
             txtUid.ReadOnly = True
             'txtUid.Enabled = False
             Dim ac As New AppConfig()
             ac.ConfigType = 1
-            If chkSave.Checked Then
-                ac.SetValue("user", username)
-                ac.SetValue("password", password)
+            ac.SetValue("user", username)
+            ac.SetValue("password", "")
 
-            Else
-                ac.SetValue("user", "")
-                ac.SetValue("password", "")
-
-            End If
             btnLogin.Text = rm.GetString("logout")
-            'pnl1.Visible = False
-            'Me.Left = Me.Right - 80
-            'Me.Width = 80
             _loggedin = True
             RaiseEvent Login(Nothing, Nothing)
 
         Else
-            'txtUid.Enabled = True
+
             txtUid.ReadOnly = False
             username = ""
             password = ""
             btnLogin.Text = rm.GetString("login")
-            'pnl1.Visible = True
-            'Me.Left = orgLeft
-            'Me.Width = orgWidth
             Dim jc As New JikConfigManager()
             jc.ClearAuthData()
 
@@ -107,7 +90,6 @@ Public Class ctrLogin
         Dim ace As New AppConfig()
         If ace.GetValue("user") <> "" Then
             txtUid.Text = ace.GetValue("user")
-            txtPwd.Text = ace.GetValue("password")
             Dim jc As New JikConfigManager()
             Dim ouhash As String = Util.HashSHA1(txtUid.Text.ToLower(), jc.Token, jc.TokenSecret)
             If ouhash = jc.TokenHash Then
@@ -118,13 +100,10 @@ Public Class ctrLogin
                 'Me.BringToFront()
                 RaiseEvent Login(Nothing, Nothing)
             End If
-            chkSave.Checked = True
 
         Else
             txtUid.Text = ""
-            txtPwd.Text = ""
-            chkSave.Checked = False
-
+            
         End If
 
     End Sub
@@ -133,7 +112,7 @@ Public Class ctrLogin
         'get oAuth info from user
         Dim f As New frmOAuth()
         f.TempUser = txtUid.Text
-        f.Temppass = txtPwd.Text
+        f.Temppass = ""
         If f.ShowDialog = DialogResult.Cancel Then
             MsgBox(rm.GetString("VeryfingError"), MsgBoxStyle.Critical)
             Return False
@@ -143,6 +122,4 @@ Public Class ctrLogin
 
         End If
     End Function
-
 End Class
-

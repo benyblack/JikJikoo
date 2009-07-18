@@ -106,10 +106,10 @@ Partial Class ctrLogin
         resources.ApplyResources(Me.pnl1, "pnl1")
         Me.pnl1.BackgroundImage = Nothing
         Me.pnl1.Controls.Add(Me.chkSave)
-        Me.pnl1.Controls.Add(Me.Label1)
         Me.pnl1.Controls.Add(Me.txtUid)
         Me.pnl1.Controls.Add(Me.Label2)
         Me.pnl1.Controls.Add(Me.txtPwd)
+        Me.pnl1.Controls.Add(Me.Label1)
         Me.pnl1.Font = Nothing
         Me.pnl1.Name = "pnl1"
         '
