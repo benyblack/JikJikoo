@@ -14,13 +14,6 @@ Public Class frmMain
     Private NewUpdate As Int32 = 0
     Private WaitingForCleanRefresh As Boolean = False
 
-    Private Sub TwitterApiHttpError(ByVal sender As Object, ByVal hea As DNE.JikJikoo.HttpExEventArgs)
-        Dim host As String = ""
-        If hea.Url <> "" Then host = New Uri(hea.Url).Host
-        ShowMessage("Error in connection", hea.Message & vbCrLf & host, True)
-
-    End Sub
-
     Private Sub Bind()
         IsBinding = True
         Try
@@ -100,6 +93,15 @@ Public Class frmMain
 
     End Sub
 
+#Region " UI "
+
+    Private Sub TwitterApiHttpError(ByVal sender As Object, ByVal hea As DNE.JikJikoo.HttpExEventArgs)
+        Dim host As String = ""
+        If hea.Url <> "" Then host = New Uri(hea.Url).Host
+        ShowMessage("Error in connection", hea.Message & vbCrLf & host, True)
+
+    End Sub
+
     Private Sub SetUiEnable(ByVal b As Boolean)
         jikUpdate.Enabled = b
         jikUpdate.Visible = b
@@ -108,12 +110,12 @@ Public Class frmMain
 
     End Sub
 
-   
-
     Private Sub ShowMessage(ByVal title As String, ByVal msg As String, ByVal err As Boolean)
         NotifyIcon1.ShowBalloonTip(30, title, msg, IIf(err, ToolTipIcon.Error, ToolTipIcon.Info))
 
     End Sub
+
+#End Region
 
 #Region " Form Events "
 
@@ -146,10 +148,6 @@ Public Class frmMain
         Me.Text = "JikJikoo - Update Status Completed!"
         Timer1.Start()
         TimerRefresh_Tick(jikUpdate, Nothing)
-
-    End Sub
-
-    Private Sub CtrlUpdateStatus1_UpdateStarted(ByVal sender As Object, ByVal e As System.EventArgs) Handles jikUpdate.UpdateStarted
 
     End Sub
 
@@ -351,69 +349,66 @@ Public Class frmMain
 
 #Region " LinkButtons "
 
-    Private Sub lnkFriendsTimeLine_LinkClicked(ByVal sender As System.Object, ByVal e As System.Windows.Forms.LinkLabelLinkClickedEventArgs) Handles lnkFriendsTimeLine.LinkClicked
-        If curSttsType <> DNE.JikJikoo.StatusListType.FriendsTimeLine Then
-            curSttsParams = New DictionaryEntry("", "")
+    Friend Sub SetBindingInfo(ByVal sltype As DNE.JikJikoo.StatusListType, Optional ByVal CheckCurSLType As Boolean = True, Optional ByVal key As String = "", Optional ByVal value As String = "")
+        If CheckCurSLType Then
+            If curSttsType <> sltype Then
+                curSttsParams = New DictionaryEntry(key, value)
+                WaitingForCleanRefresh = True
+                curSttsType = sltype
+
+            End If
+        Else
+            curSttsParams = New DictionaryEntry(key, value)
             WaitingForCleanRefresh = True
+            curSttsType = sltype
 
         End If
-        curSttsType = DNE.JikJikoo.StatusListType.FriendsTimeLine
+
         TimerRefresh_Tick(Me, Nothing)
+
+    End Sub
+
+    Private Sub lnkFriendsTimeLine_LinkClicked(ByVal sender As System.Object, ByVal e As System.Windows.Forms.LinkLabelLinkClickedEventArgs) Handles lnkFriendsTimeLine.LinkClicked
+        SetBindingInfo(DNE.JikJikoo.StatusListType.FriendsTimeLine)
 
     End Sub
 
     Private Sub lnkMentions_LinkClicked(ByVal sender As System.Object, ByVal e As System.Windows.Forms.LinkLabelLinkClickedEventArgs) Handles lnkMentions.LinkClicked
-        If curSttsType <> DNE.JikJikoo.StatusListType.Mentions Then
-            curSttsParams = New DictionaryEntry("", "")
-            WaitingForCleanRefresh = True
-
-        End If
-        curSttsType = DNE.JikJikoo.StatusListType.Mentions
-        TimerRefresh_Tick(Me, Nothing)
+        SetBindingInfo(DNE.JikJikoo.StatusListType.Mentions)
 
     End Sub
 
     Private Sub lnkMessages_LinkClicked(ByVal sender As System.Object, ByVal e As System.Windows.Forms.LinkLabelLinkClickedEventArgs) Handles lnkMessages.LinkClicked
-        If curSttsType <> DNE.JikJikoo.StatusListType.DirectMessages Then
-            curSttsParams = New DictionaryEntry("", "")
-            WaitingForCleanRefresh = True
-
-        End If
-        curSttsType = DNE.JikJikoo.StatusListType.DirectMessages
-        TimerRefresh_Tick(Me, Nothing)
+        SetBindingInfo(DNE.JikJikoo.StatusListType.DirectMessages)
 
     End Sub
 
     Private Sub lnkFavorites_LinkClicked(ByVal sender As System.Object, ByVal e As System.Windows.Forms.LinkLabelLinkClickedEventArgs) Handles lnkFavorites.LinkClicked
-        If curSttsType <> DNE.JikJikoo.StatusListType.Favorites Then
-            curSttsParams = New DictionaryEntry("", "")
-            WaitingForCleanRefresh = True
-
-        End If
-        curSttsType = DNE.JikJikoo.StatusListType.Favorites
-        TimerRefresh_Tick(Me, Nothing)
+        SetBindingInfo(DNE.JikJikoo.StatusListType.Favorites)
 
     End Sub
 
     Private Sub lnkMyUpdates_LinkClicked(ByVal sender As System.Object, ByVal e As System.Windows.Forms.LinkLabelLinkClickedEventArgs) Handles lnkMyUpdates.LinkClicked
-        If curSttsType <> DNE.JikJikoo.StatusListType.MyUpdates Then
-            curSttsParams = New DictionaryEntry("", "")
-            WaitingForCleanRefresh = True
-
-        End If
-        curSttsType = DNE.JikJikoo.StatusListType.MyUpdates
-        TimerRefresh_Tick(Me, Nothing)
+        SetBindingInfo(DNE.JikJikoo.StatusListType.MyUpdates)
 
     End Sub
 
     Private Sub lnkSearch_LinkClicked(ByVal sender As System.Object, ByVal e As System.Windows.Forms.LinkLabelLinkClickedEventArgs) Handles lnkSearch.LinkClicked
-        curSttsParams.Value = txtSearch.Text.Trim().Replace("#", "%23")
-        curSttsParams.Key = ""
-        WaitingForCleanRefresh = True
+        SetBindingInfo(DNE.JikJikoo.StatusListType.SearchResults, False, "", txtSearch.Text.Trim().Replace("#", "%23"))
 
-        curSttsType = DNE.JikJikoo.StatusListType.SearchResults
-        TimerRefresh_Tick(Me, Nothing)
+    End Sub
 
+    Private Sub lnkSearchLinks_LinkClicked(ByVal sender As System.Object, ByVal e As System.Windows.Forms.LinkLabelLinkClickedEventArgs) Handles lnkSearchLinks.LinkClicked
+        pnlSearch.Location = pnlMenu.Location
+        pnlSearch.Visible = True
+        pnlMenu.Visible = False
+
+    End Sub
+
+    Private Sub lnkBrowsLinks_LinkClicked(ByVal sender As System.Object, ByVal e As System.Windows.Forms.LinkLabelLinkClickedEventArgs) Handles lnkBrowsLinks.LinkClicked
+        pnlMenu.Location = pnlSearch.Location
+        pnlSearch.Visible = False
+        pnlMenu.Visible = True
     End Sub
 
 #End Region
@@ -460,16 +455,4 @@ Public Class frmMain
 
 #End Region
 
-    Private Sub lnkSearchLinks_LinkClicked(ByVal sender As System.Object, ByVal e As System.Windows.Forms.LinkLabelLinkClickedEventArgs) Handles lnkSearchLinks.LinkClicked
-        pnlSearch.Location = pnlMenu.Location
-        pnlSearch.Visible = True
-        pnlMenu.Visible = False
-
-    End Sub
-
-    Private Sub lnkBrowsLinks_LinkClicked(ByVal sender As System.Object, ByVal e As System.Windows.Forms.LinkLabelLinkClickedEventArgs) Handles lnkBrowsLinks.LinkClicked
-        pnlMenu.Location = pnlSearch.Location
-        pnlSearch.Visible = False
-        pnlMenu.Visible = True
-    End Sub
 End Class
