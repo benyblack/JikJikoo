@@ -6,21 +6,31 @@
     Private _loggedin As Boolean = False
     Private rm As New System.ComponentModel.ComponentResourceManager(Me.GetType)
 
+    Friend Sub SetLastUpdateText(ByVal s As String)
+        If Util.ContainRtlChars(s) Then
+            txtStatus.RightToLeft = Windows.Forms.RightToLeft.Yes
+
+        Else
+            txtStatus.RightToLeft = Windows.Forms.RightToLeft.No
+
+        End If
+        txtStatus.Text = s
+
+    End Sub
+
     Private Sub btnLogin_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnLogin.Click
         'First Check Login
         If Not _loggedin Then
-            'orgWidth = Me.Width
-            'orgLeft = Me.Left
             Dim jc As New JikConfigManager()
             Dim tw As New DNE.JikJikoo.TwitterApi()
             tw.ConfigProxy(jc.proxytype, jc.proxyport, jc.proxyserver, jc.proxyuser, jc.proxypass)
             Dim u As DNE.Twitter.User = Nothing
             Try
-                u = tw.UserShow(txtUid.Text) 'tw.VerifyCredentials()
+                u = tw.UserShow(txtUid.Text)
 
             Catch ex As Exception
-
                 Exit Sub
+
             End Try
             If u Is Nothing Then
                 MsgBox(rm.GetString("LoginError"), MsgBoxStyle.Critical)
@@ -54,7 +64,10 @@
 
             username = txtUid.Text.Trim()
             txtUid.ReadOnly = True
-            'txtUid.Enabled = False
+            txtUid.BackColor = Color.Black
+            txtUid.ForeColor = Color.White
+            txtUid.BorderStyle = Windows.Forms.BorderStyle.None
+
             Dim ac As New AppConfig()
             ac.ConfigType = 1
             ac.SetValue("user", username)
@@ -67,6 +80,8 @@
         Else
 
             txtUid.ReadOnly = False
+            txtUid.BackColor = Color.White
+            txtUid.ForeColor = Color.Black
             username = ""
             password = ""
             btnLogin.Text = rm.GetString("login")
@@ -78,6 +93,7 @@
             twa.Token = ""
 
             _loggedin = False
+            picUser.Image = Nothing
             RaiseEvent Logout(Nothing, Nothing)
 
         End If
@@ -94,16 +110,19 @@
             Dim ouhash As String = Util.HashSHA1(txtUid.Text.ToLower(), jc.Token, jc.TokenSecret)
             If ouhash = jc.TokenHash Then
                 btnLogin.Text = rm.GetString("logout") '"LogOut"
-                '   pnl1.Visible = False
-                'Me.Left = Me.Right - 80
-                'Me.Width = 80
-                'Me.BringToFront()
+                txtUid.ReadOnly = True
+                txtUid.BackColor = Color.Black
+                txtUid.ForeColor = Color.White
+                txtUid.BorderStyle = Windows.Forms.BorderStyle.None
                 RaiseEvent Login(Nothing, Nothing)
             End If
 
         Else
             txtUid.Text = ""
-            
+            txtUid.BackColor = Color.White
+            txtUid.ForeColor = Color.Black
+            txtUid.BorderStyle = Windows.Forms.BorderStyle.Fixed3D
+
         End If
 
     End Sub
@@ -122,4 +141,5 @@
 
         End If
     End Function
+
 End Class

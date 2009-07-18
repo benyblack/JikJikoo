@@ -1114,11 +1114,14 @@
         AADAHwAAAA8AAIAHAACABwAAgAcAAIADAACAAQAAgAEAAMAMAADgHAAA+HwAAP/+AAA=
 </value>
   </data>
+  <data name="lnkSearchLinks.Location" type="System.Drawing.Point, System.Drawing">
+    <value>360, 5</value>
+  </data>
   <data name="pnlMenu.Location" type="System.Drawing.Point, System.Drawing">
     <value>5, 83</value>
   </data>
   <data name="pnlMenu.Size" type="System.Drawing.Size, System.Drawing">
-    <value>386, 24</value>
+    <value>494, 24</value>
   </data>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="stlMain.RightToLeft" type="System.Windows.Forms.RightToLeft, System.Windows.Forms">
@@ -2052,10 +2055,7 @@
 </value>
   </data>
   <data name="$this.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>Inherit</value>
-  </data>
-  <data name="NewUpdate" xml:space="preserve">
-    <value>وضعیت جدید {0}</value>
+    <value>NoControl</value>
   </data>
   <data name="AddStatusEnd" xml:space="preserve">
     <value>اضافه کردن وضعیت ها انجام شد</value>
@@ -2074,5 +2074,8 @@
   </data>
   <data name="DownloadDataStart" xml:space="preserve">
     <value>دریافت داده ها ...</value>
+  </data>
+  <data name="NewUpdate" xml:space="preserve">
+    <value>وضعیت جدید {0}</value>
   </data>
 </root>
