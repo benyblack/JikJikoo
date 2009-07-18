@@ -2078,4 +2078,7 @@
   <data name="NewUpdate" xml:space="preserve">
     <value>وضعیت جدید {0}</value>
   </data>
+  <data name="lnkSearch.Text" xml:space="preserve">
+    <value>جستجو</value>
+  </data>
 </root>
