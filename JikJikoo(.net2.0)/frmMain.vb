@@ -13,7 +13,6 @@ Public Class frmMain
     Private IsBinding As Boolean = False
     Private NewUpdate As Int32 = 0
     Private WaitingForCleanRefresh As Boolean = False
-    Private SearchQuery As String = ""
 
     Private Sub TwitterApiHttpError(ByVal sender As Object, ByVal hea As DNE.JikJikoo.HttpExEventArgs)
         Dim host As String = ""
@@ -57,7 +56,7 @@ Public Class frmMain
                     sts = Util.DirectMessage2Status(twa.DirectMessages(stlMain.LastId))
 
                 ElseIf curSttsType = DNE.JikJikoo.StatusListType.SearchResults Then
-                    sts = Util.SearchResults2Status(twa.Search(SearchQuery, stlMain.LastId))
+                    sts = Util.SearchResults2Status(twa.Search(curSttsParams.Value, stlMain.LastId))
 
                 End If
                 stlMain.AddStatuses(sts)
@@ -282,6 +281,14 @@ Public Class frmMain
             WaitingForCleanRefresh = True
 
             curSttsType = DNE.JikJikoo.StatusListType.UserUpdates
+            TimerRefresh_Tick(Me, Nothing)
+
+        ElseIf t.TwitEvent = TwitEvents.SearchTags Then
+            curSttsParams.Value = "%23" & t.Text
+            curSttsParams.Key = ""
+            WaitingForCleanRefresh = True
+
+            curSttsType = DNE.JikJikoo.StatusListType.SearchResults
             TimerRefresh_Tick(Me, Nothing)
 
         End If

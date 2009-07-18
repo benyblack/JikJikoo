@@ -143,6 +143,7 @@ Namespace DNE.Twitter
         Private _completed_in As String = ""
         Private _page As String = ""
         Private _query As String = ""
+        Private _total As String = ""
 
         <JsonProperty("since_id")> _
         Public Property since_id() As String
@@ -221,6 +222,16 @@ Namespace DNE.Twitter
             End Get
             Set(ByVal Value As String)
                 _query = Value
+            End Set
+        End Property
+
+        <JsonProperty("total")> _
+        Public Property Total() As String
+            Get
+                Return _total
+            End Get
+            Set(ByVal Value As String)
+                _total = Value
             End Set
         End Property
 

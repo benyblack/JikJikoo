@@ -88,7 +88,9 @@ Public Class Util
             st.Id = sr.results(i).id
             st.Created_At = sr.results(i).created_at
             st.Text = sr.results(i).text
+            st.User = New DNE.Twitter.User()
             st.User.Screen_Name = sr.results(i).from_user
+            st.User.Profile_image_url = sr.results(i).profile_image_url
 
             sc.Add(st)
 

@@ -71,7 +71,7 @@ Namespace DNE.JikJikoo
 
         End Sub
 
-        Private Function HttpRequest(ByVal method As String, ByVal url As String, ByVal query As String) As String
+        Private Function HttpRequest(ByVal method As String, ByVal url As String, ByVal query As String, Optional ByVal host As String = "twitter.com") As String
             If AuthenticationType = AuthType.oAuth Then
                 Dim o As New oAuthExample.oAuthTwitter(Me)
                 o.ConsumerKey = "Um0Z859qORQgTkN4ehyqdw"
@@ -89,10 +89,10 @@ Namespace DNE.JikJikoo
             End If
 
             If Me.ProxyType = ProxyTypes.Socks4 Or Me.ProxyType = ProxyTypes.Socks5 Or Me.ProxyType = ProxyTypes.None Then
-                Return HttpRequestSocket(method, url, query)
+                Return HttpRequestSocket(method, url, query, host)
 
             Else
-                Return HttpRequest(method, url, query)
+                Return HttpRequest(method, url, query, host)
 
             End If
             Return ""
@@ -168,11 +168,12 @@ Namespace DNE.JikJikoo
         Private favoritesdestroyurl As String = "/favorites/destroy/id.xml"
 
         'search
-        Private searchurl As String = "http://search.twitter.com/search.json"
-        Private trendsurl As String = "http://search.twitter.com/trends.json"
-        Private trendscurrenturl As String = "http://search.twitter.com/trends/current.json"
-        Private trendsdailyurl As String = "http://search.twitter.com/trends/daily.json"
-        Private trendsweeklyurl As String = "http://search.twitter.com/trends/weekly.json"
+        Private SearchHost As String = "search.twitter.com"
+        Private searchurl As String = "/search.json"
+        Private trendsurl As String = "/trends.json"
+        Private trendscurrenturl As String = "/trends/current.json"
+        Private trendsdailyurl As String = "/trends/daily.json"
+        Private trendsweeklyurl As String = "/trends/weekly.json"
 
 #End Region
 
@@ -645,7 +646,7 @@ Namespace DNE.JikJikoo
             If since_id <> "" Then query += "&since_id=" & since_id
             If geocode <> "" Then query += "&geocode=" & geocode
             If show_user Then query += "&show_user=true"
-            Dim s As String = HttpRequest("GET", searchurl, query)
+            Dim s As String = HttpRequest("GET", searchurl, query, SearchHost)
             Return ParsJsonSearchResults(s)
 
         End Function
@@ -754,6 +755,7 @@ Namespace DNE.JikJikoo
         End Function
 
         Protected Function DownloadFromHttp(ByVal url As String) As Byte()
+            If url.Trim = "" Then Return Nothing
             Dim wc As New WebClient()
             If Me.ProxyType = ProxyTypes.Http Then
                 Dim wp As New WebProxy(Me.ProxyIP, ProxyPort)

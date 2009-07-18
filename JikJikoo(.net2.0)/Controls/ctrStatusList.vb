@@ -185,6 +185,9 @@ Public Class ctrStatusList
         For i As Int32 = 0 To pnlMain.Controls.Count - 1
             Dim c As ctrStatus = pnlMain.Controls(i)
             If Not c.Formated Then
+                'must be first
+                c.FormatNumberSigns()
+
                 c.FormatAtSigns()
                 c.FormatUrls()
                 c.Formated = True

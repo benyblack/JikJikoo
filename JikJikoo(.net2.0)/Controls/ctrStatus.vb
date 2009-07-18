@@ -73,7 +73,33 @@ Public Class ctrStatus
             For i As Int32 = 0 To mc.Count - 1
                 txtStatus.Select(mc(i).Index + 1 + offset, mc(i).Length - 1)
                 txtStatus.InsertLink(mc(i).Value.Substring(1), "user")
-                offset += 1 + 4 '"#view".Lenght
+                offset += 1 + 4 '"#user".Lenght
+
+            Next
+
+        End If
+
+
+    End Sub
+
+    ''' <summary>
+    ''' plz use it befor FormatAtSign and FormatUrl, richtextbox use # for link
+    ''' </summary>
+    ''' <remarks></remarks>
+    Friend Sub FormatNumberSigns()
+        If Me.InvokeRequired Then
+            Me.Invoke(New MethodInvoker(AddressOf FormatNumberSigns))
+        Else
+
+            Dim pat As String = "#[a-z0-9A-Z]*"
+            Dim t As String = txtStatus.Text
+            Dim mc As MatchCollection = Regex.Matches(t, pat)
+            If mc Is Nothing Then Exit Sub
+            Dim offset As Int32 = 0
+            For i As Int32 = 0 To mc.Count - 1
+                txtStatus.Select(mc(i).Index + 1 + offset, mc(i).Length - 1)
+                txtStatus.InsertLink(mc(i).Value.Substring(1), "tag")
+                offset += 1 + 3 '"#tag".Lenght
 
             Next
 
@@ -105,6 +131,7 @@ Public Class ctrStatus
 
 
     Private whatisClickedInTxtStatus As String = ""
+
     Private Sub txtStatus_LinkClicked(ByVal sender As Object, ByVal e As System.Windows.Forms.LinkClickedEventArgs) Handles txtStatus.LinkClicked
         If e.LinkText = "" Then Exit Sub
         Dim txt As String = e.LinkText
@@ -112,7 +139,11 @@ Public Class ctrStatus
         If verb.ToLower = "user" Then
             whatisClickedInTxtStatus = txt.Substring(0, txt.Length - 5)
             RaiseEvent TwitEvent(Me, New TwitEventArgs(Status, whatisClickedInTxtStatus, TwitEvents.UserStatuses))
-            ' mnuUsername.Show(txtStatus, New Point(mousexyOntxtstatus.X - 2, mousexyOntxtstatus.Y - 2))
+
+        ElseIf verb.ToLower = "tag" Then
+            whatisClickedInTxtStatus = txt.Substring(0, txt.Length - 4)
+            RaiseEvent TwitEvent(Me, New TwitEventArgs(Status, whatisClickedInTxtStatus, TwitEvents.SearchTags))
+
 
         ElseIf verb.ToLower = "url" Then
             Process.Start(e.LinkText.Substring(0, e.LinkText.Length - 4)) ' 4= "#url".lenght

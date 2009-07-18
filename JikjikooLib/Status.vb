@@ -40,10 +40,20 @@ Namespace DNE.Twitter
         End Property
 
         Public Const TimeFormat As String = "ddd MMM dd HH:mm:ss zzzz yyyy"
+        Public Const TimeFormatSearch As String = "ddd, dd MMM yyyy HH:mm:ss zzzz"
+        '"Sat, 18 Jul 2009 07:26:18 +0000"
+        '"ddd, dd MMM yyyy HH:mm:ss zzzz"
         Public ReadOnly Property CreatedAt() As DateTime
             Get
                 'This is from TwitterN: Amplify.Twitter.Status
-                Return DateTime.ParseExact(_created_at, TimeFormat, New CultureInfo("en-US"), DateTimeStyles.AllowWhiteSpaces)
+                Try
+                    Return DateTime.ParseExact(_created_at, TimeFormat, New CultureInfo("en-US"), DateTimeStyles.AllowWhiteSpaces)
+
+                Catch ex As Exception
+                    Return DateTime.ParseExact(_created_at, TimeFormatSearch, New CultureInfo("en-US"), DateTimeStyles.AllowWhiteSpaces)
+
+                End Try
+                Return Nothing
             End Get
         End Property
 
