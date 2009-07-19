@@ -443,6 +443,27 @@ Namespace DNE.JikJikoo
 
         End Function
 
+        ''' <summary>
+        ''' statuses/mentions
+        ''' Returns the 20 most recent mentions (status containing @username) for the authenticating user.
+        ''' </summary>
+        ''' <param name="since_id">if have value methid return statuses after this id.leave blank for default</param>
+        ''' <returns></returns>
+        ''' <remarks></remarks>
+        Public Function GetMentions(ByVal since_id As String, ByVal page As Int32) As ObjectModel.Collection(Of DNE.Twitter.Status)
+            Dim query As String = ""
+            If since_id <> "" Then query = "since_id=" & since_id
+            If page > 1 Then
+                If query <> "" Then query += "&"
+                query += "page=" & page.ToString()
+
+            End If
+            Dim s As String = HttpRequest("GET", mentionsurl, query)
+            Return ParsTwitterXML(Of Collection(Of DNE.Twitter.Status))(s, TwitterXmlTypes.Status)
+            'Return ParsStatusXML(s)
+
+        End Function
+
 #End Region
 
 #Region " Status "

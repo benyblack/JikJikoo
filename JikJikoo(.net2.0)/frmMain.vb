@@ -21,7 +21,6 @@ Public Class frmMain
         Set(ByVal value As Int32)
             If value <> _page Then
                 _page = value
-                SetBindingInfo(curSttsType, False, curSttsParams.Key, curSttsParams.Value)
 
             End If
         End Set
@@ -46,7 +45,7 @@ Public Class frmMain
                     If sts IsNot Nothing Then NewUpdate = sts.Count
 
                 ElseIf curSttsType = DNE.JikJikoo.StatusListType.Mentions Then
-                    sts = twa.GetMentions(stlMain.LastId)
+                    sts = twa.GetMentions(stlMain.LastId, Page)
 
                 ElseIf curSttsType = DNE.JikJikoo.StatusListType.Favorites Then
                     sts = twa.Favorites(stlMain.LastId)
@@ -292,11 +291,13 @@ Public Class frmMain
 
     Private Sub stlMain_PagerPrev(ByVal sender As Object, ByVal e As System.EventArgs) Handles stlMain.PagerPrev
         If Page > 1 Then Page -= 1
+        SetBindingInfo(curSttsType, False, curSttsParams.Key, curSttsParams.Value)
 
     End Sub
 
     Private Sub stlMain_PagerNext(ByVal sender As Object, ByVal e As System.EventArgs) Handles stlMain.PagerNext
         Page += 1
+        SetBindingInfo(curSttsType, False, curSttsParams.Key, curSttsParams.Value)
 
     End Sub
 
@@ -394,31 +395,37 @@ Public Class frmMain
     End Sub
 
     Private Sub lnkFriendsTimeLine_LinkClicked(ByVal sender As System.Object, ByVal e As System.Windows.Forms.LinkLabelLinkClickedEventArgs) Handles lnkFriendsTimeLine.LinkClicked
+        stlMain.Page = 1
         SetBindingInfo(DNE.JikJikoo.StatusListType.FriendsTimeLine)
 
     End Sub
 
     Private Sub lnkMentions_LinkClicked(ByVal sender As System.Object, ByVal e As System.Windows.Forms.LinkLabelLinkClickedEventArgs) Handles lnkMentions.LinkClicked
+        stlMain.Page = 1
         SetBindingInfo(DNE.JikJikoo.StatusListType.Mentions)
 
     End Sub
 
     Private Sub lnkMessages_LinkClicked(ByVal sender As System.Object, ByVal e As System.Windows.Forms.LinkLabelLinkClickedEventArgs) Handles lnkMessages.LinkClicked
+        stlMain.Page = 1
         SetBindingInfo(DNE.JikJikoo.StatusListType.DirectMessages)
 
     End Sub
 
     Private Sub lnkFavorites_LinkClicked(ByVal sender As System.Object, ByVal e As System.Windows.Forms.LinkLabelLinkClickedEventArgs) Handles lnkFavorites.LinkClicked
+        stlMain.Page = 1
         SetBindingInfo(DNE.JikJikoo.StatusListType.Favorites)
 
     End Sub
 
     Private Sub lnkMyUpdates_LinkClicked(ByVal sender As System.Object, ByVal e As System.Windows.Forms.LinkLabelLinkClickedEventArgs) Handles lnkMyUpdates.LinkClicked
+        stlMain.Page = 1
         SetBindingInfo(DNE.JikJikoo.StatusListType.MyUpdates)
 
     End Sub
 
     Private Sub lnkSearch_LinkClicked(ByVal sender As System.Object, ByVal e As System.Windows.Forms.LinkLabelLinkClickedEventArgs) Handles lnkSearch.LinkClicked
+        stlMain.Page = 1
         SetBindingInfo(DNE.JikJikoo.StatusListType.SearchResults, False, "", txtSearch.Text.Trim().Replace("#", "%23"))
 
     End Sub
@@ -479,6 +486,5 @@ Public Class frmMain
     End Sub
 
 #End Region
-
 
 End Class
