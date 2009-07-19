@@ -87,12 +87,6 @@
     <Compile Include="Code\AppConfigEditor.vb" />
     <Compile Include="Code\ReplyEventHandler.vb" />
     <Compile Include="Code\Util.vb" />
-    <Compile Include="Controls\ctrLogin.Designer.vb">
-      <DependentUpon>ctrLogin.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\ctrLogin.vb">
-      <SubType>UserControl</SubType>
-    </Compile>
     <Compile Include="Controls\ctrLoginOAuth.Designer.vb">
       <DependentUpon>ctrLoginOAuth.vb</DependentUpon>
     </Compile>
@@ -152,6 +146,11 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="Resources\JikJikoo.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>JikJikoo.resx</DependentUpon>
+    </Compile>
     <Compile Include="SplashScreen1.Designer.vb">
       <DependentUpon>SplashScreen1.vb</DependentUpon>
     </Compile>
@@ -160,9 +159,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Controls\ctrLogin.resx">
-      <DependentUpon>ctrLogin.vb</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Controls\ctrlUpdateStatus.resx">
       <DependentUpon>ctrlUpdateStatus.vb</DependentUpon>
     </EmbeddedResource>
@@ -213,9 +209,6 @@
     <EmbeddedResource Include="AboutBox1.resx">
       <DependentUpon>AboutBox1.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\ctrLogin.fa-IR.resx">
-      <DependentUpon>ctrLogin.vb</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Controls\ctrLoginOAuth.fa-IR.resx">
       <DependentUpon>ctrLoginOAuth.vb</DependentUpon>
     </EmbeddedResource>
@@ -240,7 +233,13 @@
     <EmbeddedResource Include="frmOAuth.resx">
       <DependentUpon>frmOAuth.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources\JikJikoo.fa-IR.resx" />
     <EmbeddedResource Include="Resources\jikjikoo.ico" />
+    <EmbeddedResource Include="Resources\JikJikoo.resx">
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>JikJikoo.Designer.vb</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="SplashScreen1.resx">
       <DependentUpon>SplashScreen1.vb</DependentUpon>
     </EmbeddedResource>

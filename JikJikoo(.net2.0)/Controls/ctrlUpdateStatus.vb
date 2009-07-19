@@ -27,7 +27,7 @@
     Private Sub SetButtonText()
         Dim rm As New System.ComponentModel.ComponentResourceManager(Me.GetType)
         If _in_reply_to_status_id <> "" Then
-            btnUpdate.Text = rm.GetString("ReplyButton")
+            btnUpdate.Text = My.Resources.JikJikoo.ReplyButton  'rm.GetString("ReplyButton")
         Else
             btnUpdate.Text = rm.GetString("btnUpdate.Text")
         End If

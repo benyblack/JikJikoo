@@ -341,7 +341,7 @@ Namespace DNE.JikJikoo
         Public Function GetFriendsTimeLine(ByVal since_id As String, ByVal page As Int32) As ObjectModel.Collection(Of DNE.Twitter.Status)
             Dim query As String = ""
             If since_id <> "" Then query = "since_id=" & since_id
-            If page > 0 Then
+            If page > 1 Then
                 If query <> "" Then query += "&"
                 query += "page=" & page.ToString()
 
@@ -401,7 +401,7 @@ Namespace DNE.JikJikoo
         Public Function GetUserTimeLine(ByVal screenname As String, ByVal since_id As String, ByVal page As Int32) As ObjectModel.Collection(Of DNE.Twitter.Status)
             Dim query As String = ""
             If since_id <> "" Then query = "since_id=" & since_id
-            If page > 0 Then
+            If page > 1 Then
                 If query <> "" Then query += "&"
                 query += "page=" & page.ToString()
 

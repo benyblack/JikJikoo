@@ -4,7 +4,6 @@
     Public Event Logout As EventHandler
 
     Private _loggedin As Boolean = False
-    Private rm As New System.ComponentModel.ComponentResourceManager(Me.GetType)
 
     Friend Sub SetLastUpdateText(ByVal s As String)
         If Util.ContainRtlChars(s) Then
@@ -33,7 +32,7 @@
 
             End Try
             If u Is Nothing Then
-                MsgBox(rm.GetString("LoginError"), MsgBoxStyle.Critical)
+                MsgBox(My.Resources.JikJikoo.LoginError, MsgBoxStyle.Critical)
                 Exit Sub
 
             Else
@@ -73,7 +72,7 @@
             ac.SetValue("user", username)
             ac.SetValue("password", "")
 
-            btnLogin.Text = rm.GetString("logout")
+            btnLogin.Text = My.Resources.JikJikoo.logout
             _loggedin = True
             RaiseEvent Login(Nothing, Nothing)
 
@@ -84,7 +83,7 @@
             txtUid.ForeColor = Color.Black
             username = ""
             password = ""
-            btnLogin.Text = rm.GetString("login")
+            btnLogin.Text = My.Resources.JikJikoo.login
             Dim jc As New JikConfigManager()
             jc.ClearAuthData()
 
@@ -109,7 +108,7 @@
             Dim jc As New JikConfigManager()
             Dim ouhash As String = Util.HashSHA1(txtUid.Text.ToLower(), jc.Token, jc.TokenSecret)
             If ouhash = jc.TokenHash Then
-                btnLogin.Text = rm.GetString("logout") '"LogOut"
+                btnLogin.Text = My.Resources.JikJikoo.logout
                 txtUid.ReadOnly = True
                 txtUid.BackColor = Color.Black
                 txtUid.ForeColor = Color.White
@@ -133,7 +132,7 @@
         f.TempUser = txtUid.Text
         f.Temppass = ""
         If f.ShowDialog = DialogResult.Cancel Then
-            MsgBox(rm.GetString("VeryfingError"), MsgBoxStyle.Critical)
+            MsgBox(My.Resources.JikJikoo.VeryfingError)
             Return False
 
         Else

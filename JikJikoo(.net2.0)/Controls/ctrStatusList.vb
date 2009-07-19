@@ -9,11 +9,29 @@ Public Class ctrStatusList
     Public Event StartAddStatuses As EventHandler
     Public Event EndAddStatuses As EventHandler
     Public Event TwitCommand As TwitEventHandler
+    Public Event PagerNext As EventHandler
+    Public Event PagerPrev As EventHandler
+
 
 
     Private _statuses As Collection(Of Status)
     Private _images As New Dictionary(Of String, Image)
     Private _laststatusId As Int64 = 0
+    Private _page As Int32 = 1
+    Friend Property Page() As Int32
+        Get
+            Return _page
+        End Get
+        Set(ByVal value As Int32)
+            If _page <> value Then
+                _page = value
+                lblPager.Text = _page.ToString()
+
+            End If
+
+        End Set
+    End Property
+
 
     ''' <summary>
     ''' Collection of status objects.
@@ -200,6 +218,19 @@ Public Class ctrStatusList
 
     Private Sub TwitEvent(ByVal sender As Object, ByVal t As TwitEventArgs)
         RaiseEvent TwitCommand(sender, t)
+
+    End Sub
+
+    Private Sub lnkPrev_LinkClicked(ByVal sender As System.Object, ByVal e As System.Windows.Forms.LinkLabelLinkClickedEventArgs) Handles lnkPrev.LinkClicked
+        RaiseEvent PagerPrev(Me, Nothing)
+        If Page > 1 Then Page -= 1
+
+    End Sub
+
+    Private Sub lnkNext_LinkClicked(ByVal sender As System.Object, ByVal e As System.Windows.Forms.LinkLabelLinkClickedEventArgs) Handles lnkNext.LinkClicked
+        RaiseEvent PagerNext(Me, Nothing)
+        Page += 1
+
     End Sub
 
 End Class

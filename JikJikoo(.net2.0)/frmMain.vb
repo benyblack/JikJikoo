@@ -7,12 +7,25 @@ Imports System.Collections.ObjectModel
 Public Class frmMain
 
     Private t As Thread = Nothing
-    Private rm As New System.ComponentModel.ComponentResourceManager(Me.GetType)
     Private curSttsType As DNE.JikJikoo.StatusListType = DNE.JikJikoo.StatusListType.FriendsTimeLine
     Private curSttsParams As New DictionaryEntry("", "")
     Private IsBinding As Boolean = False
     Private NewUpdate As Int32 = 0
     Private WaitingForCleanRefresh As Boolean = False
+    Private _page As Int32 = 1
+
+    Friend Property Page() As Int32
+        Get
+            Return _page
+        End Get
+        Set(ByVal value As Int32)
+            If value <> _page Then
+                _page = value
+                SetBindingInfo(curSttsType, False, curSttsParams.Key, curSttsParams.Value)
+
+            End If
+        End Set
+    End Property
 
     Private Sub Bind()
         IsBinding = True
@@ -29,7 +42,7 @@ Public Class frmMain
                 If curSttsParams.Key.ToString().Length = 0 OrElse curSttsParams.Key.ToString() = "" Then stlMain.Clear()
 
                 If curSttsType = DNE.JikJikoo.StatusListType.FriendsTimeLine Then
-                    sts = twa.GetFriendsTimeLine(stlMain.LastId)
+                    sts = twa.GetFriendsTimeLine(stlMain.LastId, page)
                     If sts IsNot Nothing Then NewUpdate = sts.Count
 
                 ElseIf curSttsType = DNE.JikJikoo.StatusListType.Mentions Then
@@ -40,10 +53,10 @@ Public Class frmMain
 
 
                 ElseIf curSttsType = DNE.JikJikoo.StatusListType.MyUpdates Then
-                    sts = twa.GetUserTimeLine(stlMain.LastId)
+                    sts = twa.GetUserTimeLine(CurrentUser.Screen_Name, stlMain.LastId, page)
 
                 ElseIf curSttsType = DNE.JikJikoo.StatusListType.UserUpdates Then
-                    sts = twa.GetUserTimeLine(curSttsParams.Value, stlMain.LastId)
+                    sts = twa.GetUserTimeLine(curSttsParams.Value, stlMain.LastId, page)
 
                 ElseIf curSttsType = DNE.JikJikoo.StatusListType.DirectMessages Then
                     sts = Util.DirectMessage2Status(twa.DirectMessages(stlMain.LastId))
@@ -72,7 +85,7 @@ Public Class frmMain
         IsBinding = False
 
         If NewUpdate = 0 Then Exit Sub
-        ShowMessage("Alert", String.Format(rm.GetString("NewUpdate", (New JikConfigManager()).CultureInfo), NewUpdate), False)
+        ShowMessage("Alert", String.Format(My.Resources.JikJikoo.NewUpdate, NewUpdate), False)
         NewUpdate = 0
 
 
@@ -240,7 +253,7 @@ Public Class frmMain
         If Me.InvokeRequired Then
             Me.Invoke(New MethodInvoker(AddressOf EndCachingImages))
         Else
-            Me.Text = "JikJikoo - " & rm.GetString("CachingImageEnd")
+            Me.Text = "JikJikoo - " & My.Resources.JikJikoo.CachingImageEnd
         End If
     End Sub
 
@@ -277,11 +290,21 @@ Public Class frmMain
         End If
     End Sub
 
+    Private Sub stlMain_PagerPrev(ByVal sender As Object, ByVal e As System.EventArgs) Handles stlMain.PagerPrev
+        If Page > 1 Then Page -= 1
+
+    End Sub
+
+    Private Sub stlMain_PagerNext(ByVal sender As Object, ByVal e As System.EventArgs) Handles stlMain.PagerNext
+        Page += 1
+
+    End Sub
+
     Private Sub stlMain_StartAddStatuses(ByVal sender As Object, ByVal e As System.EventArgs) Handles stlMain.StartAddStatuses
         If Me.InvokeRequired Then
             Me.Invoke(New MethodInvoker(AddressOf StartAddStatuses))
         Else
-            Me.Text = "JikJikoo - " & rm.GetString("AddStatusStart")
+            Me.Text = "JikJikoo - " & My.Resources.JikJikoo.AddStatusStart
         End If
     End Sub
 
@@ -289,7 +312,7 @@ Public Class frmMain
         If Me.InvokeRequired Then
             Me.Invoke(New MethodInvoker(AddressOf StartCachingImages))
         Else
-            Me.Text = "JikJikoo - " & rm.GetString("CashingImageStart")
+            Me.Text = "JikJikoo - " & My.Resources.JikJikoo.CashingImageStart
         End If
 
     End Sub
@@ -298,7 +321,7 @@ Public Class frmMain
         If Me.InvokeRequired Then
             Me.Invoke(New MethodInvoker(AddressOf DownloadStart))
         Else
-            Me.Text = "JikJikoo - " & rm.GetString("DownloadDataStart")
+            Me.Text = "JikJikoo - " & My.Resources.JikJikoo.DownloadDataStart
 
         End If
 
@@ -308,23 +331,23 @@ Public Class frmMain
         If Me.InvokeRequired Then
             Me.Invoke(New MethodInvoker(AddressOf DownloadEnd))
         Else
-            Me.Text = "JikJikoo - " & rm.GetString("DownloadDataEnd")
+            Me.Text = "JikJikoo - " & My.Resources.JikJikoo.DownloadDataEnd
         End If
     End Sub
 
     Private Sub DownloadStart()
-        Me.Text = "JikJikoo - " & rm.GetString("DownloadDataStart")
+        Me.Text = "JikJikoo - " & My.Resources.JikJikoo.DownloadDataStart
 
     End Sub
 
     Private Sub EndCachingImages()
-        Me.Text = "JikJikoo - " & rm.GetString("CachingImageEnd")
+        Me.Text = "JikJikoo - " & My.Resources.JikJikoo.CachingImageEnd
 
     End Sub
 
 
     Private Sub StartAddStatuses()
-        Me.Text = "JikJikoo - " & rm.GetString("AddStatusStart")
+        Me.Text = "JikJikoo - " & My.Resources.JikJikoo.AddStatusStart
 
     End Sub
 
@@ -334,14 +357,14 @@ Public Class frmMain
     End Sub
 
     Private Sub StartCachingImages()
-        Me.Text = "JikJikoo - " & rm.GetString("CashingImageStart")
+        Me.Text = "JikJikoo - " & My.Resources.JikJikoo.CashingImageStart
         Threading.Thread.Sleep(25)
 
 
     End Sub
 
     Private Sub DownloadEnd()
-        Me.Text = "JikJikoo - " & rm.GetString("DownloadDataEnd")
+        Me.Text = "JikJikoo - " & My.Resources.JikJikoo.DownloadDataEnd
 
     End Sub
 
@@ -355,6 +378,8 @@ Public Class frmMain
                 curSttsParams = New DictionaryEntry(key, value)
                 WaitingForCleanRefresh = True
                 curSttsType = sltype
+                Page = 1
+                stlMain.Page = 1
 
             End If
         Else
@@ -454,5 +479,6 @@ Public Class frmMain
     End Sub
 
 #End Region
+
 
 End Class
