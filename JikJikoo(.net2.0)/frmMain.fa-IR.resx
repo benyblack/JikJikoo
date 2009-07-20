@@ -1123,6 +1123,12 @@
   <data name="pnlMenu.Size" type="System.Drawing.Size, System.Drawing">
     <value>494, 24</value>
   </data>
+  <data name="lnkSearch.Size" type="System.Drawing.Size, System.Drawing">
+    <value>42, 13</value>
+  </data>
+  <data name="lnkSearch.Text" xml:space="preserve">
+    <value>جستجو</value>
+  </data>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="stlMain.RightToLeft" type="System.Windows.Forms.RightToLeft, System.Windows.Forms">
     <value>Yes</value>
@@ -2053,32 +2059,5 @@
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFf3/AAD4vwAA+R8AAPA/
         AADAHwAAAA8AAIAHAACABwAAgAcAAIADAACAAQAAgAEAAMAMAADgHAAA+HwAAP/+AAA=
 </value>
-  </data>
-  <data name="$this.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="AddStatusEnd" xml:space="preserve">
-    <value>اضافه کردن وضعیت ها انجام شد</value>
-  </data>
-  <data name="AddStatusStart" xml:space="preserve">
-    <value>اضافه کردن وضعیت ها ...</value>
-  </data>
-  <data name="CachingImageEnd" xml:space="preserve">
-    <value>ذخیره سازی تصاویر انجام شد</value>
-  </data>
-  <data name="CashingImageStart" xml:space="preserve">
-    <value>ذخیره سازی تصاویر ...</value>
-  </data>
-  <data name="DownloadDataEnd" xml:space="preserve">
-    <value>دریافت داده ها انجام شد</value>
-  </data>
-  <data name="DownloadDataStart" xml:space="preserve">
-    <value>دریافت داده ها ...</value>
-  </data>
-  <data name="NewUpdate" xml:space="preserve">
-    <value>وضعیت جدید {0}</value>
-  </data>
-  <data name="lnkSearch.Text" xml:space="preserve">
-    <value>جستجو</value>
   </data>
 </root>

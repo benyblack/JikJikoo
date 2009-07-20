@@ -59,7 +59,8 @@ Public Class Util
     ''' <param name="dmc"></param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    Public Shared Function DirectMessage2Status(ByVal dmc As Collection(Of DirectMessage)) As Collection(Of Status)
+    Friend Shared Function DirectMessage2Status(ByVal dmc As Collection(Of DirectMessage)) As Collection(Of Status)
+        If dmc Is Nothing Then Return Nothing
         Dim sc As New Collection(Of Status)
         For i As Int32 = 0 To dmc.Count - 1
             Dim st As New Status()
@@ -81,7 +82,8 @@ Public Class Util
     ''' <param name="sr"></param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    Public Shared Function SearchResults2Status(ByVal sr As DNE.Twitter.SearchResults) As Collection(Of Status)
+    Friend Shared Function SearchResults2Status(ByVal sr As SearchResults) As Collection(Of Status)
+        If sr Is Nothing Then Return Nothing
         Dim sc As New Collection(Of Status)
         For i As Int32 = 0 To sr.results.Length - 1
             Dim st As New Status()
@@ -99,6 +101,29 @@ Public Class Util
 
     End Function
 
+    ''' <summary>
+    ''' temporary method. must be removed.
+    ''' </summary>
+    ''' <param name="r"></param>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    Friend Shared Function Relations2Status(ByVal r As Collection(Of Relationship)) As Collection(Of Status)
+        If r Is Nothing Then Return Nothing
+        Dim sc As New Collection(Of Status)
+        For i As Int32 = 0 To r.Count - 1
+            Dim st As New Status()
+            st.Id = ""
+            st.Created_At = ""
+            st.Text = "@" & r(i).target.screen_name
+            Dim u As New User()
+            st.User = u
+            st.User.Screen_Name = r(i).target.screen_name
+
+            sc.Add(st)
+
+        Next
+        Return sc
+    End Function
     Public Shared Function ContainRtlChars(ByVal s As String) As Boolean
       For i As Int32 = 0 To s.Length - 1
             Dim ii As Int32 = AscW(s.ToCharArray()(i))

@@ -128,6 +128,23 @@ Namespace DNE.Twitter
         Inherits StatusBase
         Private _user As User = Nothing
 
+        Public Sub New()
+
+        End Sub
+
+        Public Sub New(ByVal stb As StatusBase)
+            Me.Created_At = stb.Created_At
+            Me.Favorited = stb.Favorited
+            Me.Id = stb.Id
+            Me.In_reply_to_screen_name = stb.In_reply_to_screen_name
+            Me.In_reply_to_status_id = stb.In_reply_to_status_id
+            Me.In_reply_to_user_id = stb.In_reply_to_user_id
+            Me.Source = stb.Source
+            Me.Text = stb.Text
+            Me.Truncated = stb.Truncated
+            
+        End Sub
+
         Public Property [User]() As User
             Get
                 Return _user

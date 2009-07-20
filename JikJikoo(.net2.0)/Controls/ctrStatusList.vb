@@ -199,19 +199,21 @@ Public Class ctrStatusList
         Next
     End Sub
 
-    Friend Sub FormatStatusText()
+    Friend Sub FormatStatusText(ByVal lastFormatedId As Int64)
         For i As Int32 = 0 To pnlMain.Controls.Count - 1
             Dim c As ctrStatus = pnlMain.Controls(i)
-            If Not c.Formated Then
-                'must be first
-                c.FormatNumberSigns()
+            If c.Status.numId > lastFormatedId Then
+                If Not c.Formated Then
+                    'must be first
+                    c.FormatNumberSigns()
 
-                c.FormatAtSigns()
-                c.FormatUrls()
-                c.Formated = True
+                    c.FormatAtSigns()
+                    c.FormatUrls()
+                    c.Formated = True
 
+                End If
             End If
-           
+
 
         Next
     End Sub

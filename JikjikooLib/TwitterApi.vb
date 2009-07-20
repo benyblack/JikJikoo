@@ -96,6 +96,7 @@ Namespace DNE.JikJikoo
 
             End If
             Return ""
+
         End Function
 
 
@@ -131,7 +132,7 @@ Namespace DNE.JikJikoo
 
         'user
         Private showuserurl As String = "/users/show.xml"
-        Private friendsurl As String = "/statuses/friends..xml"
+        Private friendsurl As String = "/statuses/friends.xml"
         Private followersurl As String = "/statuses/followers.xml"
 
 
@@ -531,8 +532,31 @@ Namespace DNE.JikJikoo
         ''' <returns></returns>
         ''' <remarks></remarks>
         Public Function DirectMessages(ByVal since_id As String) As ObjectModel.Collection(Of DNE.Twitter.DirectMessage)
+            'Dim query As String = ""
+            'If since_id <> "" Then query = "since_id=" & since_id
+            'Dim s As String = HttpRequest("GET", directmessageurl, query)
+            'Return ParsTwitterXML(Of Collection(Of DNE.Twitter.DirectMessage))(s, TwitterXmlTypes.DirectMessage)
+            Return DirectMessages(since_id, 1)
+
+        End Function
+
+
+        ''' <summary>
+        ''' direct_messages
+        ''' Returns a list of the 20 most recent direct messages sent to the authenticating user.  The XML and JSON versions include detailed information about the sending and recipient users.
+        ''' </summary>
+        ''' <param name="since_id">Returns only direct messages with an ID greater than (that is, more recent than) the specified ID</param>
+        ''' <param name="page">Optional. Specifies the page of direct messages to retrieve</param>
+        ''' <returns></returns>
+        ''' <remarks></remarks>
+        Public Function DirectMessages(ByVal since_id As String, ByVal page As Int32) As ObjectModel.Collection(Of DNE.Twitter.DirectMessage)
             Dim query As String = ""
             If since_id <> "" Then query = "since_id=" & since_id
+            If page > 1 Then
+                If query <> "" Then query += "&"
+                query += String.Format("page=" & page.ToString())
+
+            End If
             Dim s As String = HttpRequest("GET", directmessageurl, query)
             Return ParsTwitterXML(Of Collection(Of DNE.Twitter.DirectMessage))(s, TwitterXmlTypes.DirectMessage)
             'Return ParsDirectmessageXML(s)
@@ -575,7 +599,7 @@ Namespace DNE.JikJikoo
         ''' users/show
         ''' Returns extended information of a given user, specified by ID or screen name as per the required id parameter.  The author's most recent status will be returned inline.
         ''' </summary>
-        ''' <param name="screenname">Username in Twitter</param>
+        ''' <param name="screenname">Specfies the screen name of the user to return. Helpful for disambiguating when a valid screen name is also a user ID.</param>
         ''' <returns></returns>
         ''' <remarks></remarks>
         Public Function UserShow(ByVal screenname As String) As DNE.Twitter.User
@@ -583,17 +607,44 @@ Namespace DNE.JikJikoo
             query = String.Format("screen_name={0}", screenname)
             Dim s As String = HttpRequest("GET", showuserurl, query)
             Return ParsTwitterXML(Of DNE.Twitter.User)(s, TwitterXmlTypes.User)
-            'Return ParsUserXML(s)
+
+        End Function
+
+        ''' <summary>
+        ''' Returns a user's friends, each with current status inline. 
+        ''' They are ordered by the order in which they were added as friends, 100 at a time. 
+        ''' (Please note that the result set isn't guaranteed to be 100 every time as suspended users will be filtered out.) 
+        ''' Use the page option to access older friends. 
+        ''' With no user specified, request defaults to the authenticated user's friends. 
+        ''' It's also possible to request another user's friends list via the id, screen_name or user_id parameter.
+        ''' </summary>
+        ''' <param name="screen_name">Optional.Specfies the screen name of the user for whom to return the list of friends. Helpful for disambiguating when a valid screen name is also a user ID</param>
+        ''' <param name="page">Optional.Specifies the page of friends to receive.</param>
+        ''' <returns></returns>
+        ''' <remarks></remarks>
+        Public Function Friends(ByVal screen_name As String, ByVal page As Int32) As Collection(Of DNE.Twitter.User)
+            Dim query As String = ""
+            If screen_name <> "" Then query = "screen_name=" & screen_name
+            If page > 1 Then
+                If query <> "" Then query += "&"
+                query += String.Format("page=" & page.ToString())
+
+            End If
+            Dim s As String = HttpRequest("GET", friendsurl, query)
+            Return ParsTwitterXML(Of Collection(Of DNE.Twitter.User))(s, TwitterXmlTypes.Users)
+
         End Function
 
 #End Region
 
 #Region " Favorites "
 
-        Public Function Favorites(ByVal screenname As String) As Collection(Of DNE.Twitter.Status)
-            Dim s As String = HttpRequest("GET", String.Format(favoritesurl, screenname), "")
+        Public Function Favorites(ByVal screenname As String, ByVal page As Int32) As Collection(Of DNE.Twitter.Status)
+            Dim query As String = ""
+            If page > 1 Then query = String.Format("page={0}", page.ToString())
+            Dim s As String = HttpRequest("GET", String.Format(favoritesurl, screenname), query)
             Return ParsTwitterXML(Of Collection(Of DNE.Twitter.Status))(s, TwitterXmlTypes.Status)
-            'Return ParsStatusXML(s)
+
         End Function
 
 #End Region
@@ -1076,6 +1127,9 @@ Namespace DNE.JikJikoo
             If xt = TwitterXmlTypes.User Then
                 o = ParsUserXML(sXml)
 
+            ElseIf xt = TwitterXmlTypes.Users Then
+                o = ParsUsersXML(sXml)
+
             ElseIf xt = TwitterXmlTypes.Status Then
                 o = ParsStatusXML(sXml)
 
@@ -1275,6 +1329,62 @@ Namespace DNE.JikJikoo
 
         End Function
 
+        Private Function ParsUsersXML(ByVal s As String) As Collection(Of DNE.Twitter.User)
+            Dim xdoc As New XmlDocument()
+            xdoc.LoadXml(s)
+            Dim xnl As XmlNodeList = xdoc.SelectNodes("/users/user")
+            If xnl Is Nothing OrElse xnl.Count = 0 Then Return Nothing
+
+            Dim uc As New Collection(Of DNE.Twitter.User)
+            For i As Int32 = 0 To xnl.Count - 1
+                Dim u As New DNE.Twitter.User()
+                u.Created_at = xdoc.SelectNodes("/users/user/created_at")(i).InnerText
+                u.Description = xdoc.SelectNodes("/users/user/description")(i).InnerText
+                u.Favourites_count = xdoc.SelectNodes("/users/user/favourites_count")(i).InnerText
+                u.Followers_count = xdoc.SelectNodes("/users/user/followers_count")(i).InnerText
+                u.Following = xdoc.SelectNodes("/users/user/following")(i).InnerText
+                u.Friends_count = xdoc.SelectNodes("/users/user/friends_count")(i).InnerText
+                u.Id = xdoc.SelectNodes("/users/user/id")(i).InnerText
+                u.Location = xdoc.SelectNodes("/users/user/location")(i).InnerText
+                u.Name = xdoc.SelectNodes("/users/user/name")(i).InnerText
+                u.Notifications = xdoc.SelectNodes("/users/user/notifications")(i).InnerText
+                u.Profile_background_color = xdoc.SelectNodes("/users/user/profile_background_color")(i).InnerText
+                u.Profile_background_image_url = xdoc.SelectNodes("/users/user/profile_background_image_url")(i).InnerText
+                u.Profile_background_tile = xdoc.SelectNodes("/users/user/profile_background_tile")(i).InnerText
+                u.Profile_image_url = xdoc.SelectNodes("/users/user/profile_image_url")(i).InnerText
+                u.Profile_link_color = xdoc.SelectNodes("/users/user/profile_link_color")(i).InnerText
+                u.Profile_sidebar_border_color = xdoc.SelectNodes("/users/user/profile_sidebar_border_color")(i).InnerText
+                u.Profile_sidebar_fill_color = xdoc.SelectNodes("/users/user/profile_sidebar_fill_color")(i).InnerText
+                u.Profile_text_color = xdoc.SelectNodes("/users/user/profile_text_color")(i).InnerText
+                u.Protected = xdoc.SelectNodes("/users/user/protected")(i).InnerText
+                u.Screen_Name = xdoc.SelectNodes("/users/user/screen_name")(i).InnerText
+                u.Statuses_count = xdoc.SelectNodes("/users/user/statuses_count")(i).InnerText
+                u.Time_zone = xdoc.SelectNodes("/users/user/time_zone")(i).InnerText
+                u.Url = xdoc.SelectNodes("/users/user/url")(i).InnerText
+                u.Utc_offset = xdoc.SelectNodes("/users/user/utc_offset")(i).InnerText
+                u.Verified = xdoc.SelectNodes("/users/user/verified")(i).InnerText
+
+                Dim st As New DNE.Twitter.StatusBase()
+                If xdoc.SelectNodes("/users/user/status/favorited")(i) IsNot Nothing Then
+                    st.Favorited = xdoc.SelectNodes("/users/user/status/favorited")(i).InnerText
+                    st.Created_At = xdoc.SelectNodes("/users/user/status/created_at")(i).InnerText
+                    st.Id = xdoc.SelectNodes("/users/user/status/id")(i).InnerText
+                    st.In_reply_to_screen_name = xdoc.SelectNodes("/users/user/status/in_reply_to_screen_name")(i).InnerText
+                    st.In_reply_to_status_id = xdoc.SelectNodes("/users/user/status/in_reply_to_status_id")(i).InnerText
+                    st.In_reply_to_user_id = xdoc.SelectNodes("/users/user/status/in_reply_to_user_id")(i).InnerText
+                    st.Source = xdoc.SelectNodes("/users/user/status/source")(i).InnerText
+                    st.Text = xdoc.SelectNodes("/users/user/status/text")(i).InnerText
+                    st.Truncated = xdoc.SelectNodes("/users/user/status/truncated")(i).InnerText
+                    u.Status = st
+
+                End If
+                uc.Add(u)
+
+            Next
+            Return uc
+
+        End Function
+
         Public Function GetImage(ByVal url As String) As Drawing.Image
             'If Me.ProxyType = ProxyTypes.Http Then
             Dim b() As Byte = DownloadFromHttp(url)
@@ -1313,22 +1423,7 @@ Namespace DNE.JikJikoo
 
 #End Region
 
-
     End Class
-
-    Public Enum ProxyType As Int32
-        None = 0
-        HTTP = 1
-        SOCKS4 = 2
-        SOCKS5 = 3
-
-    End Enum
-
-    Public Enum AuthType
-        Basic = 0
-        oAuth = 1
-
-    End Enum
 
 End Namespace
 

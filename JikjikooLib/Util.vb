@@ -29,31 +29,5 @@ Namespace DNE.JikJikoo
 
     End Class
 
-    Public Enum ShortenServers
-        bit_ly
-        is_gd
-        tinyurl_com
-
-
-    End Enum
-
-    Public Enum StatusListType
-        FriendsTimeLine
-        UserUpdates
-        DirectMessages
-        Favorites
-        Mentions
-        MyUpdates
-        SearchResults
-
-    End Enum
-
-    Public Enum TwitterXmlTypes
-        User = 0
-        Status = 1
-        DirectMessage = 2
-
-
-    End Enum
 
 End Namespace

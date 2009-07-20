@@ -42,80 +42,124 @@ Partial Class ctrStatus
         '
         'picUser
         '
+        Me.picUser.AccessibleDescription = Nothing
+        Me.picUser.AccessibleName = Nothing
         resources.ApplyResources(Me.picUser, "picUser")
+        Me.picUser.BackgroundImage = Nothing
+        Me.picUser.Font = Nothing
+        Me.picUser.ImageLocation = Nothing
         Me.picUser.Name = "picUser"
         Me.picUser.TabStop = False
         '
         'lblUserName
         '
+        Me.lblUserName.AccessibleDescription = Nothing
+        Me.lblUserName.AccessibleName = Nothing
         resources.ApplyResources(Me.lblUserName, "lblUserName")
         Me.lblUserName.Cursor = System.Windows.Forms.Cursors.Hand
         Me.lblUserName.Name = "lblUserName"
         '
         'lblTime
         '
+        Me.lblTime.AccessibleDescription = Nothing
+        Me.lblTime.AccessibleName = Nothing
         resources.ApplyResources(Me.lblTime, "lblTime")
         Me.lblTime.Name = "lblTime"
         '
         'lnkSource
         '
+        Me.lnkSource.AccessibleDescription = Nothing
+        Me.lnkSource.AccessibleName = Nothing
         resources.ApplyResources(Me.lnkSource, "lnkSource")
+        Me.lnkSource.Font = Nothing
         Me.lnkSource.LinkColor = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(255, Byte), Integer))
         Me.lnkSource.Name = "lnkSource"
         Me.lnkSource.TabStop = True
         '
         'txtStatus
         '
+        Me.txtStatus.AccessibleDescription = Nothing
+        Me.txtStatus.AccessibleName = Nothing
+        resources.ApplyResources(Me.txtStatus, "txtStatus")
         Me.txtStatus.BackColor = System.Drawing.Color.Black
+        Me.txtStatus.BackgroundImage = Nothing
         Me.txtStatus.BorderStyle = System.Windows.Forms.BorderStyle.None
         Me.txtStatus.DetectUrls = True
+        Me.txtStatus.Font = Nothing
         Me.txtStatus.ForeColor = System.Drawing.Color.White
-        resources.ApplyResources(Me.txtStatus, "txtStatus")
         Me.txtStatus.Name = "txtStatus"
         Me.txtStatus.ReadOnly = True
         '
         'FlowLayoutPanel1
         '
+        Me.FlowLayoutPanel1.AccessibleDescription = Nothing
+        Me.FlowLayoutPanel1.AccessibleName = Nothing
+        resources.ApplyResources(Me.FlowLayoutPanel1, "FlowLayoutPanel1")
+        Me.FlowLayoutPanel1.BackgroundImage = Nothing
         Me.FlowLayoutPanel1.Controls.Add(Me.lblUserName)
         Me.FlowLayoutPanel1.Controls.Add(Me.lnkSource)
-        resources.ApplyResources(Me.FlowLayoutPanel1, "FlowLayoutPanel1")
+        Me.FlowLayoutPanel1.Font = Nothing
         Me.FlowLayoutPanel1.Name = "FlowLayoutPanel1"
         '
         'mnuUsername
         '
+        Me.mnuUsername.AccessibleDescription = Nothing
+        Me.mnuUsername.AccessibleName = Nothing
+        resources.ApplyResources(Me.mnuUsername, "mnuUsername")
+        Me.mnuUsername.BackgroundImage = Nothing
+        Me.mnuUsername.Font = Nothing
         Me.mnuUsername.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.UseToolStripMenuItem, Me.ReplyToolStripMenuItem, Me.RTToolStripMenuItem, Me.MentionsToolStripMenuItem})
         Me.mnuUsername.Name = "ContextMenuStrip1"
-        resources.ApplyResources(Me.mnuUsername, "mnuUsername")
         '
         'UseToolStripMenuItem
         '
-        Me.UseToolStripMenuItem.Name = "UseToolStripMenuItem"
+        Me.UseToolStripMenuItem.AccessibleDescription = Nothing
+        Me.UseToolStripMenuItem.AccessibleName = Nothing
         resources.ApplyResources(Me.UseToolStripMenuItem, "UseToolStripMenuItem")
+        Me.UseToolStripMenuItem.BackgroundImage = Nothing
+        Me.UseToolStripMenuItem.Name = "UseToolStripMenuItem"
+        Me.UseToolStripMenuItem.ShortcutKeyDisplayString = Nothing
         '
         'ReplyToolStripMenuItem
         '
-        Me.ReplyToolStripMenuItem.Name = "ReplyToolStripMenuItem"
+        Me.ReplyToolStripMenuItem.AccessibleDescription = Nothing
+        Me.ReplyToolStripMenuItem.AccessibleName = Nothing
         resources.ApplyResources(Me.ReplyToolStripMenuItem, "ReplyToolStripMenuItem")
+        Me.ReplyToolStripMenuItem.BackgroundImage = Nothing
+        Me.ReplyToolStripMenuItem.Name = "ReplyToolStripMenuItem"
+        Me.ReplyToolStripMenuItem.ShortcutKeyDisplayString = Nothing
         '
         'RTToolStripMenuItem
         '
-        Me.RTToolStripMenuItem.Name = "RTToolStripMenuItem"
+        Me.RTToolStripMenuItem.AccessibleDescription = Nothing
+        Me.RTToolStripMenuItem.AccessibleName = Nothing
         resources.ApplyResources(Me.RTToolStripMenuItem, "RTToolStripMenuItem")
+        Me.RTToolStripMenuItem.BackgroundImage = Nothing
+        Me.RTToolStripMenuItem.Name = "RTToolStripMenuItem"
+        Me.RTToolStripMenuItem.ShortcutKeyDisplayString = Nothing
         '
         'MentionsToolStripMenuItem
         '
-        Me.MentionsToolStripMenuItem.Name = "MentionsToolStripMenuItem"
+        Me.MentionsToolStripMenuItem.AccessibleDescription = Nothing
+        Me.MentionsToolStripMenuItem.AccessibleName = Nothing
         resources.ApplyResources(Me.MentionsToolStripMenuItem, "MentionsToolStripMenuItem")
+        Me.MentionsToolStripMenuItem.BackgroundImage = Nothing
+        Me.MentionsToolStripMenuItem.Name = "MentionsToolStripMenuItem"
+        Me.MentionsToolStripMenuItem.ShortcutKeyDisplayString = Nothing
         '
         'ctrStatus
         '
+        Me.AccessibleDescription = Nothing
+        Me.AccessibleName = Nothing
         resources.ApplyResources(Me, "$this")
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.Transparent
+        Me.BackgroundImage = Nothing
         Me.Controls.Add(Me.FlowLayoutPanel1)
         Me.Controls.Add(Me.lblTime)
         Me.Controls.Add(Me.txtStatus)
         Me.Controls.Add(Me.picUser)
+        Me.Font = Nothing
         Me.Name = "ctrStatus"
         CType(Me.picUser, System.ComponentModel.ISupportInitialize).EndInit()
         Me.FlowLayoutPanel1.ResumeLayout(False)

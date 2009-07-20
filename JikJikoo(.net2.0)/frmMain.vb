@@ -36,39 +36,67 @@ Public Class frmMain
                 SetCurrentUser()
             End If
             If Not CurrentUser Is Nothing Then
-                ' TimerRefresh.Enabled = False
+              
+
                 Dim sts As Collections.ObjectModel.Collection(Of DNE.Twitter.Status) = Nothing
                 If curSttsParams.Key.ToString().Length = 0 OrElse curSttsParams.Key.ToString() = "" Then stlMain.Clear()
+                'need to store last stored id
+                Dim lid As Int64 = 0
+                If stlMain.LastId <> "" Then lid = CLng(stlMain.LastId)
 
+                'friends timeline
                 If curSttsType = DNE.JikJikoo.StatusListType.FriendsTimeLine Then
-                    sts = twa.GetFriendsTimeLine(stlMain.LastId, page)
+                    sts = twa.GetFriendsTimeLine(stlMain.LastId, Page)
                     If sts IsNot Nothing Then NewUpdate = sts.Count
 
+                    'mentions
                 ElseIf curSttsType = DNE.JikJikoo.StatusListType.Mentions Then
                     sts = twa.GetMentions(stlMain.LastId, Page)
 
+                    'favorites
                 ElseIf curSttsType = DNE.JikJikoo.StatusListType.Favorites Then
-                    sts = twa.Favorites(stlMain.LastId)
+                    sts = twa.Favorites(CurrentUser.Screen_Name, Page)
 
-
+                    'myupdates
                 ElseIf curSttsType = DNE.JikJikoo.StatusListType.MyUpdates Then
-                    sts = twa.GetUserTimeLine(CurrentUser.Screen_Name, stlMain.LastId, page)
+                    sts = twa.GetUserTimeLine(CurrentUser.Screen_Name, stlMain.LastId, Page)
 
+                    'userupdates
                 ElseIf curSttsType = DNE.JikJikoo.StatusListType.UserUpdates Then
-                    sts = twa.GetUserTimeLine(curSttsParams.Value, stlMain.LastId, page)
+                    sts = twa.GetUserTimeLine(curSttsParams.Value, stlMain.LastId, Page)
 
+                    'direct messages (inbox)
                 ElseIf curSttsType = DNE.JikJikoo.StatusListType.DirectMessages Then
-                    sts = Util.DirectMessage2Status(twa.DirectMessages(stlMain.LastId))
+                    sts = Util.DirectMessage2Status(twa.DirectMessages(stlMain.LastId, Page))
 
+                    'search results
                 ElseIf curSttsType = DNE.JikJikoo.StatusListType.SearchResults Then
-                    sts = Util.SearchResults2Status(twa.Search(curSttsParams.Value, stlMain.LastId))
+                    sts = Util.SearchResults2Status(twa.Search(curSttsParams.Value, Page, stlMain.LastId))
+
+                ElseIf curSttsType = DNE.JikJikoo.StatusListType.Friends Then
+                    Dim uc As Collection(Of DNE.Twitter.User) = twa.Friends(CurrentUser.Screen_Name, Page)
+                    If uc IsNot Nothing AndAlso uc.Count > 0 Then
+                        sts = New Collection(Of DNE.Twitter.Status)
+                        For i As Int32 = 0 To uc.Count - 1
+                            Dim tempst As New DNE.Twitter.Status()
+                            If uc(i).Status IsNot Nothing Then
+                                tempst = New DNE.Twitter.Status(uc(i).Status)
+
+                            End If
+                            tempst.User = uc(i)
+                            sts.Add(tempst)
+
+                        Next
+
+                    End If
 
                 End If
                 stlMain.AddStatuses(sts)
                 curSttsParams.Key = stlMain.LastStatusId
+
                 'Update prev controls datetime
                 stlMain.DateTimesUpdate()
-                stlMain.FormatStatusText()
+                stlMain.FormatStatusText(lid)
 
 
             End If
@@ -443,6 +471,12 @@ Public Class frmMain
         pnlMenu.Visible = True
     End Sub
 
+    Private Sub lnkFriends_LinkClicked(ByVal sender As System.Object, ByVal e As System.Windows.Forms.LinkLabelLinkClickedEventArgs) Handles lnkFriends.LinkClicked
+        stlMain.Page = 1
+        SetBindingInfo(DNE.JikJikoo.StatusListType.Friends)
+
+    End Sub
+
 #End Region
 
 #Region " NotifyIcon & Context Menu"
@@ -487,4 +521,5 @@ Public Class frmMain
 
 #End Region
 
+   
 End Class

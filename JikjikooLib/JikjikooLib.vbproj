@@ -58,6 +58,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DirectMessage.vb" />
+    <Compile Include="Enums.vb" />
     <Compile Include="Events.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
@@ -76,6 +77,7 @@
     </Compile>
     <Compile Include="oAuth\oAuth.vb" />
     <Compile Include="oAuth\oAuthTwitter.vb" />
+    <Compile Include="Relationship.vb" />
     <Compile Include="SearchResults.vb" />
     <Compile Include="Status.vb" />
     <Compile Include="TwitterApi.vb" />
