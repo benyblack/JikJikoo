@@ -218,7 +218,6 @@ Partial Class frmMain
         '
         resources.ApplyResources(Me.stlMain, "stlMain")
         Me.stlMain.Name = "stlMain"
-        Me.stlMain.Statuses = Nothing
         '
         'jikUpdate
         '

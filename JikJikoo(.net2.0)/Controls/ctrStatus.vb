@@ -4,8 +4,91 @@ Public Class ctrStatus
 
     Public Event TwitEvent As TwitEventHandler
 
+    Public Sub DateTimeUpdate()
+        If Me.InvokeRequired Then
+            Me.Invoke(New MethodInvoker(AddressOf DateTimeUpdate))
+        Else
+            If _status IsNot Nothing Then
+                lblTime.Text = Util.GetPrettyDate(Status.CreatedAt, IIf(jc.lang.ToLower = "fa", Language.Farsi, Language.English))
+
+            ElseIf _user IsNot Nothing Then
+                If User.Status IsNot Nothing AndAlso User.Status.Created_At <> "" Then
+                    lblTime.Text = Util.GetPrettyDate(User.Status.CreatedAt, IIf(jc.lang.ToLower = "fa", Language.Farsi, Language.English))
+
+                Else
+                    lblTime.Text = ""
+
+                End If
+
+            End If
+
+        End If
+
+    End Sub
+
+    Private Sub BindFields()
+        If _status IsNot Nothing Then
+            lblUserName.Text = Status.User.Screen_Name
+            _originalText = Status.Text
+            If Util.ContainRtlChars(_originalText) Then
+                txtStatus.RightToLeft = Windows.Forms.RightToLeft.Yes
+            Else
+                txtStatus.RightToLeft = Windows.Forms.RightToLeft.No
+            End If
+            txtStatus.Text = Status.Text
+            Dim m As Match = Regex.Match(Status.Source, "<a href=\""(.*?)\"">(.*?)</a>")
+            If m IsNot Nothing AndAlso m.Groups.Count > 0 Then
+                lnkSource.Text = m.Groups(2).Value  'Status.Source
+                lnkSourceHref = m.Groups(1).Value
+
+            End If
+
+            'picUser.ImageLocation = Status.User.Profile_image_url
+            lblTime.Text = Util.GetPrettyDate(Status.CreatedAt, IIf(jc.lang.ToLower = "fa", Language.Farsi, Language.English))
+
+        ElseIf _user IsNot Nothing Then
+            lblUserName.Text = User.Screen_Name
+            If User.Status IsNot Nothing Then
+                _originalText = User.Status.Text
+                If Util.ContainRtlChars(User.Status.Text) Then
+                    txtStatus.RightToLeft = Windows.Forms.RightToLeft.Yes
+                Else
+                    txtStatus.RightToLeft = Windows.Forms.RightToLeft.No
+                End If
+                txtStatus.Text = User.Status.Text
+                Dim m As Match = Regex.Match(User.Status.Source, "<a href=\""(.*?)\"">(.*?)</a>")
+                If m IsNot Nothing AndAlso m.Groups.Count > 0 Then
+                    lnkSource.Text = m.Groups(2).Value  'Status.Source
+                    lnkSourceHref = m.Groups(1).Value
+
+                End If
+
+                'picUser.ImageLocation = Status.User.Profile_image_url
+                If User.Status IsNot Nothing AndAlso User.Status.Created_At <> "" Then
+                    lblTime.Text = Util.GetPrettyDate(_user.Status.CreatedAt, IIf(jc.lang.ToLower = "fa", Language.Farsi, Language.English))
+
+                Else
+                    lblTime.Text = ""
+
+                End If
+
+            End If
+
+        End If
+
+
+    End Sub
+
+
+#Region " Properties "
+
+    Private lnkSourceHref As String = ""
+    Private jc As New JikConfigManager()
+    Private mousexyOntxtstatus As Point = Nothing
+    Private whatisClickedInTxtStatus As String = ""
+
     Private _status As DNE.Twitter.Status
-    Public Property Status() As DNE.Twitter.Status
+    Friend Property Status() As DNE.Twitter.Status
         Get
             Return _status
         End Get
@@ -15,10 +98,21 @@ Public Class ctrStatus
 
         End Set
     End Property
-    Private lnkSourceHref As String = ""
-    Private jc As New JikConfigManager()
+
+    Private _user As DNE.Twitter.User
+    Friend Property User() As DNE.Twitter.User
+        Get
+            Return _user
+        End Get
+        Set(ByVal value As DNE.Twitter.User)
+            _user = value
+            BindFields()
+
+        End Set
+    End Property
+
     Private _formated As Boolean = False
-    Public Property Formated() As Boolean
+    Friend Property Formated() As Boolean
         Get
             Return _formated
         End Get
@@ -27,58 +121,46 @@ Public Class ctrStatus
         End Set
     End Property
 
-    Private mousexyOntxtstatus As Point = Nothing
+    Private _originalText As String = ""
+    Friend Property OriginalText() As String
+        Get
+            Return _originalText
+        End Get
+        Set(ByVal value As String)
+            _originalText = value
+        End Set
+    End Property
 
-    Public Sub DateTimeUpdate()
-        If Me.InvokeRequired Then
-            Me.Invoke(New MethodInvoker(AddressOf DateTimeUpdate))
-        Else
-            If Me.Status Is Nothing Then Exit Sub
-            lblTime.Text = Util.GetPrettyDate(Status.CreatedAt, IIf(jc.lang.ToLower = "fa", Language.Farsi, Language.English))
-        End If
+    ''' <summary>
+    ''' Return Id of Current object
+    ''' </summary>
+    ''' <value></value>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    Friend ReadOnly Property ObjectId() As Int64
+        Get
+            If _status IsNot Nothing Then
+                Return _status.numId
 
-    End Sub
+            ElseIf _user IsNot Nothing Then
+                Return _user.Id
+            End If
 
-    Private Sub BindFields()
-        lblUserName.Text = Status.User.Screen_Name
-        If Util.ContainRtlChars(Status.Text) Then
-            txtStatus.RightToLeft = Windows.Forms.RightToLeft.Yes
-        Else
-            txtStatus.RightToLeft = Windows.Forms.RightToLeft.No
-        End If
-        txtStatus.Text = Status.Text
-        Dim m As Match = Regex.Match(Status.Source, "<a href=\""(.*?)\"">(.*?)</a>")
-        If m IsNot Nothing AndAlso m.Groups.Count > 0 Then
-            lnkSource.Text = m.Groups(2).Value  'Status.Source
-            lnkSourceHref = m.Groups(1).Value
+        End Get
+    End Property
 
-        End If
 
-        'picUser.ImageLocation = Status.User.Profile_image_url
-        lblTime.Text = Util.GetPrettyDate(Status.CreatedAt, IIf(jc.lang.ToLower = "fa", Language.Farsi, Language.English))
-        'DetectAtSign()
+#End Region
 
-    End Sub
+#Region " Formating "
 
-    Friend Sub FormatAtSigns()
-        If Me.InvokeRequired Then
-            Me.Invoke(New MethodInvoker(AddressOf FormatAtSigns))
-        Else
+    Friend Sub FormatText()
+        'must be first
+        FormatNumberSigns()
 
-            Dim pat As String = "@[a-z0-9A-Z]*"
-            Dim t As String = txtStatus.Text
-            Dim mc As MatchCollection = Regex.Matches(t, pat)
-            If mc Is Nothing Then Exit Sub
-            Dim offset As Int32 = 0
-            For i As Int32 = 0 To mc.Count - 1
-                txtStatus.Select(mc(i).Index + 1 + offset, mc(i).Length - 1)
-                txtStatus.InsertLink(mc(i).Value.Substring(1), "user")
-                offset += 1 + 4 '"#user".Lenght
-
-            Next
-
-        End If
-
+        FormatAtSigns()
+        FormatUrls()
+        Formated = True
 
     End Sub
 
@@ -86,7 +168,7 @@ Public Class ctrStatus
     ''' plz use it befor FormatAtSign and FormatUrl, richtextbox use # for link
     ''' </summary>
     ''' <remarks></remarks>
-    Friend Sub FormatNumberSigns()
+    Private Sub FormatNumberSigns()
         If Me.InvokeRequired Then
             Me.Invoke(New MethodInvoker(AddressOf FormatNumberSigns))
         Else
@@ -108,7 +190,29 @@ Public Class ctrStatus
 
     End Sub
 
-    Friend Sub FormatUrls()
+    Private Sub FormatAtSigns()
+        If Me.InvokeRequired Then
+            Me.Invoke(New MethodInvoker(AddressOf FormatAtSigns))
+        Else
+
+            Dim pat As String = "@[a-z0-9A-Z]*"
+            Dim t As String = txtStatus.Text
+            Dim mc As MatchCollection = Regex.Matches(t, pat)
+            If mc Is Nothing Then Exit Sub
+            Dim offset As Int32 = 0
+            For i As Int32 = 0 To mc.Count - 1
+                txtStatus.Select(mc(i).Index + 1 + offset, mc(i).Length - 1)
+                txtStatus.InsertLink(mc(i).Value.Substring(1), "user")
+                offset += 1 + 4 '"#user".Lenght
+
+            Next
+
+        End If
+
+
+    End Sub
+
+    Private Sub FormatUrls()
         If Me.InvokeRequired Then
             Me.Invoke(New MethodInvoker(AddressOf FormatUrls))
         Else
@@ -129,8 +233,10 @@ Public Class ctrStatus
 
     End Sub
 
+#End Region
 
-    Private whatisClickedInTxtStatus As String = ""
+#Region " Events "
+
 
     Private Sub txtStatus_LinkClicked(ByVal sender As Object, ByVal e As System.Windows.Forms.LinkClickedEventArgs) Handles txtStatus.LinkClicked
         If e.LinkText = "" Then Exit Sub
@@ -189,5 +295,7 @@ Public Class ctrStatus
         RaiseEvent TwitEvent(Me, New TwitEventArgs(Status, whatisClickedInTxtStatus, TwitEvents.UserStatuses))
 
     End Sub
+
+#End Region
 
 End Class

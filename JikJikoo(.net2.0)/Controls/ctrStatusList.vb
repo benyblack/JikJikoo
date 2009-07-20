@@ -4,20 +4,22 @@ Imports System.Threading
 
 Public Class ctrStatusList
 
-    Public Event StartCachingImages As EventHandler
-    Public Event EndCachingImages As EventHandler
-    Public Event StartAddStatuses As EventHandler
-    Public Event EndAddStatuses As EventHandler
-    Public Event TwitCommand As TwitEventHandler
-    Public Event PagerNext As EventHandler
-    Public Event PagerPrev As EventHandler
+    Friend Event StartCachingImages As EventHandler
+    Friend Event EndCachingImages As EventHandler
+    Friend Event StartAddStatuses As EventHandler
+    Friend Event EndAddStatuses As EventHandler
+    Friend Event TwitCommand As TwitEventHandler
+    Friend Event PagerNext As EventHandler
+    Friend Event PagerPrev As EventHandler
 
-
+#Region " Properties "
 
     Private _statuses As Collection(Of Status)
+    Private _users As Collection(Of User)
     Private _images As New Dictionary(Of String, Image)
     Private _laststatusId As Int64 = 0
     Private _page As Int32 = 1
+
     Friend Property Page() As Int32
         Get
             Return _page
@@ -32,78 +34,42 @@ Public Class ctrStatusList
         End Set
     End Property
 
-
-    ''' <summary>
-    ''' Collection of status objects.
-    ''' when you set this property
-    ''' status controls will be added to panel
-    ''' </summary>
-    ''' <value></value>
-    ''' <returns></returns>
-    ''' <remarks></remarks>
-    Public Property Statuses() As Collection(Of Status)
-        Get
-            Return _statuses
-        End Get
-        Set(ByVal value As Collection(Of Status))
-            _statuses = value
-            If _statuses Is Nothing OrElse _statuses.Count = 0 Then
-                RaiseEvent EndAddStatuses(Me, Nothing)
-                Exit Property
-            End If
-            Me.pnlMain.Controls.Clear()
-
-        End Set
-    End Property
-
-    Public ReadOnly Property Images() As Dictionary(Of String, Image)
+    Friend ReadOnly Property Images() As Dictionary(Of String, Image)
         Get
             Return _images
         End Get
     End Property
 
-    Public ReadOnly Property LastStatusId() As Int64
+    Friend ReadOnly Property LastStatusId() As Int64
         Get
             Return _laststatusId
         End Get
     End Property
 
-    Public ReadOnly Property LastId() As String
+    Friend ReadOnly Property LastId() As String
         Get
             Return IIf(_laststatusId = 0, "", _laststatusId.ToString())
         End Get
     End Property
 
-    ''' <summary>
-    ''' Clear status list
-    ''' </summary>
-    ''' <remarks></remarks>
-    Public Sub Clear()
-        If Me.InvokeRequired Then
-            Me.Invoke(New MethodInvoker(AddressOf Clear))
-        Else
-            pnlMain.Controls.Clear()
-            _laststatusId = 0
-            If _statuses Is Nothing Then Exit Sub
-            _statuses.Clear()
+#End Region
 
-        End If
-
-
-    End Sub
+#Region " Status Management "
 
     ''' <summary>
     ''' Add Statuses on top of prev statuses
     ''' </summary>
     ''' <param name="sts">Collection of statuses</param>
     ''' <remarks></remarks>
-    Public Sub AddStatuses(ByVal sts As Collection(Of Status))
+    Friend Sub AddStatuses(ByVal sts As Collection(Of Status))
         If sts Is Nothing OrElse sts.Count = 0 Then
             RaiseEvent EndAddStatuses(Me, Nothing)
             Exit Sub
+
         End If
         CashImage(sts)
         RaiseEvent StartAddStatuses(Me, Nothing)
+
         Thread.Sleep(50)
         Me.SuspendLayout()
         For i As Int32 = sts.Count - 1 To 0 Step -1
@@ -111,17 +77,13 @@ Public Class ctrStatusList
 
         Next
         Me.ResumeLayout()
+
         If _statuses Is Nothing Then _statuses = New Collection(Of Status)
         For i As Int32 = sts.Count - 1 To 0
             _statuses.Insert(0, sts(i))
 
         Next
         RaiseEvent EndAddStatuses(Me, Nothing)
-
-    End Sub
-
-    Private Sub SetLastFirst()
-        pnlMain.Controls.SetChildIndex(pnlMain.Controls(pnlMain.Controls.Count - 1), 0)
 
     End Sub
 
@@ -146,8 +108,8 @@ Public Class ctrStatusList
             End If
             AddHandler c.TwitEvent, AddressOf TwitEvent
             Me.pnlMain.Controls.Add(c)
-            If c.Status.numId > _laststatusId Then
-                _laststatusId = c.Status.numId
+            If c.ObjectId > _laststatusId Then
+                _laststatusId = c.ObjectId
                 pnlMain.Controls.SetChildIndex(pnlMain.Controls(pnlMain.Controls.Count - 1), 0)
 
             End If
@@ -155,7 +117,6 @@ Public Class ctrStatusList
         End If
 
     End Sub
-
 
     Private Sub AddStatusControl()
         Dim st As Status = _tempstatus
@@ -169,12 +130,144 @@ Public Class ctrStatusList
         End If
         AddHandler c.TwitEvent, AddressOf TwitEvent
         Me.pnlMain.Controls.Add(c)
-        If c.Status.numId > _laststatusId Then
-            _laststatusId = c.Status.numId
+        If c.ObjectId > _laststatusId Then
+            _laststatusId = c.ObjectId
             pnlMain.Controls.SetChildIndex(pnlMain.Controls(pnlMain.Controls.Count - 1), 0)
 
         End If
 
+    End Sub
+
+#End Region
+
+#Region " User Management "
+
+    ''' <summary>
+    ''' Add Users on top of prev statuses
+    ''' </summary>
+    ''' <param name="uc">Collection of users</param>
+    ''' <remarks></remarks>
+    Friend Sub AddUsers(ByVal uc As Collection(Of User))
+        If uc Is Nothing OrElse uc.Count = 0 Then
+            RaiseEvent EndAddStatuses(Me, Nothing)
+            Exit Sub
+
+        End If
+        CashImage(uc)
+        RaiseEvent StartAddStatuses(Me, Nothing)
+
+        Thread.Sleep(50)
+        Me.SuspendLayout()
+        For i As Int32 = uc.Count - 1 To 0 Step -1
+            If _users IsNot Nothing AndAlso _users.Contains(uc(i)) Then
+
+            Else
+                AddStatusControl(uc(i))
+
+            End If
+
+        Next
+        Me.ResumeLayout()
+
+        If _statuses Is Nothing Then _statuses = New Collection(Of Status)
+        For i As Int32 = uc.Count - 1 To 0
+            _users.Insert(0, uc(i))
+
+        Next
+        RaiseEvent EndAddStatuses(Me, Nothing)
+
+    End Sub
+
+    Private _tempuser As User
+    Private Sub AddStatusControl(ByVal u As User)
+        If Me.InvokeRequired Then
+            _tempuser = u
+            Me.Invoke(New MethodInvoker(AddressOf AddStatusControlforUser))
+        Else
+            'Dim st As Status = _tempstatus
+            Dim c As New ctrStatus()
+            c.User = u
+            'If st.numId > _laststatusId Then _laststatusId = st.numId
+            If Images.Count > 0 AndAlso Images.ContainsKey(u.Profile_image_url) Then
+                c.picUser.Image = Images(u.Profile_image_url)
+
+            Else
+                Dim img As Image = twa.GetImage(u.Profile_image_url)
+                Me.Images.Add(u.Profile_image_url, img)
+                c.picUser.Image = img
+
+            End If
+            AddHandler c.TwitEvent, AddressOf TwitEvent
+            Me.pnlMain.Controls.Add(c)
+            If c.ObjectId > _laststatusId Then
+                _laststatusId = c.ObjectId
+                pnlMain.Controls.SetChildIndex(pnlMain.Controls(pnlMain.Controls.Count - 1), 0)
+
+            End If
+
+        End If
+
+    End Sub
+
+    Private Sub AddStatusControlforUser()
+        Dim u As User = _tempuser
+        Dim c As New ctrStatus()
+        c.User = u
+        If Images.ContainsKey(u.Profile_image_url) Then
+            c.picUser.Image = Images(u.Profile_image_url)
+        Else
+            c.picUser.ImageLocation = u.Profile_image_url
+
+        End If
+        AddHandler c.TwitEvent, AddressOf TwitEvent
+        Me.pnlMain.Controls.Add(c)
+        If c.ObjectId > _laststatusId Then
+            _laststatusId = c.ObjectId
+            pnlMain.Controls.SetChildIndex(pnlMain.Controls(pnlMain.Controls.Count - 1), 0)
+
+        End If
+
+    End Sub
+
+#End Region
+
+#Region " Utils "
+
+    ''' <summary>
+    ''' Clear status list
+    ''' </summary>
+    ''' <remarks></remarks>
+    Friend Sub Clear()
+        If Me.InvokeRequired Then
+            Me.Invoke(New MethodInvoker(AddressOf Clear))
+        Else
+            pnlMain.Controls.Clear()
+            _laststatusId = 0
+            If _statuses Is Nothing Then Exit Sub
+            _statuses.Clear()
+
+        End If
+
+
+    End Sub
+
+    Friend Sub FormatStatusText(ByVal lastFormatedId As Int64)
+        For i As Int32 = 0 To pnlMain.Controls.Count - 1
+            Dim c As ctrStatus = pnlMain.Controls(i)
+            If Not c.Formated Then
+                c.FormatText()
+
+            End If
+
+        Next
+
+    End Sub
+
+    Friend Sub DateTimesUpdate()
+        For Each c As ctrStatus In Me.pnlMain.Controls
+            c.DateTimeUpdate()
+
+        Next
     End Sub
 
     Private Sub CashImage(ByRef stti As Collection(Of Status))
@@ -183,7 +276,7 @@ Public Class ctrStatusList
         For i As Int32 = 0 To stti.Count - 1
             If Images.Count = 0 OrElse Not Images.ContainsKey(stti(i).User.Profile_image_url) Then
                 Dim img As Image = twa.GetImage(stti(i).User.Profile_image_url)
-                Me.Images.Add(stti(i).User.Profile_image_url, img)
+                If img IsNot Nothing Then Me.Images.Add(stti(i).User.Profile_image_url, img)
 
             End If
 
@@ -192,31 +285,29 @@ Public Class ctrStatusList
 
     End Sub
 
-    Public Sub DateTimesUpdate()
-        For Each c As ctrStatus In Me.pnlMain.Controls
-            c.DateTimeUpdate()
+    Private Sub CashImage(ByRef uc As Collection(Of User))
+        RaiseEvent StartCachingImages(Me, Nothing)
+        Thread.Sleep(50)
+        For i As Int32 = 0 To uc.Count - 1
+            If Images.Count = 0 OrElse Not Images.ContainsKey(uc(i).Profile_image_url) Then
+                Dim img As Image = twa.GetImage(uc(i).Profile_image_url)
+                If img IsNot Nothing Then Me.Images.Add(uc(i).Profile_image_url, img)
 
-        Next
-    End Sub
-
-    Friend Sub FormatStatusText(ByVal lastFormatedId As Int64)
-        For i As Int32 = 0 To pnlMain.Controls.Count - 1
-            Dim c As ctrStatus = pnlMain.Controls(i)
-            If c.Status.numId > lastFormatedId Then
-                If Not c.Formated Then
-                    'must be first
-                    c.FormatNumberSigns()
-
-                    c.FormatAtSigns()
-                    c.FormatUrls()
-                    c.Formated = True
-
-                End If
             End If
 
-
         Next
+        RaiseEvent EndCachingImages(Me, Nothing)
+
     End Sub
+
+    Private Sub SetLastFirst()
+        pnlMain.Controls.SetChildIndex(pnlMain.Controls(pnlMain.Controls.Count - 1), 0)
+
+    End Sub
+
+#End Region
+
+#Region " Events "
 
     Private Sub TwitEvent(ByVal sender As Object, ByVal t As TwitEventArgs)
         RaiseEvent TwitCommand(sender, t)
@@ -234,6 +325,8 @@ Public Class ctrStatusList
         Page += 1
 
     End Sub
+
+#End Region
 
 End Class
 

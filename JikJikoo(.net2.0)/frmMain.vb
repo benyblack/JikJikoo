@@ -48,50 +48,44 @@ Public Class frmMain
                 If curSttsType = DNE.JikJikoo.StatusListType.FriendsTimeLine Then
                     sts = twa.GetFriendsTimeLine(stlMain.LastId, Page)
                     If sts IsNot Nothing Then NewUpdate = sts.Count
+                    stlMain.AddStatuses(sts)
 
                     'mentions
                 ElseIf curSttsType = DNE.JikJikoo.StatusListType.Mentions Then
                     sts = twa.GetMentions(stlMain.LastId, Page)
+                    stlMain.AddStatuses(sts)
 
                     'favorites
                 ElseIf curSttsType = DNE.JikJikoo.StatusListType.Favorites Then
                     sts = twa.Favorites(CurrentUser.Screen_Name, Page)
+                    stlMain.AddStatuses(sts)
 
                     'myupdates
                 ElseIf curSttsType = DNE.JikJikoo.StatusListType.MyUpdates Then
                     sts = twa.GetUserTimeLine(CurrentUser.Screen_Name, stlMain.LastId, Page)
+                    stlMain.AddStatuses(sts)
 
                     'userupdates
                 ElseIf curSttsType = DNE.JikJikoo.StatusListType.UserUpdates Then
                     sts = twa.GetUserTimeLine(curSttsParams.Value, stlMain.LastId, Page)
+                    stlMain.AddStatuses(sts)
 
                     'direct messages (inbox)
                 ElseIf curSttsType = DNE.JikJikoo.StatusListType.DirectMessages Then
                     sts = Util.DirectMessage2Status(twa.DirectMessages(stlMain.LastId, Page))
+                    stlMain.AddStatuses(sts)
 
                     'search results
                 ElseIf curSttsType = DNE.JikJikoo.StatusListType.SearchResults Then
                     sts = Util.SearchResults2Status(twa.Search(curSttsParams.Value, Page, stlMain.LastId))
+                    stlMain.AddStatuses(sts)
 
                 ElseIf curSttsType = DNE.JikJikoo.StatusListType.Friends Then
                     Dim uc As Collection(Of DNE.Twitter.User) = twa.Friends(CurrentUser.Screen_Name, Page)
-                    If uc IsNot Nothing AndAlso uc.Count > 0 Then
-                        sts = New Collection(Of DNE.Twitter.Status)
-                        For i As Int32 = 0 To uc.Count - 1
-                            Dim tempst As New DNE.Twitter.Status()
-                            If uc(i).Status IsNot Nothing Then
-                                tempst = New DNE.Twitter.Status(uc(i).Status)
+                    stlMain.AddUsers(uc)
 
-                            End If
-                            tempst.User = uc(i)
-                            sts.Add(tempst)
-
-                        Next
-
-                    End If
 
                 End If
-                stlMain.AddStatuses(sts)
                 curSttsParams.Key = stlMain.LastStatusId
 
                 'Update prev controls datetime

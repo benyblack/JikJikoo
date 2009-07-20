@@ -144,6 +144,8 @@ Public Class Util
     ''' <returns></returns>
     ''' <remarks></remarks>
     Public Shared Function GetPrettyDate(ByVal d As DateTime, ByVal lang As Language) As String
+        If d = DateTime.MinValue Then Return ""
+
         Dim ago As String = "Ago"
         Dim sec As String = "Second"
         Dim min As String = "Minute"

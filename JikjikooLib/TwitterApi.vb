@@ -1389,7 +1389,13 @@ Namespace DNE.JikJikoo
             'If Me.ProxyType = ProxyTypes.Http Then
             Dim b() As Byte = DownloadFromHttp(url)
             If b Is Nothing Then Return Nothing
-            Return Image.FromStream(New IO.MemoryStream(b))
+            Try
+                Return Image.FromStream(New IO.MemoryStream(b))
+
+            Catch ex As Exception
+                Return Nothing
+
+            End Try
 
             'Else
 

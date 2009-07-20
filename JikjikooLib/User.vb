@@ -43,6 +43,13 @@
             End Set
         End Property
 
+        Public ReadOnly Property NumId() As Int64
+            Get
+                If _id = "" Then Return 0
+                Return CLng(_id)
+            End Get
+        End Property
+
         Public Property Name() As String
             Get
                 Return _name
