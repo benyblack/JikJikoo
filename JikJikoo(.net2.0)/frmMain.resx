@@ -312,6 +312,33 @@
   <metadata name="ContextMenuStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>344, 17</value>
   </metadata>
+  <data name="HideToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>107, 22</value>
+  </data>
+  <data name="HideToolStripMenuItem.Text" xml:space="preserve">
+    <value>&amp;Hide</value>
+  </data>
+  <data name="ShowToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>107, 22</value>
+  </data>
+  <data name="ShowToolStripMenuItem.Text" xml:space="preserve">
+    <value>&amp;Show</value>
+  </data>
+  <data name="ToolStripSeparator1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>104, 6</value>
+  </data>
+  <data name="AboutToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>107, 22</value>
+  </data>
+  <data name="AboutToolStripMenuItem.Text" xml:space="preserve">
+    <value>&amp;About</value>
+  </data>
+  <data name="ExitToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>107, 22</value>
+  </data>
+  <data name="ExitToolStripMenuItem.Text" xml:space="preserve">
+    <value>E&amp;xit</value>
+  </data>
   <data name="ContextMenuStrip1.Size" type="System.Drawing.Size, System.Drawing">
     <value>108, 98</value>
   </data>
@@ -1254,32 +1281,23 @@
   <data name="NotifyIcon1.Visible" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <data name="HideToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>107, 22</value>
+  <data name="lnkSearchLinks.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
-  <data name="HideToolStripMenuItem.Text" xml:space="preserve">
-    <value>&amp;Hide</value>
+  <data name="lnkSearchLinks.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
   </data>
-  <data name="ShowToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>107, 22</value>
+  <data name="lnkSearchLinks.Location" type="System.Drawing.Point, System.Drawing">
+    <value>465, 5</value>
   </data>
-  <data name="ShowToolStripMenuItem.Text" xml:space="preserve">
-    <value>&amp;Show</value>
+  <data name="lnkSearchLinks.Size" type="System.Drawing.Size, System.Drawing">
+    <value>23, 13</value>
   </data>
-  <data name="ToolStripSeparator1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>104, 6</value>
+  <data name="lnkSearchLinks.TabIndex" type="System.Int32, mscorlib">
+    <value>23</value>
   </data>
-  <data name="AboutToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>107, 22</value>
-  </data>
-  <data name="AboutToolStripMenuItem.Text" xml:space="preserve">
-    <value>&amp;About</value>
-  </data>
-  <data name="ExitToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>107, 22</value>
-  </data>
-  <data name="ExitToolStripMenuItem.Text" xml:space="preserve">
-    <value>E&amp;xit</value>
+  <data name="lnkSearchLinks.Text" xml:space="preserve">
+    <value>&gt;&gt;</value>
   </data>
   <data name="&gt;&gt;lnkSearchLinks.Name" xml:space="preserve">
     <value>lnkSearchLinks</value>
@@ -1377,36 +1395,6 @@
   <data name="&gt;&gt;lnkFollowers.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
-  <data name="lnkSearchLinks.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="lnkSearchLinks.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="lnkSearchLinks.Location" type="System.Drawing.Point, System.Drawing">
-    <value>465, 5</value>
-  </data>
-  <data name="lnkSearchLinks.Size" type="System.Drawing.Size, System.Drawing">
-    <value>23, 13</value>
-  </data>
-  <data name="lnkSearchLinks.TabIndex" type="System.Int32, mscorlib">
-    <value>23</value>
-  </data>
-  <data name="lnkSearchLinks.Text" xml:space="preserve">
-    <value>&gt;&gt;</value>
-  </data>
-  <data name="&gt;&gt;lnkSearchLinks.Name" xml:space="preserve">
-    <value>lnkSearchLinks</value>
-  </data>
-  <data name="&gt;&gt;lnkSearchLinks.Type" xml:space="preserve">
-    <value>System.Windows.Forms.LinkLabel, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;lnkSearchLinks.Parent" xml:space="preserve">
-    <value>pnlMenu</value>
-  </data>
-  <data name="&gt;&gt;lnkSearchLinks.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
   <data name="lnkSearch.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
@@ -1435,54 +1423,6 @@
     <value>pnlSearch</value>
   </data>
   <data name="&gt;&gt;lnkSearch.ZOrder" xml:space="preserve">
-    <value>4</value>
-  </data>
-  <data name="&gt;&gt;txtSearch.Name" xml:space="preserve">
-    <value>txtSearch</value>
-  </data>
-  <data name="&gt;&gt;txtSearch.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;txtSearch.Parent" xml:space="preserve">
-    <value>pnlSearch</value>
-  </data>
-  <data name="&gt;&gt;txtSearch.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="&gt;&gt;lnkBrowsLinks.Name" xml:space="preserve">
-    <value>lnkBrowsLinks</value>
-  </data>
-  <data name="&gt;&gt;lnkBrowsLinks.Type" xml:space="preserve">
-    <value>System.Windows.Forms.LinkLabel, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;lnkBrowsLinks.Parent" xml:space="preserve">
-    <value>pnlSearch</value>
-  </data>
-  <data name="&gt;&gt;lnkBrowsLinks.ZOrder" xml:space="preserve">
-    <value>3</value>
-  </data>
-  <data name="pnlSearch.Location" type="System.Drawing.Point, System.Drawing">
-    <value>8, 123</value>
-  </data>
-  <data name="pnlSearch.Size" type="System.Drawing.Size, System.Drawing">
-    <value>491, 35</value>
-  </data>
-  <data name="pnlSearch.TabIndex" type="System.Int32, mscorlib">
-    <value>26</value>
-  </data>
-  <data name="pnlSearch.Visible" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
-  <data name="&gt;&gt;pnlSearch.Name" xml:space="preserve">
-    <value>pnlSearch</value>
-  </data>
-  <data name="&gt;&gt;pnlSearch.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Panel, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;pnlSearch.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;pnlSearch.ZOrder" xml:space="preserve">
     <value>4</value>
   </data>
   <data name="txtSearch.Location" type="System.Drawing.Point, System.Drawing">
@@ -1536,6 +1476,30 @@
   <data name="&gt;&gt;lnkBrowsLinks.ZOrder" xml:space="preserve">
     <value>3</value>
   </data>
+  <data name="pnlSearch.Location" type="System.Drawing.Point, System.Drawing">
+    <value>8, 123</value>
+  </data>
+  <data name="pnlSearch.Size" type="System.Drawing.Size, System.Drawing">
+    <value>491, 35</value>
+  </data>
+  <data name="pnlSearch.TabIndex" type="System.Int32, mscorlib">
+    <value>26</value>
+  </data>
+  <data name="pnlSearch.Visible" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="&gt;&gt;pnlSearch.Name" xml:space="preserve">
+    <value>pnlSearch</value>
+  </data>
+  <data name="&gt;&gt;pnlSearch.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Panel, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;pnlSearch.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;pnlSearch.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
   <data name="jikLogin.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Right</value>
   </data>
@@ -1552,7 +1516,7 @@
     <value>jikLogin</value>
   </data>
   <data name="&gt;&gt;jikLogin.Type" xml:space="preserve">
-    <value>JikJikoo.ctrLoginOAuth, JikJikoo(.net2.0), Version=0.6.3488.1634, Culture=neutral, PublicKeyToken=null</value>
+    <value>JikJikoo.ctrLoginOAuth, JikJikoo(.net2.0), Version=0.6.3488.37338, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;jikLogin.Parent" xml:space="preserve">
     <value>$this</value>
@@ -1579,7 +1543,7 @@
     <value>stlMain</value>
   </data>
   <data name="&gt;&gt;stlMain.Type" xml:space="preserve">
-    <value>JikJikoo.ctrStatusList, JikJikoo(.net2.0), Version=0.6.3488.1634, Culture=neutral, PublicKeyToken=null</value>
+    <value>JikJikoo.ctrStatusList, JikJikoo(.net2.0), Version=0.6.3488.37338, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;stlMain.Parent" xml:space="preserve">
     <value>$this</value>
@@ -1609,7 +1573,7 @@
     <value>jikUpdate</value>
   </data>
   <data name="&gt;&gt;jikUpdate.Type" xml:space="preserve">
-    <value>JikJikoo.ctrlUpdateStatus, JikJikoo(.net2.0), Version=0.6.3488.1634, Culture=neutral, PublicKeyToken=null</value>
+    <value>JikJikoo.ctrlUpdateStatus, JikJikoo(.net2.0), Version=0.6.3488.37338, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;jikUpdate.Parent" xml:space="preserve">
     <value>$this</value>

@@ -40,9 +40,9 @@ Partial Class frmMain
         Me.AboutToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
         Me.ExitToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
         Me.pnlMenu = New System.Windows.Forms.Panel
+        Me.lnkSearchLinks = New System.Windows.Forms.LinkLabel
         Me.lnkFriends = New System.Windows.Forms.LinkLabel
         Me.lnkFollowers = New System.Windows.Forms.LinkLabel
-        Me.lnkSearchLinks = New System.Windows.Forms.LinkLabel
         Me.lnkSearch = New System.Windows.Forms.LinkLabel
         Me.pnlSearch = New System.Windows.Forms.Panel
         Me.txtSearch = New System.Windows.Forms.TextBox
@@ -153,6 +153,14 @@ Partial Class frmMain
         resources.ApplyResources(Me.pnlMenu, "pnlMenu")
         Me.pnlMenu.Name = "pnlMenu"
         '
+        'lnkSearchLinks
+        '
+        Me.lnkSearchLinks.AutoEllipsis = True
+        resources.ApplyResources(Me.lnkSearchLinks, "lnkSearchLinks")
+        Me.lnkSearchLinks.LinkColor = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.lnkSearchLinks.Name = "lnkSearchLinks"
+        Me.lnkSearchLinks.TabStop = True
+        '
         'lnkFriends
         '
         Me.lnkFriends.AutoEllipsis = True
@@ -168,14 +176,6 @@ Partial Class frmMain
         Me.lnkFollowers.LinkColor = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(255, Byte), Integer))
         Me.lnkFollowers.Name = "lnkFollowers"
         Me.lnkFollowers.TabStop = True
-        '
-        'lnkSearchLinks
-        '
-        Me.lnkSearchLinks.AutoEllipsis = True
-        resources.ApplyResources(Me.lnkSearchLinks, "lnkSearchLinks")
-        Me.lnkSearchLinks.LinkColor = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.lnkSearchLinks.Name = "lnkSearchLinks"
-        Me.lnkSearchLinks.TabStop = True
         '
         'lnkSearch
         '

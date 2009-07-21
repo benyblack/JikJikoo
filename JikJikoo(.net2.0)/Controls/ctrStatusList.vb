@@ -79,7 +79,7 @@ Public Class ctrStatusList
         Me.ResumeLayout()
 
         If _statuses Is Nothing Then _statuses = New Collection(Of Status)
-        For i As Int32 = sts.Count - 1 To 0
+        For i As Int32 = sts.Count - 1 To 0 Step -1
             _statuses.Insert(0, sts(i))
 
         Next
@@ -159,18 +159,17 @@ Public Class ctrStatusList
         Thread.Sleep(50)
         Me.SuspendLayout()
         For i As Int32 = uc.Count - 1 To 0 Step -1
-            If _users IsNot Nothing AndAlso _users.Contains(uc(i)) Then
+            'If _users IsNot Nothing AndAlso _users.Contains(uc(i)) Then
+            'If Not UsersContains(uc(i).Screen_Name) Then
+            AddStatusControl(uc(i))
 
-            Else
-                AddStatusControl(uc(i))
-
-            End If
+            'End If
 
         Next
         Me.ResumeLayout()
 
-        If _statuses Is Nothing Then _statuses = New Collection(Of Status)
-        For i As Int32 = uc.Count - 1 To 0
+        If _users Is Nothing Then _users = New Collection(Of User)
+        For i As Int32 = uc.Count - 1 To 0 Step -1
             _users.Insert(0, uc(i))
 
         Next
@@ -178,12 +177,24 @@ Public Class ctrStatusList
 
     End Sub
 
+    Private Function UsersContains(ByVal screenname As String) As Boolean
+        For Each c As ctrStatus In pnlMain.Controls
+            If c.User IsNot Nothing AndAlso c.User.Screen_Name = screenname Then
+                Return True
+
+            End If
+        Next
+        Return False
+
+    End Function
+
     Private _tempuser As User
     Private Sub AddStatusControl(ByVal u As User)
         If Me.InvokeRequired Then
             _tempuser = u
             Me.Invoke(New MethodInvoker(AddressOf AddStatusControlforUser))
         Else
+            If UsersContains(u.Screen_Name) Then Exit Sub
             'Dim st As Status = _tempstatus
             Dim c As New ctrStatus()
             c.User = u
@@ -211,6 +222,8 @@ Public Class ctrStatusList
 
     Private Sub AddStatusControlforUser()
         Dim u As User = _tempuser
+        If UsersContains(u.Screen_Name) Then Exit Sub
+
         Dim c As New ctrStatus()
         c.User = u
         If Images.ContainsKey(u.Profile_image_url) Then

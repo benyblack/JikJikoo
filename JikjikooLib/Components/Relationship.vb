@@ -1,21 +1,4 @@
-﻿'   <relationship>
-'        <source>
-'            <id>123</id>
-'            <screen_name>bob</screen_name>
-'            <following>true</following>
-'            <followed_by>false</followed_by>
-'            <notifications_enabled>false</notifications_enabled>
-'        </source>
-'       <target>
-'           <id>456</id>
-'           <screen_name>jack</screen_name>
-'           <following>false</following>
-'           <followed_by>true</followed_by>
-'           <notifications_enabled></notifications_enabled>
-'       </target>
-'   </relationship>
-
-
+﻿
 Namespace DNE.Twitter
     Public Class RelationshipNode
 

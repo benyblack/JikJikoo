@@ -1,4 +1,4 @@
-﻿Namespace DNE.JikJikoo
+﻿Namespace DNE.Twitter
 
     Public Delegate Sub HttpEventHandler(ByVal sender As Object, ByVal hea As HttpExEventArgs)
 
@@ -55,4 +55,5 @@
         Inherits Exception
 
     End Class
+
 End Namespace

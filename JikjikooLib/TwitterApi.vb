@@ -11,9 +11,9 @@ Imports System.Collections.ObjectModel
 Imports Org.Mentalis.Network.ProxySocket
 Imports Newtonsoft.Json
 
-Namespace DNE.JikJikoo
+Namespace DNE.Twitter
 
-    Public Class TwitterApi
+    Public Class Api
 
         Public Event DownloadingDataStart As EventHandler
         Public Event DownloadingDataEnd As EventHandler
@@ -92,7 +92,7 @@ Namespace DNE.JikJikoo
                 Return HttpRequestSocket(method, url, query, host)
 
             Else
-                Return HttpRequest(method, url, query, host)
+                Return HttpRequestHTTP(method, url, query) ', host)
 
             End If
             Return ""
@@ -635,6 +635,26 @@ Namespace DNE.JikJikoo
 
         End Function
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="screen_name"></param>
+        ''' <param name="page"></param>
+        ''' <returns></returns>
+        ''' <remarks></remarks>
+        Public Function Followers(ByVal screen_name As String, ByVal page As Int32) As Collection(Of DNE.Twitter.User)
+            Dim query As String = ""
+            If screen_name <> "" Then query = "screen_name=" & screen_name
+            If page > 1 Then
+                If query <> "" Then query += "&"
+                query += String.Format("page=" & page.ToString())
+
+            End If
+            Dim s As String = HttpRequest("GET", folowersidsurl, query)
+            Return ParsTwitterXML(Of Collection(Of DNE.Twitter.User))(s, TwitterXmlTypes.Users)
+
+        End Function
+
 #End Region
 
 #Region " Favorites "
@@ -891,7 +911,7 @@ Namespace DNE.JikJikoo
 
             Catch ex As SocketException
                 RaiseEvent HttpError(Me, New HttpExEventArgs(ex, url, "Can not resolve host"))
-                Throw New DNE.JikJikoo.NoConnectionException()
+                Throw New NoConnectionException()
 
             End Try
             Dim address As IPAddress = hostEntry.AddressList(0)

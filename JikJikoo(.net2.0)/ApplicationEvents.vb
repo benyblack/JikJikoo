@@ -9,6 +9,14 @@
     ' NetworkAvailabilityChanged: Raised when the network connection is connected or disconnected.
     Partial Friend Class MyApplication
         
+        Private Sub MyApplication_Startup(ByVal sender As Object, ByVal e As Microsoft.VisualBasic.ApplicationServices.StartupEventArgs) Handles Me.Startup
+            'JikJikoo Globalization
+            Dim jc As New JikConfigManager()
+            Threading.Thread.CurrentThread.CurrentCulture = jc.CultureInfo
+            Threading.Thread.CurrentThread.CurrentUICulture = jc.CultureInfo
+
+        End Sub
+
     End Class
 
 End Namespace

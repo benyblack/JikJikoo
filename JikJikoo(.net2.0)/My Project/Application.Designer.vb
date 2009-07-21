@@ -29,12 +29,6 @@ Namespace My
             Me.SaveMySettingsOnExit = true
             Me.ShutdownStyle = Global.Microsoft.VisualBasic.ApplicationServices.ShutdownMode.AfterMainFormCloses
 
-            'JikJikoo Globalization
-            Dim jc As New JikConfigManager()
-            Threading.Thread.CurrentThread.CurrentCulture = jc.CultureInfo
-            Threading.Thread.CurrentThread.CurrentUICulture = jc.CultureInfo
-
-
         End Sub
         
         <Global.System.Diagnostics.DebuggerStepThroughAttribute()>  _

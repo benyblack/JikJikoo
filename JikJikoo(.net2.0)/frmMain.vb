@@ -4,10 +4,12 @@ Imports System.Xml
 Imports System.ComponentModel
 Imports System.Collections.ObjectModel
 
+Imports DNE.Twitter
+
 Public Class frmMain
 
     Private t As Thread = Nothing
-    Private curSttsType As DNE.JikJikoo.StatusListType = DNE.JikJikoo.StatusListType.FriendsTimeLine
+    Private curSttsType As StatusListType = StatusListType.FriendsTimeLine
     Private curSttsParams As New DictionaryEntry("", "")
     Private IsBinding As Boolean = False
     Private NewUpdate As Int32 = 0
@@ -36,7 +38,7 @@ Public Class frmMain
                 SetCurrentUser()
             End If
             If Not CurrentUser Is Nothing Then
-              
+
 
                 Dim sts As Collections.ObjectModel.Collection(Of DNE.Twitter.Status) = Nothing
                 If curSttsParams.Key.ToString().Length = 0 OrElse curSttsParams.Key.ToString() = "" Then stlMain.Clear()
@@ -45,45 +47,50 @@ Public Class frmMain
                 If stlMain.LastId <> "" Then lid = CLng(stlMain.LastId)
 
                 'friends timeline
-                If curSttsType = DNE.JikJikoo.StatusListType.FriendsTimeLine Then
+                If curSttsType = StatusListType.FriendsTimeLine Then
                     sts = twa.GetFriendsTimeLine(stlMain.LastId, Page)
                     If sts IsNot Nothing Then NewUpdate = sts.Count
                     stlMain.AddStatuses(sts)
 
                     'mentions
-                ElseIf curSttsType = DNE.JikJikoo.StatusListType.Mentions Then
+                ElseIf curSttsType = StatusListType.Mentions Then
                     sts = twa.GetMentions(stlMain.LastId, Page)
                     stlMain.AddStatuses(sts)
 
                     'favorites
-                ElseIf curSttsType = DNE.JikJikoo.StatusListType.Favorites Then
+                ElseIf curSttsType = StatusListType.Favorites Then
                     sts = twa.Favorites(CurrentUser.Screen_Name, Page)
                     stlMain.AddStatuses(sts)
 
                     'myupdates
-                ElseIf curSttsType = DNE.JikJikoo.StatusListType.MyUpdates Then
+                ElseIf curSttsType = StatusListType.MyUpdates Then
                     sts = twa.GetUserTimeLine(CurrentUser.Screen_Name, stlMain.LastId, Page)
                     stlMain.AddStatuses(sts)
 
                     'userupdates
-                ElseIf curSttsType = DNE.JikJikoo.StatusListType.UserUpdates Then
+                ElseIf curSttsType = StatusListType.UserUpdates Then
                     sts = twa.GetUserTimeLine(curSttsParams.Value, stlMain.LastId, Page)
                     stlMain.AddStatuses(sts)
 
                     'direct messages (inbox)
-                ElseIf curSttsType = DNE.JikJikoo.StatusListType.DirectMessages Then
+                ElseIf curSttsType = StatusListType.DirectMessages Then
                     sts = Util.DirectMessage2Status(twa.DirectMessages(stlMain.LastId, Page))
                     stlMain.AddStatuses(sts)
 
                     'search results
-                ElseIf curSttsType = DNE.JikJikoo.StatusListType.SearchResults Then
+                ElseIf curSttsType = StatusListType.SearchResults Then
                     sts = Util.SearchResults2Status(twa.Search(curSttsParams.Value, Page, stlMain.LastId))
                     stlMain.AddStatuses(sts)
 
-                ElseIf curSttsType = DNE.JikJikoo.StatusListType.Friends Then
+                    'Friends
+                ElseIf curSttsType = StatusListType.Friends Then
                     Dim uc As Collection(Of DNE.Twitter.User) = twa.Friends(CurrentUser.Screen_Name, Page)
                     stlMain.AddUsers(uc)
 
+                    'Followers
+                ElseIf curSttsType = StatusListType.Followers Then
+                    Dim uc As Collection(Of DNE.Twitter.User) = twa.Followers(CurrentUser.Screen_Name, Page)
+                    stlMain.AddUsers(uc)
 
                 End If
                 curSttsParams.Key = stlMain.LastStatusId
@@ -96,7 +103,7 @@ Public Class frmMain
             End If
 
 
-        Catch ex As DNE.JikJikoo.NoConnectionException
+        Catch ex As NoConnectionException
             TimerRefresh.Enabled = True
             ShowMessage("Error in connection", "Not Connected. check your internet connection", True)
             'MsgBox("Not Connected. check your internet connection")
@@ -115,7 +122,7 @@ Public Class frmMain
     Private Sub ReloadConfig()
         Try
             Dim jcm As New JikConfigManager()
-            twa = New DNE.JikJikoo.TwitterApi(jcm.user, jcm.Token, jcm.TokenSecret)
+            twa = New Api(jcm.user, jcm.Token, jcm.TokenSecret)
             twa.ConfigProxy(CInt(jcm.proxytype), CInt(jcm.proxyport), jcm.proxyserver, jcm.proxyuser, jcm.proxypass)
             TimerRefresh.Interval = CInt(jcm.refresh) * 1000
             AddHandler twa.DownloadingDataStart, AddressOf DownloadStart
@@ -129,7 +136,7 @@ Public Class frmMain
 
 #Region " UI "
 
-    Private Sub TwitterApiHttpError(ByVal sender As Object, ByVal hea As DNE.JikJikoo.HttpExEventArgs)
+    Private Sub TwitterApiHttpError(ByVal sender As Object, ByVal hea As HttpExEventArgs)
         Dim host As String = ""
         If hea.Url <> "" Then host = New Uri(hea.Url).Host
         ShowMessage("Error in connection", hea.Message & vbCrLf & host, True)
@@ -146,6 +153,35 @@ Public Class frmMain
 
     Private Sub ShowMessage(ByVal title As String, ByVal msg As String, ByVal err As Boolean)
         NotifyIcon1.ShowBalloonTip(30, title, msg, IIf(err, ToolTipIcon.Error, ToolTipIcon.Info))
+
+    End Sub
+
+    Private Sub MoveAnimateMenuPanels(ByVal panelId As Int32)
+        Dim c1 As Panel = Nothing
+        Dim c2 As Panel = Nothing
+
+
+        If panelId = 1 Then
+            c1 = pnlSearch
+            c2 = pnlMenu
+
+        ElseIf panelId = 2 Then
+            c1 = pnlMenu
+            c2 = pnlSearch
+
+        End If
+
+        c2.BringToFront()
+        c2.Location = New Point(c1.Left - c1.Width, c1.Top)
+        c1.Visible = False
+        c2.Visible = True
+        For i As Int32 = 0 To 20
+            Thread.Sleep(25)
+            c2.Left += 25
+
+        Next
+        c2.Left = c1.Left
+
 
     End Sub
 
@@ -227,7 +263,7 @@ Public Class frmMain
                 lnkMentions.Text = "@" & CurrentUser.Screen_Name
                 jikLogin.SetLastUpdateText(CurrentUser.Status.Text)
 
-            Catch ex As DNE.JikJikoo.NoConnectionException
+            Catch ex As NoConnectionException
                 ShowMessage("Error in connection", "Not Connected. Can not receive user information.", True)
                 Exit Sub
 
@@ -296,7 +332,7 @@ Public Class frmMain
             curSttsParams.Key = ""
             WaitingForCleanRefresh = True
 
-            curSttsType = DNE.JikJikoo.StatusListType.UserUpdates
+            curSttsType = StatusListType.UserUpdates
             TimerRefresh_Tick(Me, Nothing)
 
         ElseIf t.TwitEvent = TwitEvents.SearchTags Then
@@ -304,7 +340,7 @@ Public Class frmMain
             curSttsParams.Key = ""
             WaitingForCleanRefresh = True
             txtSearch.Text = "#" & t.Text
-            curSttsType = DNE.JikJikoo.StatusListType.SearchResults
+            curSttsType = StatusListType.SearchResults
             TimerRefresh_Tick(Me, Nothing)
             lnkSearchLinks_LinkClicked(Nothing, Nothing)
 
@@ -395,7 +431,7 @@ Public Class frmMain
 
 #Region " LinkButtons "
 
-    Friend Sub SetBindingInfo(ByVal sltype As DNE.JikJikoo.StatusListType, Optional ByVal CheckCurSLType As Boolean = True, Optional ByVal key As String = "", Optional ByVal value As String = "")
+    Friend Sub SetBindingInfo(ByVal sltype As StatusListType, Optional ByVal CheckCurSLType As Boolean = True, Optional ByVal key As String = "", Optional ByVal value As String = "")
         If CheckCurSLType Then
             If curSttsType <> sltype Then
                 curSttsParams = New DictionaryEntry(key, value)
@@ -418,56 +454,64 @@ Public Class frmMain
 
     Private Sub lnkFriendsTimeLine_LinkClicked(ByVal sender As System.Object, ByVal e As System.Windows.Forms.LinkLabelLinkClickedEventArgs) Handles lnkFriendsTimeLine.LinkClicked
         stlMain.Page = 1
-        SetBindingInfo(DNE.JikJikoo.StatusListType.FriendsTimeLine)
+        SetBindingInfo(StatusListType.FriendsTimeLine)
 
     End Sub
 
     Private Sub lnkMentions_LinkClicked(ByVal sender As System.Object, ByVal e As System.Windows.Forms.LinkLabelLinkClickedEventArgs) Handles lnkMentions.LinkClicked
         stlMain.Page = 1
-        SetBindingInfo(DNE.JikJikoo.StatusListType.Mentions)
+        SetBindingInfo(StatusListType.Mentions)
 
     End Sub
 
     Private Sub lnkMessages_LinkClicked(ByVal sender As System.Object, ByVal e As System.Windows.Forms.LinkLabelLinkClickedEventArgs) Handles lnkMessages.LinkClicked
         stlMain.Page = 1
-        SetBindingInfo(DNE.JikJikoo.StatusListType.DirectMessages)
+        SetBindingInfo(StatusListType.DirectMessages)
 
     End Sub
 
     Private Sub lnkFavorites_LinkClicked(ByVal sender As System.Object, ByVal e As System.Windows.Forms.LinkLabelLinkClickedEventArgs) Handles lnkFavorites.LinkClicked
         stlMain.Page = 1
-        SetBindingInfo(DNE.JikJikoo.StatusListType.Favorites)
+        SetBindingInfo(StatusListType.Favorites)
 
     End Sub
 
     Private Sub lnkMyUpdates_LinkClicked(ByVal sender As System.Object, ByVal e As System.Windows.Forms.LinkLabelLinkClickedEventArgs) Handles lnkMyUpdates.LinkClicked
         stlMain.Page = 1
-        SetBindingInfo(DNE.JikJikoo.StatusListType.MyUpdates)
+        SetBindingInfo(StatusListType.MyUpdates)
 
     End Sub
 
     Private Sub lnkSearch_LinkClicked(ByVal sender As System.Object, ByVal e As System.Windows.Forms.LinkLabelLinkClickedEventArgs) Handles lnkSearch.LinkClicked
         stlMain.Page = 1
-        SetBindingInfo(DNE.JikJikoo.StatusListType.SearchResults, False, "", txtSearch.Text.Trim().Replace("#", "%23"))
+        SetBindingInfo(StatusListType.SearchResults, False, "", txtSearch.Text.Trim().Replace("#", "%23"))
 
     End Sub
 
     Private Sub lnkSearchLinks_LinkClicked(ByVal sender As System.Object, ByVal e As System.Windows.Forms.LinkLabelLinkClickedEventArgs) Handles lnkSearchLinks.LinkClicked
-        pnlSearch.Location = pnlMenu.Location
-        pnlSearch.Visible = True
-        pnlMenu.Visible = False
-
+        'pnlSearch.Location = pnlMenu.Location
+        'pnlSearch.Visible = True
+        'pnlMenu.Visible = False
+        MoveAnimateMenuPanels(2)
     End Sub
 
     Private Sub lnkBrowsLinks_LinkClicked(ByVal sender As System.Object, ByVal e As System.Windows.Forms.LinkLabelLinkClickedEventArgs) Handles lnkBrowsLinks.LinkClicked
-        pnlMenu.Location = pnlSearch.Location
-        pnlSearch.Visible = False
-        pnlMenu.Visible = True
+        'pnlMenu.Location = pnlSearch.Location
+        'pnlSearch.Visible = False
+        'pnlMenu.Visible = True
+        MoveAnimateMenuPanels(1)
+
     End Sub
 
     Private Sub lnkFriends_LinkClicked(ByVal sender As System.Object, ByVal e As System.Windows.Forms.LinkLabelLinkClickedEventArgs) Handles lnkFriends.LinkClicked
         stlMain.Page = 1
-        SetBindingInfo(DNE.JikJikoo.StatusListType.Friends)
+        SetBindingInfo(StatusListType.Friends)
+
+    End Sub
+
+    Private Sub lnkFollowers_LinkClicked(ByVal sender As System.Object, ByVal e As System.Windows.Forms.LinkLabelLinkClickedEventArgs) Handles lnkFollowers.LinkClicked
+        stlMain.Page = 1
+        SetBindingInfo(StatusListType.Followers)
 
     End Sub
 
@@ -515,5 +559,4 @@ Public Class frmMain
 
 #End Region
 
-   
 End Class

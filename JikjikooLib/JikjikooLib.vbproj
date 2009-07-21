@@ -57,7 +57,7 @@
     <Import Include="System.Diagnostics" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DirectMessage.vb" />
+    <Compile Include="Components\DirectMessage.vb" />
     <Compile Include="Enums.vb" />
     <Compile Include="Events.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
@@ -77,11 +77,11 @@
     </Compile>
     <Compile Include="oAuth\oAuth.vb" />
     <Compile Include="oAuth\oAuthTwitter.vb" />
-    <Compile Include="Relationship.vb" />
-    <Compile Include="SearchResults.vb" />
-    <Compile Include="Status.vb" />
+    <Compile Include="Components\Relationship.vb" />
+    <Compile Include="Components\SearchResults.vb" />
+    <Compile Include="Components\Status.vb" />
     <Compile Include="TwitterApi.vb" />
-    <Compile Include="User.vb" />
+    <Compile Include="Components\User.vb" />
     <Compile Include="Util.vb" />
   </ItemGroup>
   <ItemGroup>
@@ -108,9 +108,6 @@
       <Project>{AD6738D4-105E-447A-8C4E-3913177D2C3B}</Project>
       <Name>SocksProxy</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Controls\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

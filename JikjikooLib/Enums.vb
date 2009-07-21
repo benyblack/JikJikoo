@@ -1,12 +1,5 @@
 ﻿
-Namespace DNE.JikJikoo
-
-    Public Enum ShortenServers
-        bit_ly
-        'is_gd
-        'tinyurl_com
-
-    End Enum
+Namespace DNE.Twitter
 
     Public Enum StatusListType
         FriendsTimeLine = 0
@@ -17,6 +10,7 @@ Namespace DNE.JikJikoo
         MyUpdates = 5
         SearchResults = 6
         Friends = 7
+        Followers = 8
 
     End Enum
 

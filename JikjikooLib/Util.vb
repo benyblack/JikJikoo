@@ -1,4 +1,5 @@
 ﻿Imports System.Runtime.InteropServices
+Imports DNE.Twitter
 
 Namespace DNE.JikJikoo
 
@@ -21,7 +22,7 @@ Namespace DNE.JikJikoo
         '</bitly>
         'http://tinyurl.com/api-create.php?url=
         Public Shared Function ShortenUrl(ByVal whoShorten As ShortenServers, ByVal longUrl As String) As String
-            Dim twa As New TwitterApi()
+            Dim twa As New Api()
             'Return twa.GetSimpleHttpGet(String.Format("http://is.gd/api.php?longurl={0}", longUrl))
             'Return twa.GetSimpleHttpGet(String.Format("http://api.bit.ly/shorten?version=2.0.1&longUrl={0}&login=jikjikoo&apiKey=R_737c18d68503f3ff2696387f43ceabde&format=xml", longUrl))
             Return twa.GetSimpleHttpGet(String.Format("http://tinyurl.com/api-create.php?url={0}", longUrl))
@@ -29,5 +30,11 @@ Namespace DNE.JikJikoo
 
     End Class
 
+    Public Enum ShortenServers
+        bit_ly
+        'is_gd
+        'tinyurl_com
+
+    End Enum
 
 End Namespace

@@ -21,7 +21,7 @@
         'First Check Login
         If Not _loggedin Then
             Dim jc As New JikConfigManager()
-            Dim tw As New DNE.JikJikoo.TwitterApi()
+            Dim tw As New DNE.Twitter.Api()
             tw.ConfigProxy(jc.proxytype, jc.proxyport, jc.proxyserver, jc.proxyuser, jc.proxypass)
             Dim u As DNE.Twitter.User = Nothing
             Try

@@ -1,4 +1,6 @@
-﻿Public Class frmOAuth
+﻿Imports DNE.Twitter
+
+Public Class frmOAuth
 
     Private _tempuser As String = ""
     Private _temppass As String = ""
@@ -18,7 +20,7 @@
     Dim jc As New JikConfigManager()
 
     Private Sub frmOAuth_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
-        Dim tw As New DNE.JikJikoo.TwitterApi()
+        Dim tw As New Api()
         tw.ConfigProxy(jc.proxytype, jc.proxyport, jc.proxyserver, jc.proxyuser, jc.proxypass)
         o = New oAuthExample.oAuthTwitter(tw)
         txtPIN.Enabled = False

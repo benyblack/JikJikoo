@@ -2,7 +2,7 @@
 
     Public username As String = ""
     Public password As String = ""
-    Public twa As DNE.JikJikoo.TwitterApi
+    Public twa As DNE.Twitter.Api
     Public CurrentUser As DNE.Twitter.User
 
 End Module
