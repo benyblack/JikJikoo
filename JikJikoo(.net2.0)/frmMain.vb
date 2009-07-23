@@ -208,6 +208,7 @@ Public Class frmMain
     End Sub
 
     Private Sub frmMain_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+        Util.SetButtonsStyle(Me)
         ReloadConfig()
         jikLogin.LoadLogin()
         AddHandler twa.HttpError, AddressOf TwitterApiHttpError

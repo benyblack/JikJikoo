@@ -54,6 +54,7 @@
     End Sub
 
     Private Sub ctrlUpdateStatus_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+        Util.SetButtonsStyle(Me)
         cboShorten.SelectedIndex = 0
 
     End Sub

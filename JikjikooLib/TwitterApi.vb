@@ -1039,7 +1039,12 @@ Namespace DNE.Twitter
 
 
                 Do
-                    bytes = ns.Read(bytesReceived, 0, bytesReceived.Length)
+                    Dim ssize As Int32 = socket.Available
+                    If ssize > bytesReceived.Length Then
+                        ssize = bytesReceived.Length
+                    End If
+                    bytes = socket.Receive(bytesReceived, ssize, 0)
+                    'bytes = ns.Read(bytesReceived, 0, bytesReceived.Length)
                     Thread.Sleep(25)
                     AddBytes(ba, bytesReceived, bytes)
 
@@ -1419,10 +1424,17 @@ Namespace DNE.Twitter
 
             'Else
 
-            'Dim b() As Byte = HttpDownloadSocket("GET", url, "")
-            'If b Is Nothing Then Return Nothing
-            'Dim ms As New IO.MemoryStream(b)
-            'Return Image.FromStream(ms)
+            'Try
+            '    Dim b() As Byte = HttpDownloadSocket("GET", url, "")
+            '    If b Is Nothing OrElse b.Length = 0 Then Return Nothing
+            '    Dim ms As New IO.MemoryStream(b)
+            '    Return Image.FromStream(ms)
+
+            'Catch ex As Exception
+            '    Return Nothing
+
+            'End Try
+
 
             'End If
             Return Nothing

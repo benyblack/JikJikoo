@@ -1,5 +1,6 @@
 ﻿Imports DNE.Twitter
 Imports System.Collections.ObjectModel
+Imports Microsoft.Win32
 
 Public Class Util
 
@@ -35,6 +36,84 @@ Public Class Util
         'Return twa.GetSimpleHttpGet(String.Format("http://is.gd/api.php?longurl={0}", longUrl))
         'Return twa.GetSimpleHttpGet(String.Format("http://tinyurl.com/api-create.php?url={0}", longUrl))
     End Function
+
+    Friend Enum Theme
+        WindowsClassic
+        XPBlue
+        XPGreen
+        XPSilver
+
+    End Enum
+
+    ''' <summary>
+    ''' Detecting windows theme
+    ''' from : http://www.codeproject.com/KB/cs/xptheme.aspx
+    ''' </summary>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    Friend Shared Function CurrentTheme() As Theme
+
+        Dim key As RegistryKey = Registry.CurrentUser.OpenSubKey("Software\Microsoft\Windows\CurrentVersion\ThemeManager")
+        If key IsNot Nothing Then
+            If "1" = key.GetValue("ThemeActive") Then
+                Dim s As String = key.GetValue("ColorName")
+                If s IsNot Nothing Then
+                    If [String].Compare(s, "NormalColor", True) = 0 Then
+                        Return Theme.XPBlue
+                    End If
+                    If [String].Compare(s, "HomeStead", True) = 0 Then
+                        Return Theme.XPGreen
+                    End If
+                    If [String].Compare(s, "Metallic", True) = 0 Then
+                        Return Theme.XPSilver
+                    End If
+                End If
+            End If
+        End If
+
+        Return Theme.WindowsClassic
+    End Function
+
+
+    ''' <summary>
+    ''' for an issue addressed by soheilpro
+    ''' button cannot be read in windows classic theme
+    ''' </summary>
+    ''' <param name="ctr"></param>
+    ''' <remarks></remarks>
+    Friend Shared Sub SetButtonsStyle(ByRef ctr As Control)
+        If Util.CurrentTheme() = Util.Theme.WindowsClassic Then
+            For Each c As Control In ctr.Controls
+                If c.GetType Is GetType(Button) Then
+                    c.BackColor = SystemColors.Control
+                    c.ForeColor = SystemColors.ControlText
+
+                End If
+               
+
+            Next
+        End If
+    End Sub
+
+    ''' <summary>
+    ''' for an issue addressed by soheilpro
+    ''' button cannot be read in windows classic theme
+    ''' </summary>
+    ''' <param name="f"></param>
+    ''' <remarks></remarks>
+    Friend Shared Sub SetButtonsStyle(ByRef f As Form)
+        If Util.CurrentTheme() = Util.Theme.WindowsClassic Then
+            For Each c As Control In f.Controls
+                If c.GetType Is GetType(Button) Then
+                    c.BackColor = SystemColors.Control
+                    c.ForeColor = SystemColors.ControlText
+
+                End If
+
+
+            Next
+        End If
+    End Sub
 
     Public Shared Function HashSHA1(ByVal ParamArray p() As String) As String
         If p Is Nothing OrElse p.Length = 0 Then Return ""
@@ -125,7 +204,7 @@ Public Class Util
         Return sc
     End Function
     Public Shared Function ContainRtlChars(ByVal s As String) As Boolean
-      For i As Int32 = 0 To s.Length - 1
+        For i As Int32 = 0 To s.Length - 1
             Dim ii As Int32 = AscW(s.ToCharArray()(i))
             If ii > 1535 And ii < 1792 Then
                 Return True

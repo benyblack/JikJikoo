@@ -141,4 +141,7 @@
         End If
     End Function
 
+    Private Sub ctrLoginOAuth_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
+        Util.SetButtonsStyle(Me)
+    End Sub
 End Class

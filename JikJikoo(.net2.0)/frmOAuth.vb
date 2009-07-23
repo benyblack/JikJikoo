@@ -20,6 +20,7 @@ Public Class frmOAuth
     Dim jc As New JikConfigManager()
 
     Private Sub frmOAuth_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+        Util.SetButtonsStyle(Me)
         Dim tw As New Api()
         tw.ConfigProxy(jc.proxytype, jc.proxyport, jc.proxyserver, jc.proxyuser, jc.proxypass)
         o = New oAuthExample.oAuthTwitter(tw)

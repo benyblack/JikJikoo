@@ -2,6 +2,7 @@
 Public Class frmConfig
 
     Private Sub frmConfig_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+        Util.SetButtonsStyle(Me)
         Dim ac As New AppConfig()
         ac.ConfigType = 1
         txtIP.Text = ac.GetValue("proxyserver")
