@@ -650,7 +650,7 @@ Namespace DNE.Twitter
                 query += String.Format("page=" & page.ToString())
 
             End If
-            Dim s As String = HttpRequest("GET", folowersidsurl, query)
+            Dim s As String = HttpRequest("GET", followersurl, query)
             Return ParsTwitterXML(Of Collection(Of DNE.Twitter.User))(s, TwitterXmlTypes.Users)
 
         End Function
