@@ -861,7 +861,6 @@ Namespace DNE.Twitter
             Try
                 b = wc.DownloadData(url)
 
-
             Catch ex As WebException
                 '
                 ' Handle HTTP 404 errors gracefully and return a null string to indicate there is no content.
