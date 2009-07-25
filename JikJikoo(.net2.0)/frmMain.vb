@@ -175,9 +175,10 @@ Public Class frmMain
         c2.Location = New Point(c1.Left - c1.Width, c1.Top)
         c1.Visible = False
         c2.Visible = True
-        For i As Int32 = 0 To 20
+        For i As Int32 = 0 To 5
             Thread.Sleep(25)
-            c2.Left += 25
+            c2.Left += 100
+            c2.Refresh()
 
         Next
         c2.Left = c1.Left
