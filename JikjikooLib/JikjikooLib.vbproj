@@ -80,6 +80,14 @@
     <Compile Include="Components\Relationship.vb" />
     <Compile Include="Components\SearchResults.vb" />
     <Compile Include="Components\Status.vb" />
+    <Compile Include="ShortenUrl\BitlyProvider.vb" />
+    <Compile Include="ShortenUrl\CortasProvider.vb" />
+    <Compile Include="ShortenUrl\IsgdProvider.vb" />
+    <Compile Include="ShortenUrl\KissabeProvider.vb" />
+    <Compile Include="ShortenUrl\ProviderBase.vb" />
+    <Compile Include="ShortenUrl\TinyArrowsProvider.vb" />
+    <Compile Include="ShortenUrl\TinyURLProvider.vb" />
+    <Compile Include="ShortenUrl\TrimProvider.vb" />
     <Compile Include="TwitterApi.vb" />
     <Compile Include="Components\User.vb" />
     <Compile Include="Util.vb" />

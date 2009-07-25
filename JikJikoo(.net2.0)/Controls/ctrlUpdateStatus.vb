@@ -1,4 +1,4 @@
-﻿Imports JikJikoo.ShortenUrl
+﻿Imports DNE.JikJikoo.ShortenUrl
 
 Public Class ctrlUpdateStatus
 
@@ -70,7 +70,7 @@ Public Class ctrlUpdateStatus
             ss = ShortenServers.tr_im
 
         End If
-        txtStatus.Text += Util.ShortenUrl(ss, txtShorten.Text)
+        txtStatus.Text += DNE.JikJikoo.Util.ShortenUrl(ss, txtShorten.Text)
 
 
     End Sub

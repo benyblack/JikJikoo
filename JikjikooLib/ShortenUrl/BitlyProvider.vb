@@ -2,7 +2,7 @@
 Imports System.Net
 Imports System.IO
 
-Namespace ShortenUrl
+Namespace DNE.JikJikoo.ShortenUrl
 
     Public Class BitlyProvider
         Inherits ProviderBase

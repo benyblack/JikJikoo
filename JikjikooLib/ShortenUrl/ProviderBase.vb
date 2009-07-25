@@ -1,6 +1,6 @@
 ﻿'from: http://shorturlcreator.codeplex.com/
 
-Namespace ShortenUrl
+Namespace DNE.JikJikoo.ShortenUrl
 
     Public Class ProviderBase
 

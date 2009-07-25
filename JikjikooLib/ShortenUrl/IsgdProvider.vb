@@ -3,13 +3,13 @@
 Imports System.Net
 Imports System.IO
 
-Namespace ShortenUrl
+Namespace DNE.JikJikoo.ShortenUrl
 
-    Public Class KissabeProvider
+    Public Class IsgdProvider
         Inherits ProviderBase
 
         Public Sub New()
-            mProviderURL = "http://kissa.be/api/shortener/url?content={0}"
+            mProviderURL = "http://is.gd/api.php?longurl={0}"
         End Sub
 
         Public Overrides Function GetShortURL(ByVal longURL As String) As String

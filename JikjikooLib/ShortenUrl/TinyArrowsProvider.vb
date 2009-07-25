@@ -2,14 +2,15 @@
 
 Imports System.Net
 Imports System.IO
+Imports System.Web
 
-Namespace ShortenUrl
+Namespace DNE.JikJikoo.ShortenUrl
 
-    Public Class IsgdProvider
+    Public Class TinyArrowsProvider
         Inherits ProviderBase
 
         Public Sub New()
-            mProviderURL = "http://is.gd/api.php?longurl={0}"
+            mProviderURL = "http://tinyarro.ws/api-create.php?url={0}"
         End Sub
 
         Public Overrides Function GetShortURL(ByVal longURL As String) As String
@@ -22,6 +23,7 @@ Namespace ShortenUrl
             response = request.GetResponse()
             reader = New StreamReader(response.GetResponseStream())
             result = reader.ReadToEnd()
+            result = HttpUtility.HtmlDecode(result)
             Return result
         End Function
 
