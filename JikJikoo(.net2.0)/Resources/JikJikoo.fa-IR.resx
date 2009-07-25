@@ -153,4 +153,7 @@
   <data name="VeryfingError" xml:space="preserve">
     <value>مراحل تأیید اعتبار باید تکمیل شود</value>
   </data>
+  <data name="DirectButton" xml:space="preserve">
+    <value>ارسال پیام</value>
+  </data>
 </root>

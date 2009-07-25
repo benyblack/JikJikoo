@@ -5,6 +5,8 @@ Public Class ctrlUpdateStatus
     Public Event UpdateStarted As EventHandler
     Public Event UpdateCompleted As EventHandler
 
+#Region " Reply "
+
     Private _in_reply_to_status_id As String = ""
     Public Property in_reply_to_status_id() As String
         Get
@@ -26,19 +28,61 @@ Public Class ctrlUpdateStatus
         End Set
     End Property
 
+#End Region
+
+#Region " Direct Message "
+
+    Private _directMessage As Boolean = False
+    Public Property DirectMessage() As Boolean
+        Get
+            Return _directMessage
+        End Get
+        Set(ByVal value As Boolean)
+            _directMessage = value
+            SetButtonText()
+        End Set
+    End Property
+
+    Private _SendMessageTo As String = ""
+    Public Property SendMessageTo() As String
+        Get
+            Return _SendMessageTo
+        End Get
+        Set(ByVal value As String)
+            _SendMessageTo = value
+        End Set
+    End Property
+
+#End Region
+
     Private Sub SetButtonText()
         Dim rm As New System.ComponentModel.ComponentResourceManager(Me.GetType)
+        If _directMessage Then
+            btnUpdate.Text = My.Resources.JikJikoo.DirectButton
+            Exit Sub
+
+        End If
         If _in_reply_to_status_id <> "" Then
-            btnUpdate.Text = My.Resources.JikJikoo.ReplyButton  'rm.GetString("ReplyButton")
+            btnUpdate.Text = My.Resources.JikJikoo.ReplyButton
+
         Else
             btnUpdate.Text = rm.GetString("btnUpdate.Text")
+
         End If
+
     End Sub
 
     Private Sub btnUpdate_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnUpdate.Click
         RaiseEvent UpdateStarted(Nothing, Nothing)
-        twa.UpdateStatus(txtStatus.Text.Trim(), _in_reply_to_status_id)
+        If _directMessage And _SendMessageTo <> "" Then
+            twa.SendMessage(_SendMessageTo, txtStatus.Text)
+
+        Else
+            twa.UpdateStatus(txtStatus.Text.Trim(), _in_reply_to_status_id)
+
+        End If
         RaiseEvent UpdateCompleted(Nothing, Nothing)
+        _directMessage = False
         txtStatus.Text = ""
 
     End Sub
@@ -96,4 +140,5 @@ Public Class ctrlUpdateStatus
 
         End If
     End Sub
+
 End Class

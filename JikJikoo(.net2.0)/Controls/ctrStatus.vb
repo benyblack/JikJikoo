@@ -248,7 +248,7 @@ Public Class ctrStatus
 
         ElseIf verb.ToLower = "tag" Then
             whatisClickedInTxtStatus = txt.Substring(0, txt.Length - 4)
-            RaiseEvent TwitEvent(Me, New TwitEventArgs(Status, whatisClickedInTxtStatus, TwitEvents.SearchTags))
+            RaiseEvent TwitEvent(Me, New TwitEventArgs(Status, whatisClickedInTxtStatus, TwitEvents.HashTag))
 
 
         ElseIf verb.ToLower = "url" Then
@@ -286,6 +286,16 @@ Public Class ctrStatus
 
     Private Sub lblUserName_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles lblUserName.Click
         whatisClickedInTxtStatus = lblUserName.Text
+        If Array.IndexOf(FriendsIds, Status.User.Id) = -1 Then
+            SendDirectMessageToolStripMenuItem.Enabled = False
+
+        ElseIf Array.IndexOf(FollowersId, Status.User.Id) = -1 Then
+            SendDirectMessageToolStripMenuItem.Enabled = False
+
+        Else
+            SendDirectMessageToolStripMenuItem.Enabled = True
+
+        End If
         mnuUsername.Show(lblUserName, 5, 5)
 
     End Sub
@@ -296,12 +306,26 @@ Public Class ctrStatus
 
     End Sub
 
+    Private Sub SendDirectMessageToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles SendDirectMessageToolStripMenuItem.Click
+        Dim sn As String = ""
+        If User IsNot Nothing Then
+            sn = User.Screen_Name
+
+        ElseIf Status IsNot Nothing Then
+            sn = Status.User.Screen_Name
+
+        End If
+        RaiseEvent TwitEvent(Me, New TwitEventArgs(Nothing, sn, TwitEvents.DirectMessage))
+
+    End Sub
+
     Private Sub ctrStatus_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         Util.SetButtonsStyle(Me)
 
     End Sub
 
 #End Region
+
 
 
 End Class

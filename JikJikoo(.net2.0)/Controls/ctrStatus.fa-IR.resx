@@ -167,4 +167,34 @@
   <data name="FlowLayoutPanel1.Size" type="System.Drawing.Size, System.Drawing">
     <value>155, 17</value>
   </data>
+  <data name="UseToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>183, 22</value>
+  </data>
+  <data name="UseToolStripMenuItem.Text" xml:space="preserve">
+    <value> &amp;Use</value>
+  </data>
+  <data name="ReplyToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>183, 22</value>
+  </data>
+  <data name="RTToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>183, 22</value>
+  </data>
+  <data name="RTToolStripMenuItem.Text" xml:space="preserve">
+    <value>R&amp;T</value>
+  </data>
+  <data name="MentionsToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>183, 22</value>
+  </data>
+  <data name="MentionsToolStripMenuItem.Text" xml:space="preserve">
+    <value>&amp;Mentions</value>
+  </data>
+  <data name="SendDirectMessageToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>183, 22</value>
+  </data>
+  <data name="SendDirectMessageToolStripMenuItem.Text" xml:space="preserve">
+    <value>&amp;Send Direct Message</value>
+  </data>
+  <data name="mnuUsername.Size" type="System.Drawing.Size, System.Drawing">
+    <value>184, 136</value>
+  </data>
 </root>

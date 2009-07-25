@@ -140,7 +140,7 @@
     <value>پیام ها</value>
   </data>
   <data name="lnkFavorites.Location" type="System.Drawing.Point, System.Drawing">
-    <value>205, 5</value>
+    <value>297, 5</value>
   </data>
   <data name="lnkFavorites.Size" type="System.Drawing.Size, System.Drawing">
     <value>89, 13</value>
@@ -149,7 +149,7 @@
     <value>مطالب مورد علاقه</value>
   </data>
   <data name="lnkMyUpdates.Location" type="System.Drawing.Point, System.Drawing">
-    <value>300, 5</value>
+    <value>392, 5</value>
   </data>
   <data name="lnkMyUpdates.Size" type="System.Drawing.Size, System.Drawing">
     <value>54, 13</value>
@@ -1114,8 +1114,17 @@
         AADAHwAAAA8AAIAHAACABwAAgAcAAIADAACAAQAAgAEAAMAMAADgHAAA+HwAAP/+AAA=
 </value>
   </data>
+  <data name="lnkSent.Location" type="System.Drawing.Point, System.Drawing">
+    <value>205, 5</value>
+  </data>
+  <data name="lnkSent.Size" type="System.Drawing.Size, System.Drawing">
+    <value>86, 13</value>
+  </data>
+  <data name="lnkSent.Text" xml:space="preserve">
+    <value>پیام های ارسالی</value>
+  </data>
   <data name="lnkSearchLinks.Location" type="System.Drawing.Point, System.Drawing">
-    <value>360, 5</value>
+    <value>468, 5</value>
   </data>
   <data name="pnlMenu.Location" type="System.Drawing.Point, System.Drawing">
     <value>5, 83</value>
@@ -2059,5 +2068,8 @@
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFf3/AAD4vwAA+R8AAPA/
         AADAHwAAAA8AAIAHAACABwAAgAcAAIADAACAAQAAgAEAAMAMAADgHAAA+HwAAP/+AAA=
 </value>
+  </data>
+  <data name="$this.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>Inherit</value>
   </data>
 </root>

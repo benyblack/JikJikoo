@@ -74,7 +74,12 @@ Public Class frmMain
 
                     'direct messages (inbox)
                 ElseIf curSttsType = StatusListType.DirectMessages Then
-                    sts = Util.DirectMessage2Status(twa.DirectMessages(stlMain.LastId, Page))
+                    sts = Util.DirectMessage2Status(twa.DirectMessages(stlMain.LastId, Page), True)
+                    stlMain.AddStatuses(sts)
+
+                    'sent Messages (sent)
+                ElseIf curSttsType = StatusListType.SentMessages Then
+                    sts = Util.DirectMessage2Status(twa.SentMessages(stlMain.LastId, Page), False)
                     stlMain.AddStatuses(sts)
 
                     'search results
@@ -259,6 +264,8 @@ Public Class frmMain
                 u = twa.UserShow(jikLogin.txtUid.Text)
                 If u Is Nothing Then Exit Sub
                 CurrentUser = u
+                FriendsIds = twa.FriendsIds()
+                FollowersId = twa.FollowersIds()
                 Dim img As Image = twa.GetImage(CurrentUser.Profile_image_url)
                 If img IsNot Nothing Then jikLogin.picUser.Image = img
                 'lblUser.Text = CurrentUser.Screen_Name
@@ -319,17 +326,21 @@ Public Class frmMain
     Private Sub stlMain_TwitCommand(ByVal sender As Object, ByVal t As TwitEventArgs) Handles stlMain.TwitCommand
         jikUpdate.in_reply_to_status_id = ""
         If t.TwitEvent = TwitEvents.Use_ScreenName Then
+            jikUpdate.DirectMessage = False
             jikUpdate.txtStatus.Paste("@" & t.Text)
 
         ElseIf t.TwitEvent = TwitEvents.RT Then
+            jikUpdate.DirectMessage = False
             jikUpdate.txtStatus.Text = "RT @" & t.Status.User.Screen_Name & " " & t.Status.Text
 
         ElseIf t.TwitEvent = TwitEvents.Reply Then
+            jikUpdate.DirectMessage = False
             jikUpdate.in_reply_to_status_id = t.Status.Id
             jikUpdate.in_reply_to_screen_name = t.Status.User.Screen_Name
             jikUpdate.txtStatus.Text = "@" & t.Status.User.Screen_Name
 
         ElseIf t.TwitEvent = TwitEvents.UserStatuses Then
+            jikUpdate.DirectMessage = False
             curSttsParams.Value = t.Text
             curSttsParams.Key = ""
             WaitingForCleanRefresh = True
@@ -337,7 +348,12 @@ Public Class frmMain
             curSttsType = StatusListType.UserUpdates
             TimerRefresh_Tick(Me, Nothing)
 
-        ElseIf t.TwitEvent = TwitEvents.SearchTags Then
+        ElseIf t.TwitEvent = TwitEvents.DirectMessage Then
+            jikUpdate.DirectMessage = True
+            jikUpdate.SendMessageTo = t.Text
+
+        ElseIf t.TwitEvent = TwitEvents.HashTag Then
+            jikUpdate.DirectMessage = False
             curSttsParams.Value = "%23" & t.Text
             curSttsParams.Key = ""
             WaitingForCleanRefresh = True
@@ -347,6 +363,7 @@ Public Class frmMain
             lnkSearchLinks_LinkClicked(Nothing, Nothing)
 
         End If
+
     End Sub
 
     Private Sub stlMain_PagerPrev(ByVal sender As Object, ByVal e As System.EventArgs) Handles stlMain.PagerPrev
@@ -469,6 +486,12 @@ Public Class frmMain
     Private Sub lnkMessages_LinkClicked(ByVal sender As System.Object, ByVal e As System.Windows.Forms.LinkLabelLinkClickedEventArgs) Handles lnkMessages.LinkClicked
         stlMain.Page = 1
         SetBindingInfo(StatusListType.DirectMessages)
+
+    End Sub
+
+    Private Sub lnkSent_LinkClicked(ByVal sender As System.Object, ByVal e As System.Windows.Forms.LinkLabelLinkClickedEventArgs) Handles lnkSent.LinkClicked
+        stlMain.Page = 1
+        SetBindingInfo(StatusListType.SentMessages)
 
     End Sub
 

@@ -40,6 +40,7 @@ Partial Class frmMain
         Me.AboutToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
         Me.ExitToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
         Me.pnlMenu = New System.Windows.Forms.Panel
+        Me.lnkSent = New System.Windows.Forms.LinkLabel
         Me.lnkSearchLinks = New System.Windows.Forms.LinkLabel
         Me.lnkFriends = New System.Windows.Forms.LinkLabel
         Me.lnkFollowers = New System.Windows.Forms.LinkLabel
@@ -64,43 +65,62 @@ Partial Class frmMain
         '
         'btnConfig
         '
+        Me.btnConfig.AccessibleDescription = Nothing
+        Me.btnConfig.AccessibleName = Nothing
         resources.ApplyResources(Me.btnConfig, "btnConfig")
+        Me.btnConfig.BackgroundImage = Nothing
+        Me.btnConfig.Font = Nothing
         Me.btnConfig.ForeColor = System.Drawing.Color.Black
         Me.btnConfig.Name = "btnConfig"
         Me.btnConfig.UseVisualStyleBackColor = True
         '
         'lnkFriendsTimeLine
         '
+        Me.lnkFriendsTimeLine.AccessibleDescription = Nothing
+        Me.lnkFriendsTimeLine.AccessibleName = Nothing
         resources.ApplyResources(Me.lnkFriendsTimeLine, "lnkFriendsTimeLine")
+        Me.lnkFriendsTimeLine.Font = Nothing
         Me.lnkFriendsTimeLine.LinkColor = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(255, Byte), Integer))
         Me.lnkFriendsTimeLine.Name = "lnkFriendsTimeLine"
         Me.lnkFriendsTimeLine.TabStop = True
         '
         'lnkMentions
         '
+        Me.lnkMentions.AccessibleDescription = Nothing
+        Me.lnkMentions.AccessibleName = Nothing
         resources.ApplyResources(Me.lnkMentions, "lnkMentions")
+        Me.lnkMentions.Font = Nothing
         Me.lnkMentions.LinkColor = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(255, Byte), Integer))
         Me.lnkMentions.Name = "lnkMentions"
         Me.lnkMentions.TabStop = True
         '
         'lnkMessages
         '
+        Me.lnkMessages.AccessibleDescription = Nothing
+        Me.lnkMessages.AccessibleName = Nothing
         resources.ApplyResources(Me.lnkMessages, "lnkMessages")
+        Me.lnkMessages.Font = Nothing
         Me.lnkMessages.LinkColor = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(255, Byte), Integer))
         Me.lnkMessages.Name = "lnkMessages"
         Me.lnkMessages.TabStop = True
         '
         'lnkFavorites
         '
+        Me.lnkFavorites.AccessibleDescription = Nothing
+        Me.lnkFavorites.AccessibleName = Nothing
         resources.ApplyResources(Me.lnkFavorites, "lnkFavorites")
+        Me.lnkFavorites.Font = Nothing
         Me.lnkFavorites.LinkColor = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(255, Byte), Integer))
         Me.lnkFavorites.Name = "lnkFavorites"
         Me.lnkFavorites.TabStop = True
         '
         'lnkMyUpdates
         '
-        Me.lnkMyUpdates.AutoEllipsis = True
+        Me.lnkMyUpdates.AccessibleDescription = Nothing
+        Me.lnkMyUpdates.AccessibleName = Nothing
         resources.ApplyResources(Me.lnkMyUpdates, "lnkMyUpdates")
+        Me.lnkMyUpdates.AutoEllipsis = True
+        Me.lnkMyUpdates.Font = Nothing
         Me.lnkMyUpdates.LinkColor = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(255, Byte), Integer))
         Me.lnkMyUpdates.Name = "lnkMyUpdates"
         Me.lnkMyUpdates.TabStop = True
@@ -108,129 +128,206 @@ Partial Class frmMain
         'NotifyIcon1
         '
         Me.NotifyIcon1.BalloonTipIcon = System.Windows.Forms.ToolTipIcon.Info
-        Me.NotifyIcon1.ContextMenuStrip = Me.ContextMenuStrip1
         resources.ApplyResources(Me.NotifyIcon1, "NotifyIcon1")
+        Me.NotifyIcon1.ContextMenuStrip = Me.ContextMenuStrip1
         '
         'ContextMenuStrip1
         '
+        Me.ContextMenuStrip1.AccessibleDescription = Nothing
+        Me.ContextMenuStrip1.AccessibleName = Nothing
+        resources.ApplyResources(Me.ContextMenuStrip1, "ContextMenuStrip1")
+        Me.ContextMenuStrip1.BackgroundImage = Nothing
+        Me.ContextMenuStrip1.Font = Nothing
         Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.HideToolStripMenuItem, Me.ShowToolStripMenuItem, Me.ToolStripSeparator1, Me.AboutToolStripMenuItem, Me.ExitToolStripMenuItem})
         Me.ContextMenuStrip1.Name = "ContextMenuStrip1"
-        resources.ApplyResources(Me.ContextMenuStrip1, "ContextMenuStrip1")
         '
         'HideToolStripMenuItem
         '
-        Me.HideToolStripMenuItem.Name = "HideToolStripMenuItem"
+        Me.HideToolStripMenuItem.AccessibleDescription = Nothing
+        Me.HideToolStripMenuItem.AccessibleName = Nothing
         resources.ApplyResources(Me.HideToolStripMenuItem, "HideToolStripMenuItem")
+        Me.HideToolStripMenuItem.BackgroundImage = Nothing
+        Me.HideToolStripMenuItem.Name = "HideToolStripMenuItem"
+        Me.HideToolStripMenuItem.ShortcutKeyDisplayString = Nothing
         '
         'ShowToolStripMenuItem
         '
-        Me.ShowToolStripMenuItem.Name = "ShowToolStripMenuItem"
+        Me.ShowToolStripMenuItem.AccessibleDescription = Nothing
+        Me.ShowToolStripMenuItem.AccessibleName = Nothing
         resources.ApplyResources(Me.ShowToolStripMenuItem, "ShowToolStripMenuItem")
+        Me.ShowToolStripMenuItem.BackgroundImage = Nothing
+        Me.ShowToolStripMenuItem.Name = "ShowToolStripMenuItem"
+        Me.ShowToolStripMenuItem.ShortcutKeyDisplayString = Nothing
         '
         'ToolStripSeparator1
         '
-        Me.ToolStripSeparator1.Name = "ToolStripSeparator1"
+        Me.ToolStripSeparator1.AccessibleDescription = Nothing
+        Me.ToolStripSeparator1.AccessibleName = Nothing
         resources.ApplyResources(Me.ToolStripSeparator1, "ToolStripSeparator1")
+        Me.ToolStripSeparator1.Name = "ToolStripSeparator1"
         '
         'AboutToolStripMenuItem
         '
-        Me.AboutToolStripMenuItem.Name = "AboutToolStripMenuItem"
+        Me.AboutToolStripMenuItem.AccessibleDescription = Nothing
+        Me.AboutToolStripMenuItem.AccessibleName = Nothing
         resources.ApplyResources(Me.AboutToolStripMenuItem, "AboutToolStripMenuItem")
+        Me.AboutToolStripMenuItem.BackgroundImage = Nothing
+        Me.AboutToolStripMenuItem.Name = "AboutToolStripMenuItem"
+        Me.AboutToolStripMenuItem.ShortcutKeyDisplayString = Nothing
         '
         'ExitToolStripMenuItem
         '
-        Me.ExitToolStripMenuItem.Name = "ExitToolStripMenuItem"
+        Me.ExitToolStripMenuItem.AccessibleDescription = Nothing
+        Me.ExitToolStripMenuItem.AccessibleName = Nothing
         resources.ApplyResources(Me.ExitToolStripMenuItem, "ExitToolStripMenuItem")
+        Me.ExitToolStripMenuItem.BackgroundImage = Nothing
+        Me.ExitToolStripMenuItem.Name = "ExitToolStripMenuItem"
+        Me.ExitToolStripMenuItem.ShortcutKeyDisplayString = Nothing
         '
         'pnlMenu
         '
+        Me.pnlMenu.AccessibleDescription = Nothing
+        Me.pnlMenu.AccessibleName = Nothing
+        resources.ApplyResources(Me.pnlMenu, "pnlMenu")
+        Me.pnlMenu.BackgroundImage = Nothing
+        Me.pnlMenu.Controls.Add(Me.lnkSent)
         Me.pnlMenu.Controls.Add(Me.lnkSearchLinks)
         Me.pnlMenu.Controls.Add(Me.lnkFriendsTimeLine)
         Me.pnlMenu.Controls.Add(Me.lnkMentions)
         Me.pnlMenu.Controls.Add(Me.lnkMessages)
         Me.pnlMenu.Controls.Add(Me.lnkFavorites)
         Me.pnlMenu.Controls.Add(Me.lnkMyUpdates)
-        resources.ApplyResources(Me.pnlMenu, "pnlMenu")
+        Me.pnlMenu.Font = Nothing
         Me.pnlMenu.Name = "pnlMenu"
+        '
+        'lnkSent
+        '
+        Me.lnkSent.AccessibleDescription = Nothing
+        Me.lnkSent.AccessibleName = Nothing
+        resources.ApplyResources(Me.lnkSent, "lnkSent")
+        Me.lnkSent.Font = Nothing
+        Me.lnkSent.LinkColor = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.lnkSent.Name = "lnkSent"
+        Me.lnkSent.TabStop = True
         '
         'lnkSearchLinks
         '
-        Me.lnkSearchLinks.AutoEllipsis = True
+        Me.lnkSearchLinks.AccessibleDescription = Nothing
+        Me.lnkSearchLinks.AccessibleName = Nothing
         resources.ApplyResources(Me.lnkSearchLinks, "lnkSearchLinks")
+        Me.lnkSearchLinks.AutoEllipsis = True
+        Me.lnkSearchLinks.Font = Nothing
         Me.lnkSearchLinks.LinkColor = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(255, Byte), Integer))
         Me.lnkSearchLinks.Name = "lnkSearchLinks"
         Me.lnkSearchLinks.TabStop = True
         '
         'lnkFriends
         '
-        Me.lnkFriends.AutoEllipsis = True
+        Me.lnkFriends.AccessibleDescription = Nothing
+        Me.lnkFriends.AccessibleName = Nothing
         resources.ApplyResources(Me.lnkFriends, "lnkFriends")
+        Me.lnkFriends.AutoEllipsis = True
+        Me.lnkFriends.Font = Nothing
         Me.lnkFriends.LinkColor = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(255, Byte), Integer))
         Me.lnkFriends.Name = "lnkFriends"
         Me.lnkFriends.TabStop = True
         '
         'lnkFollowers
         '
-        Me.lnkFollowers.AutoEllipsis = True
+        Me.lnkFollowers.AccessibleDescription = Nothing
+        Me.lnkFollowers.AccessibleName = Nothing
         resources.ApplyResources(Me.lnkFollowers, "lnkFollowers")
+        Me.lnkFollowers.AutoEllipsis = True
+        Me.lnkFollowers.Font = Nothing
         Me.lnkFollowers.LinkColor = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(255, Byte), Integer))
         Me.lnkFollowers.Name = "lnkFollowers"
         Me.lnkFollowers.TabStop = True
         '
         'lnkSearch
         '
-        Me.lnkSearch.AutoEllipsis = True
+        Me.lnkSearch.AccessibleDescription = Nothing
+        Me.lnkSearch.AccessibleName = Nothing
         resources.ApplyResources(Me.lnkSearch, "lnkSearch")
+        Me.lnkSearch.AutoEllipsis = True
+        Me.lnkSearch.Font = Nothing
         Me.lnkSearch.LinkColor = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(255, Byte), Integer))
         Me.lnkSearch.Name = "lnkSearch"
         Me.lnkSearch.TabStop = True
         '
         'pnlSearch
         '
+        Me.pnlSearch.AccessibleDescription = Nothing
+        Me.pnlSearch.AccessibleName = Nothing
+        resources.ApplyResources(Me.pnlSearch, "pnlSearch")
+        Me.pnlSearch.BackgroundImage = Nothing
         Me.pnlSearch.Controls.Add(Me.lnkFollowers)
         Me.pnlSearch.Controls.Add(Me.lnkFriends)
         Me.pnlSearch.Controls.Add(Me.txtSearch)
         Me.pnlSearch.Controls.Add(Me.lnkBrowsLinks)
         Me.pnlSearch.Controls.Add(Me.lnkSearch)
-        resources.ApplyResources(Me.pnlSearch, "pnlSearch")
+        Me.pnlSearch.Font = Nothing
         Me.pnlSearch.Name = "pnlSearch"
         '
         'txtSearch
         '
+        Me.txtSearch.AccessibleDescription = Nothing
+        Me.txtSearch.AccessibleName = Nothing
         resources.ApplyResources(Me.txtSearch, "txtSearch")
+        Me.txtSearch.BackgroundImage = Nothing
+        Me.txtSearch.Font = Nothing
         Me.txtSearch.Name = "txtSearch"
         '
         'lnkBrowsLinks
         '
-        Me.lnkBrowsLinks.AutoEllipsis = True
+        Me.lnkBrowsLinks.AccessibleDescription = Nothing
+        Me.lnkBrowsLinks.AccessibleName = Nothing
         resources.ApplyResources(Me.lnkBrowsLinks, "lnkBrowsLinks")
+        Me.lnkBrowsLinks.AutoEllipsis = True
+        Me.lnkBrowsLinks.Font = Nothing
         Me.lnkBrowsLinks.LinkColor = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(255, Byte), Integer))
         Me.lnkBrowsLinks.Name = "lnkBrowsLinks"
         Me.lnkBrowsLinks.TabStop = True
         '
         'jikLogin
         '
+        Me.jikLogin.AccessibleDescription = Nothing
+        Me.jikLogin.AccessibleName = Nothing
         resources.ApplyResources(Me.jikLogin, "jikLogin")
         Me.jikLogin.BackColor = System.Drawing.Color.Transparent
+        Me.jikLogin.BackgroundImage = Nothing
+        Me.jikLogin.Font = Nothing
         Me.jikLogin.Name = "jikLogin"
         '
         'stlMain
         '
+        Me.stlMain.AccessibleDescription = Nothing
+        Me.stlMain.AccessibleName = Nothing
         resources.ApplyResources(Me.stlMain, "stlMain")
+        Me.stlMain.BackgroundImage = Nothing
+        Me.stlMain.Font = Nothing
         Me.stlMain.Name = "stlMain"
         '
         'jikUpdate
         '
+        Me.jikUpdate.AccessibleDescription = Nothing
+        Me.jikUpdate.AccessibleName = Nothing
         resources.ApplyResources(Me.jikUpdate, "jikUpdate")
+        Me.jikUpdate.BackgroundImage = Nothing
+        Me.jikUpdate.DirectMessage = False
+        Me.jikUpdate.Font = Nothing
         Me.jikUpdate.in_reply_to_screen_name = ""
         Me.jikUpdate.in_reply_to_status_id = ""
         Me.jikUpdate.Name = "jikUpdate"
+        Me.jikUpdate.SendMessageTo = ""
         '
         'frmMain
         '
+        Me.AccessibleDescription = Nothing
+        Me.AccessibleName = Nothing
         resources.ApplyResources(Me, "$this")
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.Black
+        Me.BackgroundImage = Nothing
         Me.Controls.Add(Me.jikLogin)
         Me.Controls.Add(Me.pnlMenu)
         Me.Controls.Add(Me.btnConfig)
@@ -273,4 +370,5 @@ Partial Class frmMain
     Friend WithEvents txtSearch As System.Windows.Forms.TextBox
     Friend WithEvents lnkFollowers As System.Windows.Forms.LinkLabel
     Friend WithEvents lnkFriends As System.Windows.Forms.LinkLabel
+    Friend WithEvents lnkSent As System.Windows.Forms.LinkLabel
 End Class

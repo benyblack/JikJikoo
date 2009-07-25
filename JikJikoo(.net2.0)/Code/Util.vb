@@ -131,7 +131,7 @@ Public Class Util
     ''' <param name="dmc"></param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    Friend Shared Function DirectMessage2Status(ByVal dmc As Collection(Of DirectMessage)) As Collection(Of Status)
+    Friend Shared Function DirectMessage2Status(ByVal dmc As Collection(Of DirectMessage), ByVal inbox As Boolean) As Collection(Of Status)
         If dmc Is Nothing Then Return Nothing
         Dim sc As New Collection(Of Status)
         For i As Int32 = 0 To dmc.Count - 1
@@ -139,7 +139,13 @@ Public Class Util
             st.Id = dmc(i).id
             st.Created_At = dmc(i).created_at
             st.Text = dmc(i).text
-            st.User = dmc(i).Sender
+            If inbox Then
+                st.User = dmc(i).Sender
+
+            Else
+                st.User = dmc(i).Recipient
+
+            End If
 
             sc.Add(st)
 

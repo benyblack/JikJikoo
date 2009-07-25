@@ -35,6 +35,7 @@ Partial Class ctrStatus
         Me.ReplyToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
         Me.RTToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
         Me.MentionsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
+        Me.SendDirectMessageToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
         CType(Me.picUser, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.FlowLayoutPanel1.SuspendLayout()
         Me.mnuUsername.SuspendLayout()
@@ -108,7 +109,7 @@ Partial Class ctrStatus
         resources.ApplyResources(Me.mnuUsername, "mnuUsername")
         Me.mnuUsername.BackgroundImage = Nothing
         Me.mnuUsername.Font = Nothing
-        Me.mnuUsername.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.UseToolStripMenuItem, Me.ReplyToolStripMenuItem, Me.RTToolStripMenuItem, Me.MentionsToolStripMenuItem})
+        Me.mnuUsername.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.UseToolStripMenuItem, Me.ReplyToolStripMenuItem, Me.RTToolStripMenuItem, Me.MentionsToolStripMenuItem, Me.SendDirectMessageToolStripMenuItem})
         Me.mnuUsername.Name = "ContextMenuStrip1"
         '
         'UseToolStripMenuItem
@@ -147,6 +148,15 @@ Partial Class ctrStatus
         Me.MentionsToolStripMenuItem.Name = "MentionsToolStripMenuItem"
         Me.MentionsToolStripMenuItem.ShortcutKeyDisplayString = Nothing
         '
+        'SendDirectMessageToolStripMenuItem
+        '
+        Me.SendDirectMessageToolStripMenuItem.AccessibleDescription = Nothing
+        Me.SendDirectMessageToolStripMenuItem.AccessibleName = Nothing
+        resources.ApplyResources(Me.SendDirectMessageToolStripMenuItem, "SendDirectMessageToolStripMenuItem")
+        Me.SendDirectMessageToolStripMenuItem.BackgroundImage = Nothing
+        Me.SendDirectMessageToolStripMenuItem.Name = "SendDirectMessageToolStripMenuItem"
+        Me.SendDirectMessageToolStripMenuItem.ShortcutKeyDisplayString = Nothing
+        '
         'ctrStatus
         '
         Me.AccessibleDescription = Nothing
@@ -179,5 +189,6 @@ Partial Class ctrStatus
     Friend WithEvents RTToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents UseToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents MentionsToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents SendDirectMessageToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
 
 End Class

@@ -101,6 +101,15 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to Send Message.
+        '''</summary>
+        Friend Shared ReadOnly Property DirectButton() As String
+            Get
+                Return ResourceManager.GetString("DirectButton", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to Download Data Completed.
         '''</summary>
         Friend Shared ReadOnly Property DownloadDataEnd() As String

@@ -155,8 +155,6 @@ Namespace DNE.Twitter
         'account
         Private accountverifycredentialsurl As String = "/account/verify_credentials.xml"
 
-
-
         'OAuth 
         Private oauthrequesttokenurl As String = "/oauth/request_token"
         Private oauthauthorizeurl As String = "/oauth/authorize"
@@ -559,12 +557,31 @@ Namespace DNE.Twitter
             End If
             Dim s As String = HttpRequest("GET", directmessageurl, query)
             Return ParsTwitterXML(Of Collection(Of DNE.Twitter.DirectMessage))(s, TwitterXmlTypes.DirectMessage)
-            'Return ParsDirectmessageXML(s)
 
         End Function
 
         ''' <summary>
-        ''' Send Direct Message To Another User
+        ''' Returns a list of the 20 most recent direct messages sent by the authenticating user.  The XML and JSON versions include detailed information about the sending and recipient users.
+        ''' </summary>
+        ''' <param name="since_id">Returns only direct messages with an ID greater than (that is, more recent than) the specified ID</param>
+        ''' <param name="page">Optional. Specifies the page of direct messages to retrieve</param>
+        ''' <returns></returns>
+        ''' <remarks></remarks>
+        Public Function SentMessages(ByVal since_id As String, ByVal page As Int32) As ObjectModel.Collection(Of DNE.Twitter.DirectMessage)
+            Dim query As String = ""
+            If since_id <> "" Then query = "since_id=" & since_id
+            If page > 1 Then
+                If query <> "" Then query += "&"
+                query += String.Format("page=" & page.ToString())
+
+            End If
+            Dim s As String = HttpRequest("GET", sentmessageurl, query)
+            Return ParsTwitterXML(Of Collection(Of DNE.Twitter.DirectMessage))(s, TwitterXmlTypes.DirectMessage)
+
+        End Function
+
+        ''' <summary>
+        ''' Sends a new direct message to the specified user from the authenticating user. Requires both the user and text parameters. Request must be a POST. Returns the sent message in the requested format when successful.
         ''' </summary>
         ''' <param name="ToUser">User Id of who that message will send to him</param>
         ''' <param name="message">Text of message</param>
@@ -572,6 +589,32 @@ Namespace DNE.Twitter
         ''' <remarks></remarks>
         Public Function SendMessage(ByVal ToUser As String, ByVal message As String) As String
             Return HttpRequest("POST", newmessageurl, String.Format("user={0}&text={1}", ToUser, HttpUtility.UrlEncode(message)))
+
+        End Function
+
+#End Region
+
+#Region " social graph "
+
+        ''' <summary>
+        ''' Returns an array of numeric IDs for every user the specified user is following.
+        ''' </summary>
+        ''' <returns></returns>
+        ''' <remarks></remarks>
+        Public Function FriendsIds() As String()
+            Dim s As String = HttpRequest("GET", friendsidsurl, "")
+            Return ParsIdsXML(s)
+
+        End Function
+
+        ''' <summary>
+        ''' Returns an array of numeric IDs for every user following the specified user.
+        ''' </summary>
+        ''' <returns></returns>
+        ''' <remarks></remarks>
+        Public Function FollowersIds() As String()
+            Dim s As String = HttpRequest("GET", folowersidsurl, "")
+            Return ParsIdsXML(s)
 
         End Function
 
@@ -1409,8 +1452,21 @@ Namespace DNE.Twitter
 
         End Function
 
+        Private Function ParsIdsXML(ByVal s As String) As String()
+            Dim xdoc As New XmlDocument()
+            xdoc.LoadXml(s)
+            Dim xnl As XmlNodeList = xdoc.SelectNodes("/ids/id")
+            If xnl Is Nothing OrElse xnl.Count = 0 Then Return Nothing
+            Dim al As New ArrayList()
+            For i As Int32 = 0 To xnl.Count - 1
+                al.Add(xnl(i).InnerText)
+
+            Next
+            Return al.ToArray(GetType(String))
+
+        End Function
+
         Public Function GetImage(ByVal url As String) As Drawing.Image
-            'If Me.ProxyType = ProxyTypes.Http Then
             Dim b() As Byte = DownloadFromHttp(url)
             If b Is Nothing Then Return Nothing
             Try
@@ -1420,22 +1476,6 @@ Namespace DNE.Twitter
                 Return Nothing
 
             End Try
-
-            'Else
-
-            'Try
-            '    Dim b() As Byte = HttpDownloadSocket("GET", url, "")
-            '    If b Is Nothing OrElse b.Length = 0 Then Return Nothing
-            '    Dim ms As New IO.MemoryStream(b)
-            '    Return Image.FromStream(ms)
-
-            'Catch ex As Exception
-            '    Return Nothing
-
-            'End Try
-
-
-            'End If
             Return Nothing
 
         End Function
@@ -1463,4 +1503,3 @@ Namespace DNE.Twitter
     End Class
 
 End Namespace
-

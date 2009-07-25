@@ -5,12 +5,13 @@ Namespace DNE.Twitter
         FriendsTimeLine = 0
         UserUpdates = 1
         DirectMessages = 2
-        Favorites = 3
-        Mentions = 4
-        MyUpdates = 5
-        SearchResults = 6
-        Friends = 7
-        Followers = 8
+        SentMessages = 3
+        Favorites = 4
+        Mentions = 5
+        MyUpdates = 6
+        SearchResults = 7
+        Friends = 8
+        Followers = 9
 
     End Enum
 

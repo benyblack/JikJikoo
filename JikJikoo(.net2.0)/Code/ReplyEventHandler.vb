@@ -54,7 +54,8 @@ Public Enum TwitEvents
     RT = 1
     Reply = 2
     UserStatuses = 3
-    SearchTags = 4
+    HashTag = 4
+    DirectMessage = 5
 
 
 End Enum
