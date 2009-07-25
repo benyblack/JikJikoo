@@ -207,6 +207,21 @@
   <data name="cboShorten.Items" xml:space="preserve">
     <value>bit.ly</value>
   </data>
+  <data name="cboShorten.Items1" xml:space="preserve">
+    <value>cort.as</value>
+  </data>
+  <data name="cboShorten.Items2" xml:space="preserve">
+    <value>kissa.be</value>
+  </data>
+  <data name="cboShorten.Items3" xml:space="preserve">
+    <value>tinyarrows</value>
+  </data>
+  <data name="cboShorten.Items4" xml:space="preserve">
+    <value>tinyurl</value>
+  </data>
+  <data name="cboShorten.Items5" xml:space="preserve">
+    <value>tr.im</value>
+  </data>
   <data name="cboShorten.Location" type="System.Drawing.Point, System.Drawing">
     <value>243, 115</value>
   </data>

@@ -1,4 +1,6 @@
-﻿Public Class ctrlUpdateStatus
+﻿Imports JikJikoo.ShortenUrl
+
+Public Class ctrlUpdateStatus
 
     Public Event UpdateStarted As EventHandler
     Public Event UpdateCompleted As EventHandler
@@ -43,7 +45,33 @@
 
     Private Sub btnShorten_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnShorten.Click
         If txtStatus.Text <> "" AndAlso Not txtStatus.Text.EndsWith(" ") Then txtStatus.Text += " "
-        txtStatus.Text += Util.ShortenUrl(ShortenServers.bit_ly, txtShorten.Text)
+        Dim ss As ShortenServers = 0
+        If cboShorten.SelectedItem = "bit.ly" Then
+            ss = ShortenServers.bit_ly
+            'txtStatus.Text += Util.ShortenUrl(ShortenServers.bit_ly, txtShorten.Text)
+
+        ElseIf cboShorten.SelectedItem = "cort.as" Then
+            ss = ShortenServers.cort_as
+            'txtStatus.Text += Util.ShortenUrl(ShortenServers.cort_as, txtShorten.Text)
+
+        ElseIf cboShorten.SelectedItem = "is.gd" Then
+            ss = ShortenServers.is_gd
+
+        ElseIf cboShorten.SelectedItem = "kissa.be" Then
+            ss = ShortenServers.kissa_be
+
+        ElseIf cboShorten.SelectedItem = "tinyarrows" Then
+            ss = ShortenServers.tinyarro_ws
+
+        ElseIf cboShorten.SelectedItem = "tinyurl" Then
+            ss = ShortenServers.tinyurl
+
+        ElseIf cboShorten.SelectedItem = "tr.im" Then
+            ss = ShortenServers.tr_im
+
+        End If
+        txtStatus.Text += Util.ShortenUrl(ss, txtShorten.Text)
+
 
     End Sub
 

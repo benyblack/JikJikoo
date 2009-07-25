@@ -51,7 +51,7 @@ Partial Class ctrlUpdateStatus
         '
         resources.ApplyResources(Me.cboShorten, "cboShorten")
         Me.cboShorten.FormattingEnabled = True
-        Me.cboShorten.Items.AddRange(New Object() {resources.GetString("cboShorten.Items")})
+        Me.cboShorten.Items.AddRange(New Object() {resources.GetString("cboShorten.Items"), resources.GetString("cboShorten.Items1"), resources.GetString("cboShorten.Items2"), resources.GetString("cboShorten.Items3"), resources.GetString("cboShorten.Items4"), resources.GetString("cboShorten.Items5")})
         Me.cboShorten.Name = "cboShorten"
         '
         'btnShorten
