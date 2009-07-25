@@ -85,6 +85,7 @@
     </Compile>
     <Compile Include="ApplicationEvents.vb" />
     <Compile Include="Code\AppConfigEditor.vb" />
+    <Compile Include="Code\CacheManager.vb" />
     <Compile Include="Code\ReplyEventHandler.vb" />
     <Compile Include="Code\Util.vb" />
     <Compile Include="Controls\ctrLoginOAuth.Designer.vb">

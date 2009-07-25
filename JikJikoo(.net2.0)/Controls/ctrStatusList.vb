@@ -16,7 +16,7 @@ Public Class ctrStatusList
 
     Private _statuses As Collection(Of Status)
     Private _users As Collection(Of User)
-    Private _images As New Dictionary(Of String, Image)
+    'Private _images As New Dictionary(Of String, Image)
     Private _laststatusId As Int64 = 0
     Private _page As Int32 = 1
 
@@ -34,11 +34,11 @@ Public Class ctrStatusList
         End Set
     End Property
 
-    Friend ReadOnly Property Images() As Dictionary(Of String, Image)
-        Get
-            Return _images
-        End Get
-    End Property
+    'Friend ReadOnly Property Images() As Dictionary(Of String, Image)
+    '    Get
+    '        Return _images
+    '    End Get
+    'End Property
 
     Friend ReadOnly Property LastStatusId() As Int64
         Get
@@ -96,16 +96,17 @@ Public Class ctrStatusList
             'Dim st As Status = _tempstatus
             Dim c As New ctrStatus()
             c.Status = st
-            'If st.numId > _laststatusId Then _laststatusId = st.numId
-            If Images.Count > 0 AndAlso Images.ContainsKey(st.User.Profile_image_url) Then
-                c.picUser.Image = Images(st.User.Profile_image_url)
+            'If Images.Count > 0 AndAlso Images.ContainsKey(st.User.Profile_image_url) Then
+            '    c.picUser.Image = Images(st.User.Profile_image_url)
 
-            Else
-                Dim img As Image = twa.GetImage(st.User.Profile_image_url)
-                Me.Images.Add(st.User.Profile_image_url, img)
-                c.picUser.Image = img
+            'Else
+            Dim img As Image = Nothing
+            img = CacheManager.LoadImage(st.User.Profile_image_url)
+            If img Is Nothing Then twa.GetImage(st.User.Profile_image_url)
+            'Me.Images.Add(st.User.Profile_image_url, img)
+            c.picUser.Image = img
 
-            End If
+            'End If
             AddHandler c.TwitEvent, AddressOf TwitEvent
             Me.pnlMain.Controls.Add(c)
             If c.ObjectId > _laststatusId Then
@@ -122,12 +123,13 @@ Public Class ctrStatusList
         Dim st As Status = _tempstatus
         Dim c As New ctrStatus()
         c.Status = st
-        If Images.ContainsKey(st.User.Profile_image_url) Then
-            c.picUser.Image = Images(st.User.Profile_image_url)
-        Else
-            c.picUser.ImageLocation = st.User.Profile_image_url
 
-        End If
+
+        Dim img As Image = Nothing
+        img = CacheManager.LoadImage(st.User.Profile_image_url)
+        If img Is Nothing Then twa.GetImage(st.User.Profile_image_url)
+        c.picUser.Image = img
+ 
         AddHandler c.TwitEvent, AddressOf TwitEvent
         Me.pnlMain.Controls.Add(c)
         If c.ObjectId > _laststatusId Then
@@ -199,15 +201,11 @@ Public Class ctrStatusList
             Dim c As New ctrStatus()
             c.User = u
             'If st.numId > _laststatusId Then _laststatusId = st.numId
-            If Images.Count > 0 AndAlso Images.ContainsKey(u.Profile_image_url) Then
-                c.picUser.Image = Images(u.Profile_image_url)
+            Dim img As Image = Nothing
+            img = CacheManager.LoadImage(u.Profile_image_url)
+            If img Is Nothing Then twa.GetImage(u.Profile_image_url)
+            c.picUser.Image = img
 
-            Else
-                Dim img As Image = twa.GetImage(u.Profile_image_url)
-                Me.Images.Add(u.Profile_image_url, img)
-                c.picUser.Image = img
-
-            End If
             AddHandler c.TwitEvent, AddressOf TwitEvent
             Me.pnlMain.Controls.Add(c)
             If c.ObjectId > _laststatusId Then
@@ -226,12 +224,13 @@ Public Class ctrStatusList
 
         Dim c As New ctrStatus()
         c.User = u
-        If Images.ContainsKey(u.Profile_image_url) Then
-            c.picUser.Image = Images(u.Profile_image_url)
-        Else
-            c.picUser.ImageLocation = u.Profile_image_url
+       
+        Dim img As Image = Nothing
+        img = CacheManager.LoadImage(u.Profile_image_url)
+        If img Is Nothing Then twa.GetImage(u.Profile_image_url)
+        c.picUser.Image = img
+        c.picUser.ImageLocation = u.Profile_image_url
 
-        End If
         AddHandler c.TwitEvent, AddressOf TwitEvent
         Me.pnlMain.Controls.Add(c)
         If c.ObjectId > _laststatusId Then
@@ -287,9 +286,10 @@ Public Class ctrStatusList
         RaiseEvent StartCachingImages(Me, Nothing)
         Thread.Sleep(50)
         For i As Int32 = 0 To stti.Count - 1
-            If Images.Count = 0 OrElse Not Images.ContainsKey(stti(i).User.Profile_image_url) Then
-                Dim img As Image = twa.GetImage(stti(i).User.Profile_image_url)
-                If img IsNot Nothing Then Me.Images.Add(stti(i).User.Profile_image_url, img)
+            Dim img As Image = CacheManager.LoadImage(stti(i).User.Profile_image_url)
+            If img Is Nothing Then
+                img = twa.GetImage(stti(i).User.Profile_image_url)
+                CacheManager.SaveImage(img, stti(i).User.Profile_image_url)
 
             End If
 
@@ -302,9 +302,10 @@ Public Class ctrStatusList
         RaiseEvent StartCachingImages(Me, Nothing)
         Thread.Sleep(50)
         For i As Int32 = 0 To uc.Count - 1
-            If Images.Count = 0 OrElse Not Images.ContainsKey(uc(i).Profile_image_url) Then
-                Dim img As Image = twa.GetImage(uc(i).Profile_image_url)
-                If img IsNot Nothing Then Me.Images.Add(uc(i).Profile_image_url, img)
+            Dim img As Image = CacheManager.LoadImage(uc(i).Profile_image_url)
+            If img Is Nothing Then
+                img = twa.GetImage(uc(i).Profile_image_url)
+                CacheManager.SaveImage(img, uc(i).Profile_image_url)
 
             End If
 
