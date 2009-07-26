@@ -117,9 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="MentionsToolStripMenuItem.Text" xml:space="preserve">
-    <value>Mentions</value>
-  </data>
   <data name="&gt;&gt;lblTime.ZOrder" xml:space="preserve">
     <value>2</value>
   </data>
@@ -164,8 +161,8 @@
   <data name="lblUserName.Location" type="System.Drawing.Point, System.Drawing">
     <value>3, 0</value>
   </data>
-  <data name="lblTime.Size" type="System.Drawing.Size, System.Drawing">
-    <value>123, 16</value>
+  <data name="lnkSource.TabIndex" type="System.Int32, mscorlib">
+    <value>5</value>
   </data>
   <data name="lblTime.Font" type="System.Drawing.Font, System.Drawing">
     <value>Tahoma, 8.25pt</value>
@@ -179,8 +176,8 @@
   <data name="&gt;&gt;mnuUsername.Name" xml:space="preserve">
     <value>mnuUsername</value>
   </data>
-  <data name="lnkSource.TabIndex" type="System.Int32, mscorlib">
-    <value>5</value>
+  <data name="&gt;&gt;picUser.Type" xml:space="preserve">
+    <value>System.Windows.Forms.PictureBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="lblTime.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
     <value>TopRight</value>
@@ -188,17 +185,14 @@
   <data name="MentionsToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>124, 22</value>
   </data>
-  <data name="&gt;&gt;FlowLayoutPanel1.Parent" xml:space="preserve">
-    <value>$this</value>
+  <data name="&gt;&gt;RTToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
     <value>6, 13</value>
   </data>
   <data name="lblUserName.Text" xml:space="preserve">
     <value>Label1</value>
-  </data>
-  <data name="&gt;&gt;RTToolStripMenuItem.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;lnkSource.Type" xml:space="preserve">
     <value>System.Windows.Forms.LinkLabel, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -227,8 +221,8 @@
   <data name="picUser.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
   </data>
-  <data name="&gt;&gt;MentionsToolStripMenuItem.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="lblTime.Size" type="System.Drawing.Size, System.Drawing">
+    <value>123, 16</value>
   </data>
   <data name="&gt;&gt;ReplyToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -236,8 +230,8 @@
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
     <value>ctrStatus</value>
   </data>
-  <data name="RTToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>124, 22</value>
+  <data name="&gt;&gt;UseToolStripMenuItem.Name" xml:space="preserve">
+    <value>UseToolStripMenuItem</value>
   </data>
   <data name="FlowLayoutPanel1.Location" type="System.Drawing.Point, System.Drawing">
     <value>56, 1</value>
@@ -260,6 +254,9 @@
   <data name="lblUserName.Font" type="System.Drawing.Font, System.Drawing">
     <value>Tahoma, 8.25pt, style=Bold</value>
   </data>
+  <data name="&gt;&gt;FlowLayoutPanel1.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
   <data name="&gt;&gt;lblUserName.Name" xml:space="preserve">
     <value>lblUserName</value>
   </data>
@@ -274,6 +271,9 @@
   </data>
   <data name="&gt;&gt;SendDirectMessageToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;FlowLayoutPanel1.ZOrder" xml:space="preserve">
+    <value>1</value>
   </data>
   <data name="&gt;&gt;$this.Type" xml:space="preserve">
     <value>System.Windows.Forms.UserControl, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -326,8 +326,8 @@
   <data name="&gt;&gt;lblTime.Name" xml:space="preserve">
     <value>lblTime</value>
   </data>
-  <data name="&gt;&gt;UseToolStripMenuItem.Name" xml:space="preserve">
-    <value>UseToolStripMenuItem</value>
+  <data name="&gt;&gt;MentionsToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;picUser.Name" xml:space="preserve">
     <value>picUser</value>
@@ -344,14 +344,14 @@
   <data name="UseToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>124, 22</value>
   </data>
-  <data name="&gt;&gt;FlowLayoutPanel1.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="&gt;&gt;picUser.Type" xml:space="preserve">
-    <value>System.Windows.Forms.PictureBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="MentionsToolStripMenuItem.Text" xml:space="preserve">
+    <value>Mentions</value>
   </data>
   <data name="lnkSource.Text" xml:space="preserve">
     <value>From</value>
+  </data>
+  <data name="RTToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>124, 22</value>
   </data>
   <metadata name="mnuUsername.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>

@@ -473,42 +473,50 @@ Public Class frmMain
 
     Private Sub lnkFriendsTimeLine_LinkClicked(ByVal sender As System.Object, ByVal e As System.Windows.Forms.LinkLabelLinkClickedEventArgs) Handles lnkFriendsTimeLine.LinkClicked
         stlMain.Page = 1
+        SetActiveLinkButtonColor(lnkFriendsTimeLine)
         SetBindingInfo(StatusListType.FriendsTimeLine)
+
 
     End Sub
 
     Private Sub lnkMentions_LinkClicked(ByVal sender As System.Object, ByVal e As System.Windows.Forms.LinkLabelLinkClickedEventArgs) Handles lnkMentions.LinkClicked
         stlMain.Page = 1
+        SetActiveLinkButtonColor(lnkMentions)
         SetBindingInfo(StatusListType.Mentions)
 
     End Sub
 
     Private Sub lnkMessages_LinkClicked(ByVal sender As System.Object, ByVal e As System.Windows.Forms.LinkLabelLinkClickedEventArgs) Handles lnkMessages.LinkClicked
         stlMain.Page = 1
+        SetActiveLinkButtonColor(lnkMessages)
         SetBindingInfo(StatusListType.DirectMessages)
 
     End Sub
 
     Private Sub lnkSent_LinkClicked(ByVal sender As System.Object, ByVal e As System.Windows.Forms.LinkLabelLinkClickedEventArgs) Handles lnkSent.LinkClicked
         stlMain.Page = 1
+        SetActiveLinkButtonColor(lnkSent)
         SetBindingInfo(StatusListType.SentMessages)
 
     End Sub
 
     Private Sub lnkFavorites_LinkClicked(ByVal sender As System.Object, ByVal e As System.Windows.Forms.LinkLabelLinkClickedEventArgs) Handles lnkFavorites.LinkClicked
         stlMain.Page = 1
+        SetActiveLinkButtonColor(lnkFavorites)
         SetBindingInfo(StatusListType.Favorites)
 
     End Sub
 
     Private Sub lnkMyUpdates_LinkClicked(ByVal sender As System.Object, ByVal e As System.Windows.Forms.LinkLabelLinkClickedEventArgs) Handles lnkMyUpdates.LinkClicked
         stlMain.Page = 1
+        SetActiveLinkButtonColor(lnkMyUpdates)
         SetBindingInfo(StatusListType.MyUpdates)
 
     End Sub
 
     Private Sub lnkSearch_LinkClicked(ByVal sender As System.Object, ByVal e As System.Windows.Forms.LinkLabelLinkClickedEventArgs) Handles lnkSearch.LinkClicked
         stlMain.Page = 1
+        SetActiveLinkButtonColor(lnkSearch)
         SetBindingInfo(StatusListType.SearchResults, False, "", txtSearch.Text.Trim().Replace("#", "%23"))
 
     End Sub
@@ -517,25 +525,30 @@ Public Class frmMain
         'pnlSearch.Location = pnlMenu.Location
         'pnlSearch.Visible = True
         'pnlMenu.Visible = False
+        SetActiveLinkButtonColor(lnkBrowsLinks)
         MoveAnimateMenuPanels(2)
+
     End Sub
 
     Private Sub lnkBrowsLinks_LinkClicked(ByVal sender As System.Object, ByVal e As System.Windows.Forms.LinkLabelLinkClickedEventArgs) Handles lnkBrowsLinks.LinkClicked
         'pnlMenu.Location = pnlSearch.Location
         'pnlSearch.Visible = False
         'pnlMenu.Visible = True
+        SetActiveLinkButtonColor(lnkSearchLinks)
         MoveAnimateMenuPanels(1)
 
     End Sub
 
     Private Sub lnkFriends_LinkClicked(ByVal sender As System.Object, ByVal e As System.Windows.Forms.LinkLabelLinkClickedEventArgs) Handles lnkFriends.LinkClicked
         stlMain.Page = 1
+        SetActiveLinkButtonColor(lnkFriends)
         SetBindingInfo(StatusListType.Friends)
 
     End Sub
 
     Private Sub lnkFollowers_LinkClicked(ByVal sender As System.Object, ByVal e As System.Windows.Forms.LinkLabelLinkClickedEventArgs) Handles lnkFollowers.LinkClicked
         stlMain.Page = 1
+        SetActiveLinkButtonColor(lnkFollowers)
         SetBindingInfo(StatusListType.Followers)
 
     End Sub
@@ -583,5 +596,29 @@ Public Class frmMain
     End Sub
 
 #End Region
+
+    Private Sub SetActiveLinkButtonColor(ByVal l As LinkLabel)
+        For Each c As Control In pnlSearch.Controls
+            If c.GetType Is GetType(LinkLabel) Then
+                If c IsNot l Then
+                    CType(c, LinkLabel).LinkColor = Color.FromArgb(128, 128, 255)
+
+                End If
+
+            End If
+        Next
+
+        For Each c As Control In pnlMenu.Controls
+            If c.GetType Is GetType(LinkLabel) Then
+                If c IsNot l Then
+                    CType(c, LinkLabel).LinkColor = Color.FromArgb(128, 128, 255)
+
+                End If
+
+            End If
+        Next
+        l.LinkColor = Color.Chartreuse
+
+    End Sub
 
 End Class

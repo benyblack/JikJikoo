@@ -80,7 +80,8 @@ Partial Class frmMain
         Me.lnkFriendsTimeLine.AccessibleName = Nothing
         resources.ApplyResources(Me.lnkFriendsTimeLine, "lnkFriendsTimeLine")
         Me.lnkFriendsTimeLine.Font = Nothing
-        Me.lnkFriendsTimeLine.LinkColor = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.lnkFriendsTimeLine.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline
+        Me.lnkFriendsTimeLine.LinkColor = System.Drawing.Color.Chartreuse
         Me.lnkFriendsTimeLine.Name = "lnkFriendsTimeLine"
         Me.lnkFriendsTimeLine.TabStop = True
         '
@@ -90,6 +91,7 @@ Partial Class frmMain
         Me.lnkMentions.AccessibleName = Nothing
         resources.ApplyResources(Me.lnkMentions, "lnkMentions")
         Me.lnkMentions.Font = Nothing
+        Me.lnkMentions.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline
         Me.lnkMentions.LinkColor = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(255, Byte), Integer))
         Me.lnkMentions.Name = "lnkMentions"
         Me.lnkMentions.TabStop = True
@@ -100,6 +102,7 @@ Partial Class frmMain
         Me.lnkMessages.AccessibleName = Nothing
         resources.ApplyResources(Me.lnkMessages, "lnkMessages")
         Me.lnkMessages.Font = Nothing
+        Me.lnkMessages.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline
         Me.lnkMessages.LinkColor = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(255, Byte), Integer))
         Me.lnkMessages.Name = "lnkMessages"
         Me.lnkMessages.TabStop = True
@@ -110,6 +113,7 @@ Partial Class frmMain
         Me.lnkFavorites.AccessibleName = Nothing
         resources.ApplyResources(Me.lnkFavorites, "lnkFavorites")
         Me.lnkFavorites.Font = Nothing
+        Me.lnkFavorites.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline
         Me.lnkFavorites.LinkColor = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(255, Byte), Integer))
         Me.lnkFavorites.Name = "lnkFavorites"
         Me.lnkFavorites.TabStop = True
@@ -121,6 +125,7 @@ Partial Class frmMain
         resources.ApplyResources(Me.lnkMyUpdates, "lnkMyUpdates")
         Me.lnkMyUpdates.AutoEllipsis = True
         Me.lnkMyUpdates.Font = Nothing
+        Me.lnkMyUpdates.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline
         Me.lnkMyUpdates.LinkColor = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(255, Byte), Integer))
         Me.lnkMyUpdates.Name = "lnkMyUpdates"
         Me.lnkMyUpdates.TabStop = True
@@ -206,6 +211,7 @@ Partial Class frmMain
         Me.lnkSent.AccessibleName = Nothing
         resources.ApplyResources(Me.lnkSent, "lnkSent")
         Me.lnkSent.Font = Nothing
+        Me.lnkSent.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline
         Me.lnkSent.LinkColor = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(255, Byte), Integer))
         Me.lnkSent.Name = "lnkSent"
         Me.lnkSent.TabStop = True
@@ -217,6 +223,7 @@ Partial Class frmMain
         resources.ApplyResources(Me.lnkSearchLinks, "lnkSearchLinks")
         Me.lnkSearchLinks.AutoEllipsis = True
         Me.lnkSearchLinks.Font = Nothing
+        Me.lnkSearchLinks.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline
         Me.lnkSearchLinks.LinkColor = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(255, Byte), Integer))
         Me.lnkSearchLinks.Name = "lnkSearchLinks"
         Me.lnkSearchLinks.TabStop = True
@@ -228,6 +235,7 @@ Partial Class frmMain
         resources.ApplyResources(Me.lnkFriends, "lnkFriends")
         Me.lnkFriends.AutoEllipsis = True
         Me.lnkFriends.Font = Nothing
+        Me.lnkFriends.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline
         Me.lnkFriends.LinkColor = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(255, Byte), Integer))
         Me.lnkFriends.Name = "lnkFriends"
         Me.lnkFriends.TabStop = True
@@ -239,6 +247,7 @@ Partial Class frmMain
         resources.ApplyResources(Me.lnkFollowers, "lnkFollowers")
         Me.lnkFollowers.AutoEllipsis = True
         Me.lnkFollowers.Font = Nothing
+        Me.lnkFollowers.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline
         Me.lnkFollowers.LinkColor = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(255, Byte), Integer))
         Me.lnkFollowers.Name = "lnkFollowers"
         Me.lnkFollowers.TabStop = True
@@ -250,6 +259,7 @@ Partial Class frmMain
         resources.ApplyResources(Me.lnkSearch, "lnkSearch")
         Me.lnkSearch.AutoEllipsis = True
         Me.lnkSearch.Font = Nothing
+        Me.lnkSearch.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline
         Me.lnkSearch.LinkColor = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(255, Byte), Integer))
         Me.lnkSearch.Name = "lnkSearch"
         Me.lnkSearch.TabStop = True
@@ -284,6 +294,7 @@ Partial Class frmMain
         resources.ApplyResources(Me.lnkBrowsLinks, "lnkBrowsLinks")
         Me.lnkBrowsLinks.AutoEllipsis = True
         Me.lnkBrowsLinks.Font = Nothing
+        Me.lnkBrowsLinks.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline
         Me.lnkBrowsLinks.LinkColor = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(255, Byte), Integer))
         Me.lnkBrowsLinks.Name = "lnkBrowsLinks"
         Me.lnkBrowsLinks.TabStop = True

@@ -139,10 +139,6 @@
   <data name="stlMain.Size" type="System.Drawing.Size, System.Drawing">
     <value>779, 416</value>
   </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="$this.StartPosition" type="System.Windows.Forms.FormStartPosition, System.Windows.Forms">
-    <value>CenterScreen</value>
-  </data>
   <data name="&gt;&gt;pnlSearch.Type" xml:space="preserve">
     <value>System.Windows.Forms.Panel, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
@@ -161,6 +157,7 @@
   <data name="&gt;&gt;ToolStripSeparator1.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripSeparator, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="$this.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
@@ -189,17 +186,11 @@
   <data name="pnlMenu.TabIndex" type="System.Int32, mscorlib">
     <value>24</value>
   </data>
-  <data name="&gt;&gt;$this.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Form, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
   <data name="lnkFriends.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
   <data name="lnkMyUpdates.Text" xml:space="preserve">
     <value>My Updates</value>
-  </data>
-  <data name="&gt;&gt;ExitToolStripMenuItem.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="txtSearch.Size" type="System.Drawing.Size, System.Drawing">
     <value>100, 21</value>
@@ -210,11 +201,11 @@
   <data name="btnConfig.Text" xml:space="preserve">
     <value>Config</value>
   </data>
+  <data name="&gt;&gt;lnkFriendsTimeLine.Parent" xml:space="preserve">
+    <value>pnlMenu</value>
+  </data>
   <data name="&gt;&gt;lnkFriendsTimeLine.ZOrder" xml:space="preserve">
     <value>2</value>
-  </data>
-  <data name="lnkFavorites.Text" xml:space="preserve">
-    <value>Favorites</value>
   </data>
   <data name="&gt;&gt;lnkMentions.Parent" xml:space="preserve">
     <value>pnlMenu</value>
@@ -227,6 +218,9 @@
   </data>
   <data name="lnkSearch.Text" xml:space="preserve">
     <value>Search</value>
+  </data>
+  <data name="&gt;&gt;lnkMyUpdates.Name" xml:space="preserve">
+    <value>lnkMyUpdates</value>
   </data>
   <data name="lnkSent.Text" xml:space="preserve">
     <value>Sent Messages</value>
@@ -264,9 +258,6 @@
   <data name="&gt;&gt;lnkMyUpdates.Type" xml:space="preserve">
     <value>System.Windows.Forms.LinkLabel, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;stlMain.ZOrder" xml:space="preserve">
-    <value>5</value>
-  </data>
   <data name="jikLogin.Location" type="System.Drawing.Point, System.Drawing">
     <value>505, 1</value>
   </data>
@@ -279,8 +270,8 @@
   <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
     <value>6, 13</value>
   </data>
-  <data name="&gt;&gt;lnkMyUpdates.Name" xml:space="preserve">
-    <value>lnkMyUpdates</value>
+  <data name="jikUpdate.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
   </data>
   <data name="&gt;&gt;lnkMentions.Name" xml:space="preserve">
     <value>lnkMentions</value>
@@ -302,9 +293,6 @@
   </data>
   <data name="&gt;&gt;lnkSearch.Type" xml:space="preserve">
     <value>System.Windows.Forms.LinkLabel, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;txtSearch.ZOrder" xml:space="preserve">
-    <value>2</value>
   </data>
   <data name="&gt;&gt;lnkFriendsTimeLine.Name" xml:space="preserve">
     <value>lnkFriendsTimeLine</value>
@@ -348,14 +336,14 @@
   <data name="&gt;&gt;ContextMenuStrip1.Name" xml:space="preserve">
     <value>ContextMenuStrip1</value>
   </data>
+  <data name="&gt;&gt;stlMain.Name" xml:space="preserve">
+    <value>stlMain</value>
+  </data>
   <data name="pnlSearch.Size" type="System.Drawing.Size, System.Drawing">
     <value>491, 35</value>
   </data>
-  <data name="lnkBrowsLinks.Size" type="System.Drawing.Size, System.Drawing">
-    <value>23, 13</value>
-  </data>
-  <data name="&gt;&gt;lnkFriendsTimeLine.Parent" xml:space="preserve">
-    <value>pnlMenu</value>
+  <data name="&gt;&gt;$this.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Form, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="lnkFriendsTimeLine.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
@@ -363,8 +351,8 @@
   <data name="&gt;&gt;btnConfig.ZOrder" xml:space="preserve">
     <value>3</value>
   </data>
-  <data name="lnkFollowers.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
+  <data name="$this.StartPosition" type="System.Windows.Forms.FormStartPosition, System.Windows.Forms">
+    <value>CenterScreen</value>
   </data>
   <data name="&gt;&gt;ShowToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -393,8 +381,8 @@
   <data name="lnkFollowers.Text" xml:space="preserve">
     <value>Followers</value>
   </data>
-  <data name="&gt;&gt;pnlMenu.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Panel, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="lnkBrowsLinks.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
   <data name="&gt;&gt;lnkBrowsLinks.ZOrder" xml:space="preserve">
     <value>3</value>
@@ -417,8 +405,8 @@
   <data name="ShowToolStripMenuItem.Text" xml:space="preserve">
     <value>&amp;Show</value>
   </data>
-  <data name="jikUpdate.Enabled" type="System.Boolean, mscorlib">
-    <value>False</value>
+  <data name="&gt;&gt;pnlSearch.Name" xml:space="preserve">
+    <value>pnlSearch</value>
   </data>
   <data name="lnkMentions.TabIndex" type="System.Int32, mscorlib">
     <value>17</value>
@@ -1366,12 +1354,15 @@
     <value>System.Windows.Forms.NotifyIcon, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;jikUpdate.Type" xml:space="preserve">
-    <value>JikJikoo.ctrlUpdateStatus, JikJikoo(.net2.0), Version=0.7.1.232, Culture=neutral, PublicKeyToken=null</value>
+    <value>JikJikoo.ctrlUpdateStatus, JikJikoo(.net2.0), Version=0.7.1.2034, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;lnkFriends.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
   <data name="&gt;&gt;lnkSent.Parent" xml:space="preserve">
+    <value>pnlMenu</value>
+  </data>
+  <data name="&gt;&gt;lnkSearchLinks.Parent" xml:space="preserve">
     <value>pnlMenu</value>
   </data>
   <data name="jikUpdate.Visible" type="System.Boolean, mscorlib">
@@ -1389,8 +1380,8 @@
   <data name="jikUpdate.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
   </data>
-  <data name="&gt;&gt;pnlSearch.Name" xml:space="preserve">
-    <value>pnlSearch</value>
+  <data name="&gt;&gt;TimerRefresh.Name" xml:space="preserve">
+    <value>TimerRefresh</value>
   </data>
   <data name="pnlSearch.Location" type="System.Drawing.Point, System.Drawing">
     <value>8, 123</value>
@@ -2334,20 +2325,14 @@
   <data name="&gt;&gt;txtSearch.Name" xml:space="preserve">
     <value>txtSearch</value>
   </data>
-  <data name="lnkMessages.TabIndex" type="System.Int32, mscorlib">
-    <value>18</value>
-  </data>
   <data name="txtSearch.TabIndex" type="System.Int32, mscorlib">
     <value>23</value>
   </data>
   <data name="&gt;&gt;jikLogin.Type" xml:space="preserve">
-    <value>JikJikoo.ctrLoginOAuth, JikJikoo(.net2.0), Version=0.7.1.232, Culture=neutral, PublicKeyToken=null</value>
+    <value>JikJikoo.ctrLoginOAuth, JikJikoo(.net2.0), Version=0.7.1.2034, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="lnkFriendsTimeLine.Location" type="System.Drawing.Point, System.Drawing">
     <value>6, 5</value>
-  </data>
-  <data name="lnkBrowsLinks.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
   </data>
   <data name="&gt;&gt;jikLogin.Parent" xml:space="preserve">
     <value>$this</value>
@@ -2364,14 +2349,14 @@
   <data name="jikLogin.Size" type="System.Drawing.Size, System.Drawing">
     <value>276, 106</value>
   </data>
-  <data name="&gt;&gt;lnkSearchLinks.Parent" xml:space="preserve">
-    <value>pnlMenu</value>
+  <data name="lnkMessages.TabIndex" type="System.Int32, mscorlib">
+    <value>18</value>
   </data>
   <data name="&gt;&gt;pnlMenu.Name" xml:space="preserve">
     <value>pnlMenu</value>
   </data>
-  <data name="&gt;&gt;lnkBrowsLinks.Name" xml:space="preserve">
-    <value>lnkBrowsLinks</value>
+  <data name="&gt;&gt;ExitToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;ShowToolStripMenuItem.Name" xml:space="preserve">
     <value>ShowToolStripMenuItem</value>
@@ -2413,13 +2398,13 @@
     <value>Tahoma, 8.25pt</value>
   </data>
   <data name="&gt;&gt;stlMain.Type" xml:space="preserve">
-    <value>JikJikoo.ctrStatusList, JikJikoo(.net2.0), Version=0.7.1.232, Culture=neutral, PublicKeyToken=null</value>
+    <value>JikJikoo.ctrStatusList, JikJikoo(.net2.0), Version=0.7.1.2034, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="jikLogin.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Right</value>
   </data>
-  <data name="&gt;&gt;lnkFavorites.Type" xml:space="preserve">
-    <value>System.Windows.Forms.LinkLabel, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="lnkFavorites.Text" xml:space="preserve">
+    <value>Favorites</value>
   </data>
   <data name="lnkSearch.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -2451,6 +2436,9 @@
   <data name="lnkMessages.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
+  <data name="lnkFollowers.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
   <data name="lnkMentions.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
@@ -2463,8 +2451,8 @@
   <data name="&gt;&gt;lnkSearchLinks.Name" xml:space="preserve">
     <value>lnkSearchLinks</value>
   </data>
-  <data name="&gt;&gt;stlMain.Name" xml:space="preserve">
-    <value>stlMain</value>
+  <data name="&gt;&gt;lnkFriendsTimeLine.Type" xml:space="preserve">
+    <value>System.Windows.Forms.LinkLabel, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="lnkSent.Size" type="System.Drawing.Size, System.Drawing">
     <value>79, 13</value>
@@ -2481,20 +2469,17 @@
   <data name="lnkBrowsLinks.Location" type="System.Drawing.Point, System.Drawing">
     <value>6, 9</value>
   </data>
-  <data name="ShowToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>107, 22</value>
+  <data name="&gt;&gt;stlMain.ZOrder" xml:space="preserve">
+    <value>5</value>
   </data>
   <data name="AboutToolStripMenuItem.Text" xml:space="preserve">
     <value>&amp;About</value>
   </data>
-  <data name="&gt;&gt;TimerRefresh.Name" xml:space="preserve">
-    <value>TimerRefresh</value>
-  </data>
   <data name="&gt;&gt;lnkSearch.Parent" xml:space="preserve">
     <value>pnlSearch</value>
   </data>
-  <data name="&gt;&gt;lnkMessages.ZOrder" xml:space="preserve">
-    <value>4</value>
+  <data name="&gt;&gt;txtSearch.ZOrder" xml:space="preserve">
+    <value>2</value>
   </data>
   <data name="&gt;&gt;AboutToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -2511,8 +2496,8 @@
   <data name="lnkMyUpdates.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <data name="lnkFriends.Size" type="System.Drawing.Size, System.Drawing">
-    <value>42, 13</value>
+  <data name="&gt;&gt;lnkMessages.ZOrder" xml:space="preserve">
+    <value>4</value>
   </data>
   <data name="lnkFriendsTimeLine.TabIndex" type="System.Int32, mscorlib">
     <value>16</value>
@@ -2520,8 +2505,8 @@
   <data name="&gt;&gt;pnlMenu.ZOrder" xml:space="preserve">
     <value>2</value>
   </data>
-  <data name="&gt;&gt;lnkFriendsTimeLine.Type" xml:space="preserve">
-    <value>System.Windows.Forms.LinkLabel, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="ShowToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>107, 22</value>
   </data>
   <data name="&gt;&gt;ContextMenuStrip1.Type" xml:space="preserve">
     <value>System.Windows.Forms.ContextMenuStrip, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -2556,8 +2541,11 @@
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
     <value>784, 533</value>
   </data>
-  <data name="&gt;&gt;lnkFavorites.Name" xml:space="preserve">
-    <value>lnkFavorites</value>
+  <data name="lnkFriends.Size" type="System.Drawing.Size, System.Drawing">
+    <value>42, 13</value>
+  </data>
+  <data name="lnkBrowsLinks.Size" type="System.Drawing.Size, System.Drawing">
+    <value>23, 13</value>
   </data>
   <data name="lnkFavorites.Size" type="System.Drawing.Size, System.Drawing">
     <value>52, 13</value>
@@ -2568,6 +2556,9 @@
   <data name="lnkSearchLinks.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
+  <data name="&gt;&gt;lnkFavorites.Name" xml:space="preserve">
+    <value>lnkFavorites</value>
+  </data>
   <data name="lnkSearch.Size" type="System.Drawing.Size, System.Drawing">
     <value>40, 13</value>
   </data>
@@ -2577,11 +2568,17 @@
   <data name="&gt;&gt;txtSearch.Parent" xml:space="preserve">
     <value>pnlSearch</value>
   </data>
+  <data name="&gt;&gt;pnlMenu.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Panel, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="btnConfig.Location" type="System.Drawing.Point, System.Drawing">
     <value>392, 1</value>
   </data>
   <data name="&gt;&gt;HideToolStripMenuItem.Name" xml:space="preserve">
     <value>HideToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;lnkBrowsLinks.Name" xml:space="preserve">
+    <value>lnkBrowsLinks</value>
   </data>
   <data name="lnkFriends.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -2591,6 +2588,9 @@
   </data>
   <data name="AboutToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>107, 22</value>
+  </data>
+  <data name="&gt;&gt;lnkFavorites.Type" xml:space="preserve">
+    <value>System.Windows.Forms.LinkLabel, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;lnkBrowsLinks.Parent" xml:space="preserve">
     <value>pnlSearch</value>

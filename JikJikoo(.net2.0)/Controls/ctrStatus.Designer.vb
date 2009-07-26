@@ -107,10 +107,12 @@ Partial Class ctrStatus
         Me.mnuUsername.AccessibleDescription = Nothing
         Me.mnuUsername.AccessibleName = Nothing
         resources.ApplyResources(Me.mnuUsername, "mnuUsername")
+        Me.mnuUsername.BackColor = System.Drawing.Color.Black
         Me.mnuUsername.BackgroundImage = Nothing
         Me.mnuUsername.Font = Nothing
         Me.mnuUsername.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.UseToolStripMenuItem, Me.ReplyToolStripMenuItem, Me.RTToolStripMenuItem, Me.MentionsToolStripMenuItem, Me.SendDirectMessageToolStripMenuItem})
         Me.mnuUsername.Name = "ContextMenuStrip1"
+        Me.mnuUsername.ShowImageMargin = False
         '
         'UseToolStripMenuItem
         '
@@ -118,6 +120,7 @@ Partial Class ctrStatus
         Me.UseToolStripMenuItem.AccessibleName = Nothing
         resources.ApplyResources(Me.UseToolStripMenuItem, "UseToolStripMenuItem")
         Me.UseToolStripMenuItem.BackgroundImage = Nothing
+        Me.UseToolStripMenuItem.ForeColor = System.Drawing.Color.White
         Me.UseToolStripMenuItem.Name = "UseToolStripMenuItem"
         Me.UseToolStripMenuItem.ShortcutKeyDisplayString = Nothing
         '
@@ -127,6 +130,7 @@ Partial Class ctrStatus
         Me.ReplyToolStripMenuItem.AccessibleName = Nothing
         resources.ApplyResources(Me.ReplyToolStripMenuItem, "ReplyToolStripMenuItem")
         Me.ReplyToolStripMenuItem.BackgroundImage = Nothing
+        Me.ReplyToolStripMenuItem.ForeColor = System.Drawing.Color.White
         Me.ReplyToolStripMenuItem.Name = "ReplyToolStripMenuItem"
         Me.ReplyToolStripMenuItem.ShortcutKeyDisplayString = Nothing
         '
@@ -136,6 +140,7 @@ Partial Class ctrStatus
         Me.RTToolStripMenuItem.AccessibleName = Nothing
         resources.ApplyResources(Me.RTToolStripMenuItem, "RTToolStripMenuItem")
         Me.RTToolStripMenuItem.BackgroundImage = Nothing
+        Me.RTToolStripMenuItem.ForeColor = System.Drawing.Color.White
         Me.RTToolStripMenuItem.Name = "RTToolStripMenuItem"
         Me.RTToolStripMenuItem.ShortcutKeyDisplayString = Nothing
         '
@@ -145,6 +150,7 @@ Partial Class ctrStatus
         Me.MentionsToolStripMenuItem.AccessibleName = Nothing
         resources.ApplyResources(Me.MentionsToolStripMenuItem, "MentionsToolStripMenuItem")
         Me.MentionsToolStripMenuItem.BackgroundImage = Nothing
+        Me.MentionsToolStripMenuItem.ForeColor = System.Drawing.Color.White
         Me.MentionsToolStripMenuItem.Name = "MentionsToolStripMenuItem"
         Me.MentionsToolStripMenuItem.ShortcutKeyDisplayString = Nothing
         '
@@ -154,6 +160,7 @@ Partial Class ctrStatus
         Me.SendDirectMessageToolStripMenuItem.AccessibleName = Nothing
         resources.ApplyResources(Me.SendDirectMessageToolStripMenuItem, "SendDirectMessageToolStripMenuItem")
         Me.SendDirectMessageToolStripMenuItem.BackgroundImage = Nothing
+        Me.SendDirectMessageToolStripMenuItem.ForeColor = System.Drawing.Color.White
         Me.SendDirectMessageToolStripMenuItem.Name = "SendDirectMessageToolStripMenuItem"
         Me.SendDirectMessageToolStripMenuItem.ShortcutKeyDisplayString = Nothing
         '
