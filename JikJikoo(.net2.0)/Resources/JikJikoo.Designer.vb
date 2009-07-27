@@ -83,7 +83,7 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to Cashing Images Completed.
+        '''  Looks up a localized string similar to Caching Images Completed.
         '''</summary>
         Friend Shared ReadOnly Property CachingImageEnd() As String
             Get
@@ -92,7 +92,7 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to Cashing Images ....
+        '''  Looks up a localized string similar to Caching Images ....
         '''</summary>
         Friend Shared ReadOnly Property CashingImageStart() As String
             Get

@@ -82,7 +82,7 @@ Public Class ctrlUpdateStatus
 
         End If
         RaiseEvent UpdateCompleted(Nothing, Nothing)
-        _directMessage = False
+        DirectMessage = False
         txtStatus.Text = ""
 
     End Sub

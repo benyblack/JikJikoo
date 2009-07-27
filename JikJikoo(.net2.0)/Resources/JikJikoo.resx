@@ -124,10 +124,10 @@
     <value>Adding Statuses ...</value>
   </data>
   <data name="CachingImageEnd" xml:space="preserve">
-    <value>Cashing Images Completed</value>
+    <value>Caching Images Completed</value>
   </data>
   <data name="CashingImageStart" xml:space="preserve">
-    <value>Cashing Images ...</value>
+    <value>Caching Images ...</value>
   </data>
   <data name="DownloadDataEnd" xml:space="preserve">
     <value>Download Data Completed</value>
