@@ -246,6 +246,9 @@
   <data name="btnShorten.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Bottom, Right</value>
   </data>
+  <data name="btnShorten.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
   <data name="btnShorten.Location" type="System.Drawing.Point, System.Drawing">
     <value>314, 114</value>
   </data>

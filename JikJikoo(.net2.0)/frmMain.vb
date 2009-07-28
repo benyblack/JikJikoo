@@ -23,6 +23,13 @@ Public Class frmMain
         Set(ByVal value As Int32)
             If value <> _page Then
                 _page = value
+                If _page = 1 Then
+                    stlMain.lnkPrev.Visible = False
+
+                Else
+                    stlMain.lnkPrev.Visible = True
+
+                End If
 
             End If
         End Set
@@ -195,15 +202,6 @@ Public Class frmMain
 #End Region
 
 #Region " Form Events "
-
-    Private Sub btnConfig_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnConfig.Click
-        Dim f As New frmConfig()
-        If f.ShowDialog() = Windows.Forms.DialogResult.OK Then
-            ReloadConfig()
-        End If
-
-
-    End Sub
 
     Private Sub frmMain_FormClosing(ByVal sender As Object, ByVal e As System.Windows.Forms.FormClosingEventArgs) Handles Me.FormClosing
         If e.CloseReason = CloseReason.UserClosing Then
@@ -704,13 +702,17 @@ Public Class frmMain
         Thread.Sleep(10)
         picSetting.Image = My.Resources.settingHover
 
-        btnConfig_Click(Nothing, e)
+        Dim f As New frmConfig()
+        If f.ShowDialog() = Windows.Forms.DialogResult.OK Then
+            ReloadConfig()
+        End If
 
     End Sub
 
 #End Region
 
 #End Region
+
 
     Private Sub ShowUpdateControl()
         ShowUpdateControl(True)

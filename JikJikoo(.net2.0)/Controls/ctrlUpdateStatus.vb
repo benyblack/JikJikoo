@@ -141,4 +141,17 @@ Public Class ctrlUpdateStatus
         End If
     End Sub
 
+    Private Sub txtShorten_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles txtShorten.TextChanged
+        'from : http://regexlib.com/REDetails.aspx?regexp_id=96
+        Dim urlpat As String = "(http|ftp|https):\/\/[\w\-_]+(\.[\w\-_]+)+([\w\-\.,@?^=%&amp;:/~\+#]*[\w\-\@?^=%&amp;/~\+#])?"
+        If System.Text.RegularExpressions.Regex.IsMatch(txtShorten.Text, urlpat) Then
+            btnShorten.Enabled = True
+
+        Else
+            btnShorten.Enabled = False
+
+        End If
+
+    End Sub
+
 End Class

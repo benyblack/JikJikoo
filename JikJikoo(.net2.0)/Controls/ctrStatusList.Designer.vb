@@ -49,6 +49,7 @@ Partial Class ctrStatusList
         Me.lnkPrev.TabIndex = 1
         Me.lnkPrev.TabStop = True
         Me.lnkPrev.Text = "<"
+        Me.lnkPrev.Visible = False
         '
         'lnkNext
         '
