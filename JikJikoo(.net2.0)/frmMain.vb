@@ -84,6 +84,7 @@ Public Class frmMain
 
                     'search results
                 ElseIf curSttsType = StatusListType.SearchResults Then
+                    SetActiveLinkButtonColor(lnkSearch)
                     sts = Util.SearchResults2Status(twa.Search(curSttsParams.Value, Page, stlMain.LastId))
                     stlMain.AddStatuses(sts)
 
@@ -150,7 +151,7 @@ Public Class frmMain
 
     Private Sub SetUiEnable(ByVal b As Boolean)
         jikUpdate.Enabled = b
-        jikUpdate.Visible = b
+        'jikUpdate.Visible = b
         stlMain.Enabled = b
         pnlMenu.Visible = b
 
@@ -215,6 +216,18 @@ Public Class frmMain
 
     Private Sub frmMain_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
         Util.SetButtonsStyle(Me)
+        '--- Correct some coordinates ---
+        jikLogin.Width = pnlMenu.Width
+        jikLogin.Top = pnlMenu.Top + pnlMenu.Height
+        jikLogin.Left = pnlMenu.Left
+        jikUpdate.Width = pnlMenu.Width
+        jikUpdate.Top = pnlMenu.Top + pnlMenu.Height
+        jikUpdate.Left = pnlMenu.Left
+        stlMain.BringToFront()
+        picSetting.BringToFront()
+        picUser.BringToFront()
+        picStatus.BringToFront()
+        '--------------------------------
         ReloadConfig()
         jikLogin.LoadLogin()
         AddHandler twa.HttpError, AddressOf TwitterApiHttpError
@@ -307,6 +320,53 @@ Public Class frmMain
 
 #Region " Status List Events "
 
+    Private Sub stlMain_TwitCommand(ByVal sender As Object, ByVal t As TwitEventArgs) Handles stlMain.TwitCommand
+        jikUpdate.in_reply_to_status_id = ""
+        If t.TwitEvent = TwitEvents.Use_ScreenName Then
+            jikUpdate.DirectMessage = False
+            jikUpdate.txtStatus.Paste("@" & t.Text)
+            ShowUpdateControl()
+
+        ElseIf t.TwitEvent = TwitEvents.RT Then
+            jikUpdate.DirectMessage = False
+            jikUpdate.txtStatus.Text = "RT @" & t.Status.User.Screen_Name & " " & t.Status.Text
+            ShowUpdateControl()
+
+        ElseIf t.TwitEvent = TwitEvents.Reply Then
+            jikUpdate.DirectMessage = False
+            jikUpdate.in_reply_to_status_id = t.Status.Id
+            jikUpdate.in_reply_to_screen_name = t.Status.User.Screen_Name
+            jikUpdate.txtStatus.Text = "@" & t.Status.User.Screen_Name
+            ShowUpdateControl()
+
+        ElseIf t.TwitEvent = TwitEvents.UserStatuses Then
+            jikUpdate.DirectMessage = False
+            curSttsParams.Value = t.Text
+            curSttsParams.Key = ""
+            WaitingForCleanRefresh = True
+
+            curSttsType = StatusListType.UserUpdates
+            TimerRefresh_Tick(Me, Nothing)
+
+        ElseIf t.TwitEvent = TwitEvents.DirectMessage Then
+            jikUpdate.DirectMessage = True
+            jikUpdate.SendMessageTo = t.Text
+            ShowUpdateControl()
+
+        ElseIf t.TwitEvent = TwitEvents.HashTag Then
+            jikUpdate.DirectMessage = False
+            curSttsParams.Value = "%23" & t.Text
+            curSttsParams.Key = ""
+            WaitingForCleanRefresh = True
+            txtSearch.Text = "#" & t.Text
+            curSttsType = StatusListType.SearchResults
+            TimerRefresh_Tick(Me, Nothing)
+            lnkSearchLinks_LinkClicked(Nothing, Nothing)
+
+        End If
+
+    End Sub
+
     Private Sub stlMain_EndAddStatuses(ByVal sender As Object, ByVal e As System.EventArgs) Handles stlMain.EndAddStatuses
         If Me.InvokeRequired Then
             Me.Invoke(New MethodInvoker(AddressOf EndAddStatuses))
@@ -321,49 +381,6 @@ Public Class frmMain
         Else
             Me.Text = "JikJikoo - " & My.Resources.JikJikoo.CachingImageEnd
         End If
-    End Sub
-
-    Private Sub stlMain_TwitCommand(ByVal sender As Object, ByVal t As TwitEventArgs) Handles stlMain.TwitCommand
-        jikUpdate.in_reply_to_status_id = ""
-        If t.TwitEvent = TwitEvents.Use_ScreenName Then
-            jikUpdate.DirectMessage = False
-            jikUpdate.txtStatus.Paste("@" & t.Text)
-
-        ElseIf t.TwitEvent = TwitEvents.RT Then
-            jikUpdate.DirectMessage = False
-            jikUpdate.txtStatus.Text = "RT @" & t.Status.User.Screen_Name & " " & t.Status.Text
-
-        ElseIf t.TwitEvent = TwitEvents.Reply Then
-            jikUpdate.DirectMessage = False
-            jikUpdate.in_reply_to_status_id = t.Status.Id
-            jikUpdate.in_reply_to_screen_name = t.Status.User.Screen_Name
-            jikUpdate.txtStatus.Text = "@" & t.Status.User.Screen_Name
-
-        ElseIf t.TwitEvent = TwitEvents.UserStatuses Then
-            jikUpdate.DirectMessage = False
-            curSttsParams.Value = t.Text
-            curSttsParams.Key = ""
-            WaitingForCleanRefresh = True
-
-            curSttsType = StatusListType.UserUpdates
-            TimerRefresh_Tick(Me, Nothing)
-
-        ElseIf t.TwitEvent = TwitEvents.DirectMessage Then
-            jikUpdate.DirectMessage = True
-            jikUpdate.SendMessageTo = t.Text
-
-        ElseIf t.TwitEvent = TwitEvents.HashTag Then
-            jikUpdate.DirectMessage = False
-            curSttsParams.Value = "%23" & t.Text
-            curSttsParams.Key = ""
-            WaitingForCleanRefresh = True
-            txtSearch.Text = "#" & t.Text
-            curSttsType = StatusListType.SearchResults
-            TimerRefresh_Tick(Me, Nothing)
-            lnkSearchLinks_LinkClicked(Nothing, Nothing)
-
-        End If
-
     End Sub
 
     Private Sub stlMain_PagerPrev(ByVal sender As Object, ByVal e As System.EventArgs) Handles stlMain.PagerPrev
@@ -525,7 +542,7 @@ Public Class frmMain
         'pnlSearch.Location = pnlMenu.Location
         'pnlSearch.Visible = True
         'pnlMenu.Visible = False
-        SetActiveLinkButtonColor(lnkBrowsLinks)
+        'SetActiveLinkButtonColor(lnkBrowsLinks)
         MoveAnimateMenuPanels(2)
 
     End Sub
@@ -534,7 +551,7 @@ Public Class frmMain
         'pnlMenu.Location = pnlSearch.Location
         'pnlSearch.Visible = False
         'pnlMenu.Visible = True
-        SetActiveLinkButtonColor(lnkSearchLinks)
+        'SetActiveLinkButtonColor(lnkSearchLinks)
         MoveAnimateMenuPanels(1)
 
     End Sub
@@ -550,6 +567,30 @@ Public Class frmMain
         stlMain.Page = 1
         SetActiveLinkButtonColor(lnkFollowers)
         SetBindingInfo(StatusListType.Followers)
+
+    End Sub
+
+    Private Sub SetActiveLinkButtonColor(ByVal l As LinkLabel)
+        For Each c As Control In pnlSearch.Controls
+            If c.GetType Is GetType(LinkLabel) Then
+                If c IsNot l Then
+                    CType(c, LinkLabel).LinkColor = Color.FromArgb(128, 128, 255)
+
+                End If
+
+            End If
+        Next
+
+        For Each c As Control In pnlMenu.Controls
+            If c.GetType Is GetType(LinkLabel) Then
+                If c IsNot l Then
+                    CType(c, LinkLabel).LinkColor = Color.FromArgb(128, 128, 255)
+
+                End If
+
+            End If
+        Next
+        l.LinkColor = Color.Chartreuse
 
     End Sub
 
@@ -597,27 +638,154 @@ Public Class frmMain
 
 #End Region
 
-    Private Sub SetActiveLinkButtonColor(ByVal l As LinkLabel)
-        For Each c As Control In pnlSearch.Controls
-            If c.GetType Is GetType(LinkLabel) Then
-                If c IsNot l Then
-                    CType(c, LinkLabel).LinkColor = Color.FromArgb(128, 128, 255)
+#Region " Image Buttons "
 
-                End If
+#Region " Status "
 
-            End If
-        Next
+    Private Sub picStatus_MouseEnter(ByVal sender As Object, ByVal e As System.EventArgs) Handles picStatus.MouseEnter
+        picStatus.Image = My.Resources.statusHover
+    End Sub
 
-        For Each c As Control In pnlMenu.Controls
-            If c.GetType Is GetType(LinkLabel) Then
-                If c IsNot l Then
-                    CType(c, LinkLabel).LinkColor = Color.FromArgb(128, 128, 255)
+    Private Sub picStatus_MouseLeave(ByVal sender As Object, ByVal e As System.EventArgs) Handles picStatus.MouseLeave
+        picStatus.Image = My.Resources.status
 
-                End If
+    End Sub
 
-            End If
-        Next
-        l.LinkColor = Color.Chartreuse
+    Private Sub picStatus_Click_1(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles picStatus.Click
+        picStatus.Image = Nothing
+        picStatus.Refresh()
+        Thread.Sleep(10)
+        picStatus.Image = My.Resources.statusHover
+        ShowUpdateControl(Not jikUpdate.Visible)
+
+    End Sub
+
+#End Region
+
+#Region " User "
+
+    Private Sub picUser_MouseEnter(ByVal sender As Object, ByVal e As System.EventArgs) Handles picUser.MouseEnter
+        picUser.Image = My.Resources.userHover
+
+    End Sub
+
+    Private Sub picUser_MouseLeave(ByVal sender As Object, ByVal e As System.EventArgs) Handles picUser.MouseLeave
+        picUser.Image = My.Resources.user
+
+    End Sub
+
+    Private Sub picUser_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles picUser.Click
+        picUser.Image = Nothing
+        picUser.Refresh()
+        Thread.Sleep(10)
+        picuser.Image = My.Resources.userHover 
+
+        ShowUserLoginControl(Not jikLogin.Visible)
+
+    End Sub
+
+#End Region
+
+#Region " Settings "
+
+    Private Sub picSetting_MouseEnter(ByVal sender As Object, ByVal e As System.EventArgs) Handles picSetting.MouseEnter
+        picSetting.Image = My.Resources.settingHover
+
+    End Sub
+
+    Private Sub picSetting_MouseLeave(ByVal sender As Object, ByVal e As System.EventArgs) Handles picSetting.MouseLeave
+        picSetting.Image = My.Resources.Setting
+
+    End Sub
+
+    Private Sub picSetting_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles picSetting.Click
+        picSetting.Image = My.Resources.SettingPressed
+        picSetting.Refresh()
+        Thread.Sleep(10)
+        picSetting.Image = My.Resources.settingHover
+
+        btnConfig_Click(Nothing, e)
+
+    End Sub
+
+#End Region
+
+#End Region
+
+    Private Sub ShowUpdateControl()
+        ShowUpdateControl(True)
+
+    End Sub
+
+
+    Private Sub ShowUpdateControl(ByVal show As Boolean)
+        If Not show Then
+            jikUpdate.txtStatus.Text = ""
+            jikUpdate.txtShorten.Text = ""
+            jikUpdate.DirectMessage = False
+
+        ElseIf jikLogin.Visible Then
+            ShowUserLoginControl(False)
+
+        End If
+        jikUpdate.Visible = show 'Not jikUpdate.Visible
+        jikLogin.Visible = False
+        If jikUpdate.Visible Then
+            Dim newtop As Int32 = jikUpdate.Top + jikUpdate.Height
+            For i As Int32 = 0 To 10
+                stlMain.Top += ((newtop - 30) \ 10)
+                stlMain.Refresh()
+                jikUpdate.Refresh()
+                pnlMenu.Refresh()
+
+            Next
+            stlMain.Top = newtop
+
+        Else
+            Dim newtop As Int32 = 30
+            Dim diff As Int32 = stlMain.Top - 30
+            For i As Int32 = 0 To 9
+                stlMain.Top -= (diff \ 10)
+                stlMain.Refresh()
+                pnlMenu.Refresh()
+
+            Next
+            stlMain.Top = newtop
+
+        End If
+
+    End Sub
+
+    Private Sub ShowUserLoginControl(ByVal show As Boolean)
+        If show And jikUpdate.Visible Then
+            ShowUpdateControl(False)
+
+        End If
+        jikLogin.Visible = show
+
+        If jikLogin.Visible Then
+            Dim newtop As Int32 = jikLogin.Top + jikLogin.Height
+            For i As Int32 = 0 To 10
+                stlMain.Top += ((newtop - 30) \ 10)
+                stlMain.Refresh()
+                jikLogin.Refresh()
+                pnlMenu.Refresh()
+
+            Next
+            stlMain.Top = newtop
+
+        Else
+            Dim newtop As Int32 = 30
+            Dim diff As Int32 = stlMain.Top - 30
+            For i As Int32 = 0 To 9
+                stlMain.Top -= (diff \ 10)
+                stlMain.Refresh()
+                pnlMenu.Refresh()
+
+            Next
+            stlMain.Top = newtop
+
+        End If
 
     End Sub
 
