@@ -107,6 +107,27 @@ Namespace oAuthExample
         ''' </summary>
         ''' <param name="authToken">The oauth_token is supplied by Twitter's authorization page following the callback.</param>
         Public Sub AccessTokenGet(ByVal authToken As String)
+            Me.Token = authToken
+            Dim response As String = oAuthWebRequest(Method.[GET], ACCESS_TOKEN, [String].Empty)
+            If response.Length > 0 Then
+                'Store the Token and Token Secret
+                Dim qs As NameValueCollection = HttpUtility.ParseQueryString(response)
+                If qs("oauth_token") IsNot Nothing Then
+                    Me.Token = qs("oauth_token")
+                End If
+                If qs("oauth_token_secret") IsNot Nothing Then
+                    Me.TokenSecret = qs("oauth_token_secret")
+                End If
+
+            End If
+
+        End Sub
+
+        ''' <summary>
+        ''' Exchange the request token for an access token.
+        ''' </summary>
+        ''' <param name="authToken">The oauth_token is supplied by Twitter's authorization page following the callback.</param>
+        Public Sub AccessTokenGetPIN(ByVal authToken As String)
             'For Verifying PIN code
             authToken = "&oauth_verifier=" & authToken
 

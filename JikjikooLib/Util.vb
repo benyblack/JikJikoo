@@ -69,4 +69,53 @@ Namespace DNE.JikJikoo
 
     End Class
 
+    Public Class HtmlHeaders
+        Inherits Collections.Specialized.NameValueCollection
+
+        Private _firstLine As String = ""
+        Public Property FirstLine() As String
+            Get
+                Return _firstLine
+            End Get
+            Set(ByVal value As String)
+                _firstLine = value
+            End Set
+        End Property
+
+        Public ReadOnly Property Status() As String
+            Get
+                If Me("status") IsNot Nothing Then
+                    Return Me("status")
+
+                End If
+                Return ""
+
+            End Get
+        End Property
+
+        Public ReadOnly Property StatusCode() As Int32
+            Get
+                If Me("status") IsNot Nothing Then
+                    Return CInt(Me("status").Split(" ")(0))
+                End If
+                Return 0
+
+            End Get
+        End Property
+
+        Public Sub New(ByVal s As String)
+            Dim Headers As String() = s.Split(vbCrLf)
+            If Headers Is Nothing OrElse Headers.Length = 0 Then Exit Sub
+            _firstLine = Headers(0)
+            For i As Int32 = 1 To Headers.Length - 1
+                Dim k As String = Headers(i).Split(":")(0).Trim()
+                Dim v As String = Headers(i).Split(":")(1).Trim()
+                Me.Add(k, v)
+
+            Next
+
+        End Sub
+
+    End Class
+
 End Namespace

@@ -236,6 +236,7 @@ Namespace oAuthExample
             signatureBase.AppendFormat("{0}&", UrlEncode(normalizedUrl))
             signatureBase.AppendFormat("{0}", UrlEncode(normalizedRequestParameters))
 
+            'Dim cb As String = HttpUtility.UrlEncode(signatureBase.ToString())
             Return signatureBase.ToString()
         End Function
 

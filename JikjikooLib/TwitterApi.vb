@@ -1,4 +1,5 @@
-﻿Imports System
+﻿
+Imports System
 Imports System.Net
 Imports System.Text
 Imports System.Threading
@@ -82,8 +83,13 @@ Namespace DNE.Twitter
                 Dim normurl As String = ""
                 Dim normparam As String = ""
 
+                Dim oo As New OAuth.OAuthBase()
+                Dim nonc As String = o.GenerateNonce()
+                Dim sig As String = oo.GenerateSignature(New Uri("http://twitter.com" & url), o.ConsumerKey, o.ConsumerSecret, o.Token, o.TokenSecret, method, o.GenerateTimeStamp(), _
+                                    nonc, normurl, normparam)
+
                 Dim sign As String = o.GenerateSignature(New Uri("http://twitter.com" & url), o.ConsumerKey, o.ConsumerSecret, o.Token, o.TokenSecret, method, o.GenerateTimeStamp(), _
-                                    o.GenerateNonce(), normurl, normparam)
+                                    nonc, normurl, normparam)
                 url = String.Format("{0}?{1}&oauth_signature={2}", normurl, normparam, sign)
 
             End If
@@ -284,6 +290,7 @@ Namespace DNE.Twitter
 
 #Region " Api Functions "
 
+     
 #Region " TimeLine "
 
         ''' <summary>
@@ -984,7 +991,6 @@ Namespace DNE.Twitter
                 If method.ToLower = "get" Then request = GenerateGetRequest(host, url, query, mustAuthenticate)
                 If method.ToLower = "post" Then request = GeneratePostRequest(host, url, query, mustAuthenticate)
 
-
                 Dim bytesSent As [Byte]() = Encoding.ASCII.GetBytes(request)
                 Dim bytesReceived As [Byte]() = New [Byte](255) {}
 
@@ -1011,7 +1017,16 @@ Namespace DNE.Twitter
             End Try
 
             RaiseEvent DownloadingDataEnd(Nothing, Nothing)
-            If strOut.Length > 4 Then strOut = strOut.Substring(strOut.IndexOf(vbCrLf + vbCrLf) + 4)
+            If strOut.Length > 4 Then
+                'Check HTTP Headers
+                Dim headers As New JikJikoo.HtmlHeaders(strOut.Substring(0, strOut.IndexOf(vbCrLf + vbCrLf)))
+                If headers.StatusCode <> 200 Then
+                    headers.ToString()
+
+                End If
+
+                strOut = strOut.Substring(strOut.IndexOf(vbCrLf + vbCrLf) + 4)
+            End If
             Return strOut
 
         End Function
@@ -1135,10 +1150,13 @@ Namespace DNE.Twitter
         ''' <remarks></remarks>
         Private Function GenerateGetRequest(ByVal host As String, ByVal url As String, _
                             ByVal query As String, Optional ByVal mustAuth As Boolean = False) As String
-            If (url.IndexOf("?") > 0) Then
-                url = (url & "&")
-            Else
-                url = (url & "?")
+            If query <> "" Then
+                If (url.IndexOf("?") > 0) Then
+                    url = (url & "&")
+                Else
+                    url = (url & "?")
+                End If
+
             End If
 
             If query <> "" Then url += query 'HttpUtility.UrlEncode(query)
