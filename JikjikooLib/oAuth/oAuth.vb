@@ -84,7 +84,6 @@ Namespace oAuthExample
 
         Protected random As New Random()
 
-        Protected unreservedChars As String = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_.~"
 
         ''' <summary>
         ''' Helper function to compute a hash value
@@ -144,7 +143,7 @@ Namespace oAuthExample
         ''' <returns>Returns a Url encoded string</returns>
         Public Function UrlEncode(ByVal value As String) As String
             Dim result As New StringBuilder()
-
+            Dim unreservedChars As String = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_.~"
             For Each symbol As Char In value
                 If unreservedChars.IndexOf(symbol) <> -1 Then
                     result.Append(symbol)

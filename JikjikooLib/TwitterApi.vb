@@ -83,13 +83,27 @@ Namespace DNE.Twitter
                 Dim normurl As String = ""
                 Dim normparam As String = ""
 
-                Dim oo As New OAuth.OAuthBase()
-                Dim nonc As String = o.GenerateNonce()
-                Dim sig As String = oo.GenerateSignature(New Uri("http://twitter.com" & url), o.ConsumerKey, o.ConsumerSecret, o.Token, o.TokenSecret, method, o.GenerateTimeStamp(), _
-                                    nonc, normurl, normparam)
 
-                Dim sign As String = o.GenerateSignature(New Uri("http://twitter.com" & url), o.ConsumerKey, o.ConsumerSecret, o.Token, o.TokenSecret, method, o.GenerateTimeStamp(), _
-                                    nonc, normurl, normparam)
+                If query <> "" Then
+                    If (url.IndexOf("?") > 0) Then
+                        url = (url & "&")
+                    Else
+                        url = (url & "?")
+                    End If
+
+                End If
+
+                ''If method.ToLower = "get" And query <> "" Then
+                'url += query
+                'query = ""
+
+                ''End If
+
+
+                Dim sign As String = o.GenerateSignature(New Uri("http://twitter.com" & url & query), _
+                                    o.ConsumerKey, o.ConsumerSecret, o.Token, o.TokenSecret, method, o.GenerateTimeStamp(), _
+                                    o.GenerateNonce(), normurl, normparam)
+                If query <> "" Then normparam = normparam.Replace("&" & query, "")
                 url = String.Format("{0}?{1}&oauth_signature={2}", normurl, normparam, sign)
 
             End If
@@ -105,7 +119,25 @@ Namespace DNE.Twitter
 
         End Function
 
+        ''' <summary>
+        ''' This is a different Url Encode implementation since the default .NET one outputs the percent encoding in lower case.
+        ''' While this is not a problem with the percent encoding spec, it is used in upper case throughout OAuth
+        ''' </summary>
+        ''' <param name="value">The value to Url encode</param>
+        ''' <returns>Returns a Url encoded string</returns>
+        Public Function UrlEncode(ByVal value As String) As String
+            Dim result As New StringBuilder()
+            Dim unreservedChars As String = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_.~"
+            For Each symbol As Char In value
+                If unreservedChars.IndexOf(symbol) <> -1 Then
+                    result.Append(symbol)
+                Else
+                    result.Append("%"c + [String].Format("{0:X2}", AscW(symbol)))
+                End If
+            Next
 
+            Return result.ToString()
+        End Function
 
 #Region " Urls "
 
@@ -495,7 +527,7 @@ Namespace DNE.Twitter
         ''' <returns></returns>
         ''' <remarks></remarks>
         Public Function UpdateStatus(ByVal status As String, ByVal in_reply_to_status_id As String) As String
-            Dim query As String = String.Format("status={0}", HttpUtility.UrlEncode(status))
+            Dim query As String = String.Format("status={0}", UrlEncode(status))
             If in_reply_to_status_id <> "" Then query += String.Format("&in_reply_to_status_id={0}", in_reply_to_status_id)
             Return HttpRequest("POST", updatestatusurl, query)
 
@@ -984,10 +1016,10 @@ Namespace DNE.Twitter
             ' for result
             Dim bytes As Integer = 0
             Dim strOut As String = ""
+            Dim request As String = ""
             Try
                 socket.Connect(ipe)
 
-                Dim request As String = ""
                 If method.ToLower = "get" Then request = GenerateGetRequest(host, url, query, mustAuthenticate)
                 If method.ToLower = "post" Then request = GeneratePostRequest(host, url, query, mustAuthenticate)
 
@@ -1021,7 +1053,7 @@ Namespace DNE.Twitter
                 'Check HTTP Headers
                 Dim headers As New JikJikoo.HtmlHeaders(strOut.Substring(0, strOut.IndexOf(vbCrLf + vbCrLf)))
                 If headers.StatusCode <> 200 Then
-                    headers.ToString()
+                    'TODO://
 
                 End If
 
@@ -1160,14 +1192,14 @@ Namespace DNE.Twitter
             End If
 
             If query <> "" Then url += query 'HttpUtility.UrlEncode(query)
-            Dim request As String = "GET " & url & " HTTP/1.1" & vbLf
-            request += "Host: " & host & vbLf
-            request += "User-Agent: JikJikoo" & vbLf
+            Dim request As String = "GET " & url & " HTTP/1.1" & vbCrLf
+            request += "Host: " & host & vbCrLf
+            request += "User-Agent: JikJikoo" & vbCrLf
             If AuthenticationType = AuthType.Basic Then
-                If mustAuth Then request += "Authorization:Basic " & Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(UserName & ":" & Password)) & vbLf
+                If mustAuth Then request += "Authorization:Basic " & Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(UserName & ":" & Password)) & vbCrLf
 
             End If
-            request += vbLf
+            request += vbCrLf
             Return request
 
         End Function
@@ -1183,15 +1215,15 @@ Namespace DNE.Twitter
         ''' <remarks></remarks>
         Private Function GeneratePostRequest(ByVal host As String, _
                 ByVal url As String, ByVal data As String, Optional ByVal mustAuth As Boolean = False) As String
-            Dim request As String = "POST " & url & " HTTP/1.1" & vbLf
-            request += "Host: " & host & vbLf
-            request += "User-Agent: JikJikoo" & vbLf
-            request += "Content-Type: application/x-www-form-urlencoded" & vbLf
+            Dim request As String = "POST " & url & " HTTP/1.1" & vbCrLf
+            request += "Host: " & host & vbCrLf
+            request += "User-Agent: JikJikoo" & vbCrLf
+            request += "Content-Type: application/x-www-form-urlencoded" & vbCrLf
             If AuthenticationType = AuthType.Basic Then
-                If mustAuth Then request += "Authorization:Basic " & Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(UserName & ":" & Password)) & vbLf
+                If mustAuth Then request += "Authorization:Basic " & Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(UserName & ":" & Password)) & vbCrLf
 
             End If
-            request += "Content-Length:" & data.Length & vbLf & vbLf
+            request += "Content-Length:" & data.Length & vbCrLf & vbCrLf
             request += data
             Return request
 
