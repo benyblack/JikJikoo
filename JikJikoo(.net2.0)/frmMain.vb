@@ -149,6 +149,82 @@ Public Class frmMain
 
 #Region " UI "
 
+    Private Sub ShowUpdateControl()
+        ShowUpdateControl(True)
+
+    End Sub
+
+    Private Sub ShowUpdateControl(ByVal show As Boolean)
+        If Not show Then
+            jikUpdate.txtStatus.Text = ""
+            jikUpdate.txtShorten.Text = ""
+            jikUpdate.DirectMessage = False
+
+        ElseIf jikLogin.Visible Then
+            ShowUserLoginControl(False)
+
+        End If
+        jikUpdate.Visible = show 'Not jikUpdate.Visible
+        jikLogin.Visible = False
+        If jikUpdate.Visible Then
+            Dim newtop As Int32 = jikUpdate.Top + jikUpdate.Height
+            For i As Int32 = 0 To 10
+                stlMain.Top += ((newtop - 30) \ 10)
+                stlMain.Refresh()
+                jikUpdate.Refresh()
+                pnlMenu.Refresh()
+
+            Next
+            stlMain.Top = newtop
+
+        Else
+            Dim newtop As Int32 = 30
+            Dim diff As Int32 = stlMain.Top - 30
+            For i As Int32 = 0 To 9
+                stlMain.Top -= (diff \ 10)
+                stlMain.Refresh()
+                pnlMenu.Refresh()
+
+            Next
+            stlMain.Top = newtop
+
+        End If
+
+    End Sub
+
+    Private Sub ShowUserLoginControl(ByVal show As Boolean)
+        If show And jikUpdate.Visible Then
+            ShowUpdateControl(False)
+
+        End If
+        jikLogin.Visible = show
+
+        If jikLogin.Visible Then
+            Dim newtop As Int32 = jikLogin.Top + jikLogin.Height
+            For i As Int32 = 0 To 10
+                stlMain.Top += ((newtop - 30) \ 10)
+                stlMain.Refresh()
+                jikLogin.Refresh()
+                pnlMenu.Refresh()
+
+            Next
+            stlMain.Top = newtop
+
+        Else
+            Dim newtop As Int32 = 30
+            Dim diff As Int32 = stlMain.Top - 30
+            For i As Int32 = 0 To 9
+                stlMain.Top -= (diff \ 10)
+                stlMain.Refresh()
+                pnlMenu.Refresh()
+
+            Next
+            stlMain.Top = newtop
+
+        End If
+
+    End Sub
+
     Private Sub TwitterApiHttpError(ByVal sender As Object, ByVal hea As HttpExEventArgs)
         Dim host As String = ""
         If hea.Url <> "" Then host = New Uri(hea.Url).Host
@@ -229,7 +305,7 @@ Public Class frmMain
         ReloadConfig()
         jikLogin.LoadLogin()
         AddHandler twa.HttpError, AddressOf TwitterApiHttpError
-
+        twa.VerifyCredentials()
     End Sub
 
     Private Sub jikUpdate_UpdateCompleted(ByVal sender As Object, ByVal e As System.EventArgs) Handles jikUpdate.UpdateCompleted
@@ -712,83 +788,5 @@ Public Class frmMain
 #End Region
 
 #End Region
-
-
-    Private Sub ShowUpdateControl()
-        ShowUpdateControl(True)
-
-    End Sub
-
-
-    Private Sub ShowUpdateControl(ByVal show As Boolean)
-        If Not show Then
-            jikUpdate.txtStatus.Text = ""
-            jikUpdate.txtShorten.Text = ""
-            jikUpdate.DirectMessage = False
-
-        ElseIf jikLogin.Visible Then
-            ShowUserLoginControl(False)
-
-        End If
-        jikUpdate.Visible = show 'Not jikUpdate.Visible
-        jikLogin.Visible = False
-        If jikUpdate.Visible Then
-            Dim newtop As Int32 = jikUpdate.Top + jikUpdate.Height
-            For i As Int32 = 0 To 10
-                stlMain.Top += ((newtop - 30) \ 10)
-                stlMain.Refresh()
-                jikUpdate.Refresh()
-                pnlMenu.Refresh()
-
-            Next
-            stlMain.Top = newtop
-
-        Else
-            Dim newtop As Int32 = 30
-            Dim diff As Int32 = stlMain.Top - 30
-            For i As Int32 = 0 To 9
-                stlMain.Top -= (diff \ 10)
-                stlMain.Refresh()
-                pnlMenu.Refresh()
-
-            Next
-            stlMain.Top = newtop
-
-        End If
-
-    End Sub
-
-    Private Sub ShowUserLoginControl(ByVal show As Boolean)
-        If show And jikUpdate.Visible Then
-            ShowUpdateControl(False)
-
-        End If
-        jikLogin.Visible = show
-
-        If jikLogin.Visible Then
-            Dim newtop As Int32 = jikLogin.Top + jikLogin.Height
-            For i As Int32 = 0 To 10
-                stlMain.Top += ((newtop - 30) \ 10)
-                stlMain.Refresh()
-                jikLogin.Refresh()
-                pnlMenu.Refresh()
-
-            Next
-            stlMain.Top = newtop
-
-        Else
-            Dim newtop As Int32 = 30
-            Dim diff As Int32 = stlMain.Top - 30
-            For i As Int32 = 0 To 9
-                stlMain.Top -= (diff \ 10)
-                stlMain.Refresh()
-                pnlMenu.Refresh()
-
-            Next
-            stlMain.Top = newtop
-
-        End If
-
-    End Sub
 
 End Class

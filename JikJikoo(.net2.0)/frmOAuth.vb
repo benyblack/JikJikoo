@@ -41,7 +41,7 @@ Public Class frmOAuth
 
     Private Function ValidatePINforClient()
         If Microsoft.VisualBasic.IsNumeric(txtPIN.Text) Then
-            If txtPIN.Text.Length = 6 Then
+            If txtPIN.Text.Length >= 6 Then
                 Return True
 
             End If
@@ -53,7 +53,7 @@ Public Class frmOAuth
         txtPIN.Text = My.Computer.Clipboard.GetText()
         Application.DoEvents()
         Threading.Thread.Sleep(1000)
-        o.AccessTokenGet(txtPIN.Text)
+        o.AccessTokenGetPIN(txtPIN.Text)
         If o.TokenSecret = "" Then
             MsgBox("Entered PIN Is Not Valid", MsgBoxStyle.Critical)
             Exit Sub
