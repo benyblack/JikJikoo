@@ -145,6 +145,7 @@ Namespace DNE.Twitter
         Private _query As String = ""
         Private _total As String = ""
         Private _previous_page As String = ""
+        Private _warning As String = ""
 
         <JsonProperty("since_id")> _
         Public Property since_id() As String
@@ -243,6 +244,16 @@ Namespace DNE.Twitter
             End Get
             Set(ByVal value As String)
                 _previous_page = value
+            End Set
+        End Property
+
+        <JsonProperty("warning")> _
+        Public Property warning() As String
+            Get
+                Return _warning
+            End Get
+            Set(ByVal value As String)
+                _warning = value
             End Set
         End Property
 
