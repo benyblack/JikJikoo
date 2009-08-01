@@ -27,8 +27,14 @@ Public Class ctrStatus
     End Sub
 
     Private Sub BindFields()
+        DeleteThisStatusToolStripMenuItem.Enabled = False
         If _status IsNot Nothing Then
             lblUserName.Text = Status.User.Screen_Name
+            If CurrentUser.Screen_Name.ToLower = Status.User.Screen_Name.ToLower() Then
+                DeleteThisStatusToolStripMenuItem.Enabled = True
+
+            End If
+
             _originalText = Status.Text
             If Util.ContainRtlChars(_originalText) Then
                 txtStatus.RightToLeft = Windows.Forms.RightToLeft.Yes
@@ -286,16 +292,23 @@ Public Class ctrStatus
 
     Private Sub lblUserName_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles lblUserName.Click
         whatisClickedInTxtStatus = lblUserName.Text
-        If Array.IndexOf(FriendsIds, Status.User.Id) = -1 Then
-            SendDirectMessageToolStripMenuItem.Enabled = False
-
-        ElseIf Array.IndexOf(FollowersId, Status.User.Id) = -1 Then
+        If FriendsIds Is Nothing Or FollowersId Is Nothing Then
             SendDirectMessageToolStripMenuItem.Enabled = False
 
         Else
-            SendDirectMessageToolStripMenuItem.Enabled = True
+            If Array.IndexOf(FriendsIds, Status.User.Id) = -1 Then
+                SendDirectMessageToolStripMenuItem.Enabled = False
+
+            ElseIf Array.IndexOf(FollowersId, Status.User.Id) = -1 Then
+                SendDirectMessageToolStripMenuItem.Enabled = False
+
+            Else
+                SendDirectMessageToolStripMenuItem.Enabled = True
+
+            End If
 
         End If
+
         mnuUsername.Show(lblUserName, 5, 5)
 
     End Sub
@@ -324,8 +337,13 @@ Public Class ctrStatus
 
     End Sub
 
-#End Region
+    Private Sub DeleteThisStatusToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles DeleteThisStatusToolStripMenuItem.Click
+        If Me.Status Is Nothing Then Exit Sub
+        twa.DestroyStatus(Me.Status.Id)
 
+    End Sub
+
+#End Region
 
 
 End Class

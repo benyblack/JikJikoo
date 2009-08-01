@@ -24,13 +24,13 @@ Partial Class ctrUploadFile
     Private Sub InitializeComponent()
         Me.btnUpload = New System.Windows.Forms.Button
         Me.txtFile = New System.Windows.Forms.TextBox
-        Me.cboShorten = New System.Windows.Forms.ComboBox
         Me.btnBrowse = New System.Windows.Forms.Button
+        Me.txtOut = New System.Windows.Forms.TextBox
+        Me.prgUpload = New System.Windows.Forms.ProgressBar
         Me.SuspendLayout()
         '
         'btnUpload
         '
-        Me.btnUpload.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.btnUpload.Enabled = False
         Me.btnUpload.ForeColor = System.Drawing.Color.Black
         Me.btnUpload.ImeMode = System.Windows.Forms.ImeMode.NoControl
@@ -43,27 +43,15 @@ Partial Class ctrUploadFile
         '
         'txtFile
         '
-        Me.txtFile.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
-                    Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.txtFile.BackColor = System.Drawing.Color.White
         Me.txtFile.Location = New System.Drawing.Point(0, 3)
         Me.txtFile.Name = "txtFile"
+        Me.txtFile.ReadOnly = True
         Me.txtFile.Size = New System.Drawing.Size(308, 20)
         Me.txtFile.TabIndex = 7
         '
-        'cboShorten
-        '
-        Me.cboShorten.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.cboShorten.FormattingEnabled = True
-        Me.cboShorten.Items.AddRange(New Object() {"Rapidshare"})
-        Me.cboShorten.Location = New System.Drawing.Point(3, 31)
-        Me.cboShorten.Name = "cboShorten"
-        Me.cboShorten.Size = New System.Drawing.Size(88, 21)
-        Me.cboShorten.TabIndex = 9
-        '
         'btnBrowse
         '
-        Me.btnBrowse.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.btnBrowse.Enabled = False
         Me.btnBrowse.ForeColor = System.Drawing.Color.Black
         Me.btnBrowse.ImeMode = System.Windows.Forms.ImeMode.NoControl
         Me.btnBrowse.Location = New System.Drawing.Point(314, 3)
@@ -73,23 +61,41 @@ Partial Class ctrUploadFile
         Me.btnBrowse.Text = "&Browse"
         Me.btnBrowse.UseVisualStyleBackColor = True
         '
+        'txtOut
+        '
+        Me.txtOut.BackColor = System.Drawing.Color.White
+        Me.txtOut.Location = New System.Drawing.Point(0, 29)
+        Me.txtOut.Name = "txtOut"
+        Me.txtOut.ReadOnly = True
+        Me.txtOut.Size = New System.Drawing.Size(308, 20)
+        Me.txtOut.TabIndex = 10
+        '
+        'prgUpload
+        '
+        Me.prgUpload.Location = New System.Drawing.Point(0, 55)
+        Me.prgUpload.Name = "prgUpload"
+        Me.prgUpload.Size = New System.Drawing.Size(422, 23)
+        Me.prgUpload.TabIndex = 11
+        '
         'ctrUploadFile
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.Controls.Add(Me.cboShorten)
+        Me.Controls.Add(Me.prgUpload)
+        Me.Controls.Add(Me.txtOut)
         Me.Controls.Add(Me.btnBrowse)
         Me.Controls.Add(Me.btnUpload)
         Me.Controls.Add(Me.txtFile)
         Me.Name = "ctrUploadFile"
-        Me.Size = New System.Drawing.Size(425, 110)
+        Me.Size = New System.Drawing.Size(425, 88)
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
     End Sub
     Friend WithEvents btnUpload As System.Windows.Forms.Button
     Friend WithEvents txtFile As System.Windows.Forms.TextBox
-    Friend WithEvents cboShorten As System.Windows.Forms.ComboBox
     Friend WithEvents btnBrowse As System.Windows.Forms.Button
+    Friend WithEvents txtOut As System.Windows.Forms.TextBox
+    Friend WithEvents prgUpload As System.Windows.Forms.ProgressBar
 
 End Class

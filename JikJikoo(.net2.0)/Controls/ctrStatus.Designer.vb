@@ -36,6 +36,7 @@ Partial Class ctrStatus
         Me.RTToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
         Me.MentionsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
         Me.SendDirectMessageToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
+        Me.DeleteThisStatusToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
         CType(Me.picUser, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.FlowLayoutPanel1.SuspendLayout()
         Me.mnuUsername.SuspendLayout()
@@ -110,7 +111,7 @@ Partial Class ctrStatus
         Me.mnuUsername.BackColor = System.Drawing.Color.Black
         Me.mnuUsername.BackgroundImage = Nothing
         Me.mnuUsername.Font = Nothing
-        Me.mnuUsername.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.UseToolStripMenuItem, Me.ReplyToolStripMenuItem, Me.RTToolStripMenuItem, Me.MentionsToolStripMenuItem, Me.SendDirectMessageToolStripMenuItem})
+        Me.mnuUsername.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.UseToolStripMenuItem, Me.ReplyToolStripMenuItem, Me.RTToolStripMenuItem, Me.MentionsToolStripMenuItem, Me.SendDirectMessageToolStripMenuItem, Me.DeleteThisStatusToolStripMenuItem})
         Me.mnuUsername.Name = "ContextMenuStrip1"
         Me.mnuUsername.ShowImageMargin = False
         '
@@ -164,6 +165,16 @@ Partial Class ctrStatus
         Me.SendDirectMessageToolStripMenuItem.Name = "SendDirectMessageToolStripMenuItem"
         Me.SendDirectMessageToolStripMenuItem.ShortcutKeyDisplayString = Nothing
         '
+        'DeleteThisStatusToolStripMenuItem
+        '
+        Me.DeleteThisStatusToolStripMenuItem.AccessibleDescription = Nothing
+        Me.DeleteThisStatusToolStripMenuItem.AccessibleName = Nothing
+        resources.ApplyResources(Me.DeleteThisStatusToolStripMenuItem, "DeleteThisStatusToolStripMenuItem")
+        Me.DeleteThisStatusToolStripMenuItem.BackgroundImage = Nothing
+        Me.DeleteThisStatusToolStripMenuItem.ForeColor = System.Drawing.Color.White
+        Me.DeleteThisStatusToolStripMenuItem.Name = "DeleteThisStatusToolStripMenuItem"
+        Me.DeleteThisStatusToolStripMenuItem.ShortcutKeyDisplayString = Nothing
+        '
         'ctrStatus
         '
         Me.AccessibleDescription = Nothing
@@ -197,5 +208,6 @@ Partial Class ctrStatus
     Friend WithEvents UseToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents MentionsToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents SendDirectMessageToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents DeleteThisStatusToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
 
 End Class

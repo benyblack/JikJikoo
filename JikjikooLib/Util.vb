@@ -5,40 +5,8 @@ Imports DNE.JikJikoo.ShortenUrl
 Namespace DNE.JikJikoo
 
     Public Class Util
-        ''http://is.gd/api.php?longurl=http://www.example.com
-        ''login=login&apiKey=apiKey
-        ''<bitly>
-        ''      <errorCode>0</errorCode>
-        ''      <errorMessage></errorMessage>
-        ''      <results>
-        ''          <nodeKeyVal>
-        ''              <userHash>Zkmf7</userHash>
-        ''              <shortKeywordUrl></shortKeywordUrl>
-        ''              <hash>3j4ir4</hash>
-        ''              <nodeKey><![CDATA[http://google.com]]></nodeKey>
-        ''              <shortUrl>http://bit.ly/Zkmf7</shortUrl>
-        ''          </nodeKeyVal>
-        ''      </results>
-        ''      <statusCode>OK</statusCode>
-        ''</bitly>
-        ''http://tinyurl.com/api-create.php?url=
-        'Public Shared Function ShortenUrl(ByVal whoShorten As JikJikoo.ShortenUrl.ShortenServers, ByVal longUrl As String) As String
-        '    Dim twa As New Api()
-        '    'Return twa.GetSimpleHttpGet(String.Format("http://is.gd/api.php?longurl={0}", longUrl))
-        '    'Return twa.GetSimpleHttpGet(String.Format("http://api.bit.ly/shorten?version=2.0.1&longUrl={0}&login=jikjikoo&apiKey=R_737c18d68503f3ff2696387f43ceabde&format=xml", longUrl))
-        '    Return twa.GetSimpleHttpGet(String.Format("http://tinyurl.com/api-create.php?url={0}", longUrl))
-        'End Function
-
+    
         Public Shared Function ShortenUrl(ByVal whoShorten As ShortenServers, ByVal longUrl As String) As String
-            'Dim sxml As String = twa.GetSimpleHttpGet(String.Format("http://api.bit.ly/shorten?version=2.0.1&longUrl={0}&login=jikjikoo&apiKey=R_737c18d68503f3ff2696387f43ceabde&format=xml", longUrl))
-            'Dim xdoc As New Xml.XmlDocument()
-            'xdoc.LoadXml(sxml)
-            ''first check ErrorCode
-            'Return xdoc.SelectSingleNode("bitly/results/nodeKeyVal/shortUrl").InnerText
-            ''Return twa.GetSimpleHttpGet(String.Format("http://is.gd/api.php?longurl={0}", longUrl))
-            ''Return twa.GetSimpleHttpGet(String.Format("http://tinyurl.com/api-create.php?url={0}", longUrl))
-
-
             Dim sp As ShortenUrl.ProviderBase = Nothing
             If whoShorten = ShortenServers.bit_ly Then
                 sp = New ShortenUrl.BitlyProvider()
@@ -67,6 +35,14 @@ Namespace DNE.JikJikoo
 
         End Function
 
+        Public Shared Sub LogIt(ByVal s As String)
+            Dim startpath As String = My.Application.Info.DirectoryPath
+            startpath += "\log.txt"
+            IO.File.AppendAllText(startpath, s)
+
+
+        End Sub
+
     End Class
 
     Public Class HtmlHeaders
@@ -93,6 +69,16 @@ Namespace DNE.JikJikoo
             End Get
         End Property
 
+        Private _text As String = ""
+        Public Property Text() As String
+            Get
+                Return _text
+            End Get
+            Set(ByVal value As String)
+                _text = value
+            End Set
+        End Property
+
         Public ReadOnly Property StatusCode() As Int32
             Get
                 If Me("status") IsNot Nothing Then
@@ -104,6 +90,7 @@ Namespace DNE.JikJikoo
         End Property
 
         Public Sub New(ByVal s As String)
+            _text = s
             Dim Headers As String() = s.Split(vbCrLf)
             If Headers Is Nothing OrElse Headers.Length = 0 Then Exit Sub
             _firstLine = Headers(0)

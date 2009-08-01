@@ -28,6 +28,7 @@ Partial Class ctrlUpdateStatus
         Me.txtShorten = New System.Windows.Forms.TextBox
         Me.cboShorten = New System.Windows.Forms.ComboBox
         Me.btnShorten = New System.Windows.Forms.Button
+        Me.btnUpload = New System.Windows.Forms.Button
         Me.SuspendLayout()
         '
         'txtStatus
@@ -61,10 +62,18 @@ Partial Class ctrlUpdateStatus
         Me.btnShorten.Name = "btnShorten"
         Me.btnShorten.UseVisualStyleBackColor = True
         '
+        'btnUpload
+        '
+        resources.ApplyResources(Me.btnUpload, "btnUpload")
+        Me.btnUpload.ForeColor = System.Drawing.Color.Black
+        Me.btnUpload.Name = "btnUpload"
+        Me.btnUpload.UseVisualStyleBackColor = True
+        '
         'ctrlUpdateStatus
         '
         resources.ApplyResources(Me, "$this")
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+        Me.Controls.Add(Me.btnUpload)
         Me.Controls.Add(Me.btnShorten)
         Me.Controls.Add(Me.cboShorten)
         Me.Controls.Add(Me.txtShorten)
@@ -80,5 +89,6 @@ Partial Class ctrlUpdateStatus
     Friend WithEvents txtShorten As System.Windows.Forms.TextBox
     Friend WithEvents cboShorten As System.Windows.Forms.ComboBox
     Friend WithEvents btnShorten As System.Windows.Forms.Button
+    Friend WithEvents btnUpload As System.Windows.Forms.Button
 
 End Class

@@ -20,6 +20,8 @@ Namespace DNE.Twitter
         Public Event DownloadingDataEnd As EventHandler
         Public Event HttpError As HttpEventHandler
 
+        Private _cookie As String = ""
+
         Public Sub New()
 
         End Sub
@@ -73,6 +75,7 @@ Namespace DNE.Twitter
         End Sub
 
         Private Function HttpRequest(ByVal method As String, ByVal url As String, ByVal query As String, Optional ByVal host As String = "twitter.com") As String
+          
             If AuthenticationType = AuthType.oAuth Then
                 Dim o As New oAuthExample.oAuthTwitter(Me)
                 o.ConsumerKey = "Um0Z859qORQgTkN4ehyqdw"
@@ -92,19 +95,13 @@ Namespace DNE.Twitter
                     End If
 
                 End If
-
-                ''If method.ToLower = "get" And query <> "" Then
-                'url += query
-                'query = ""
-
-                ''End If
-
-
+                Dim ts As String = o.GenerateTimeStamp()
                 Dim sign As String = o.GenerateSignature(New Uri("http://twitter.com" & url & query), _
-                                    o.ConsumerKey, o.ConsumerSecret, o.Token, o.TokenSecret, method, o.GenerateTimeStamp(), _
+                                    o.ConsumerKey, o.ConsumerSecret, o.Token, o.TokenSecret, method, ts, _
                                     o.GenerateNonce(), normurl, normparam)
-                If query <> "" Then normparam = normparam.Replace("&" & query, "")
+                If query <> "" Then normparam = normparam.Substring(0, normparam.Length - query.Length - 1)
                 url = String.Format("{0}?{1}&oauth_signature={2}", normurl, normparam, sign)
+                ' DNE.JikJikoo.Util.LogIt(ts & vbCrLf)
 
             End If
 
@@ -139,24 +136,32 @@ Namespace DNE.Twitter
             Return result.ToString()
         End Function
 
+        Private Function UrlXEncode(ByVal s As String) As String
+            Dim c() As Char = s.ToCharArray
+            Dim ss As String = ""
+            Dim unreservedChars As String = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_.~"
+            For i As Int32 = 0 To s.Length - 1
+                If unreservedChars.IndexOf(c(i)) <> -1 Then
+                    ss += c(i)
+
+                ElseIf c(i) = " "c Then
+                    ss += "%20"
+
+                Else
+                    ss += HttpUtility.UrlEncode(c(i)).ToUpper()
+
+                End If
+
+
+            Next
+            Return ss
+
+        End Function
+
 #Region " Urls "
 
         'timeline
         Private publictimelineurl As String = "/statuses/public_timeline.xml"
-
-        ''' <summary>
-        ''' 
-        '''Parameters:
-        '''since_id.  Optional.  Returns only statuses with an ID greater than (that is, more recent than) the specified ID.
-        '''http://twitter.com/statuses/friends_timeline.xml?since_id=12345
-        '''max_id. Optional.  Returns only statuses with an ID less than (that is, older than) or equal to the specified ID.
-        '''Example: http://twitter.com/statuses/friends_timeline.xml?max_id=54321
-        '''count.  Optional.  Specifies the number of statuses to retrieve. May not be greater than 200. 
-        '''Example: http://twitter.com/statuses/friends_timeline.xml?count=5 
-        '''page. Optional. Specifies the page of results to retrieve. Note: there are pagination limits.
-        '''Example: http://twitter.com/statuses/friends_timeline.rss?page=3
-        ''' </summary>
-        ''' <remarks></remarks>
         Private friendtimelineurl As String = "/statuses/friends_timeline.xml"
         Private usertimelineurl As String = "/statuses/user_timeline.xml"
         Private usertimelineurl2 As String = "/statuses/user_timeline/{0}.xml"
@@ -527,7 +532,7 @@ Namespace DNE.Twitter
         ''' <returns></returns>
         ''' <remarks></remarks>
         Public Function UpdateStatus(ByVal status As String, ByVal in_reply_to_status_id As String) As String
-            Dim query As String = String.Format("status={0}", UrlEncode(status))
+            Dim query As String = String.Format("status={0}", UrlXEncode(status))
             If in_reply_to_status_id <> "" Then query += String.Format("&in_reply_to_status_id={0}", in_reply_to_status_id)
             Return HttpRequest("POST", updatestatusurl, query)
 
@@ -541,7 +546,7 @@ Namespace DNE.Twitter
         ''' <returns></returns>
         ''' <remarks></remarks>
         Public Function DestroyStatus(ByVal statusid As String) As String
-            Return HttpRequest("POST", destrystatusurl, "id=" & statusid)
+            Return HttpRequest("POST", String.Format(destrystatusurl, statusid), "")
 
         End Function
 
@@ -1052,12 +1057,17 @@ Namespace DNE.Twitter
             If strOut.Length > 4 Then
                 'Check HTTP Headers
                 Dim headers As New JikJikoo.HtmlHeaders(strOut.Substring(0, strOut.IndexOf(vbCrLf + vbCrLf)))
+                strOut = strOut.Substring(strOut.IndexOf(vbCrLf + vbCrLf) + 4)
+                If Not String.IsNullOrEmpty(headers("Set-Cookie")) And method.ToLower = "get" Then
+                    _cookie = headers("Set-Cookie")
+
+                End If
                 If headers.StatusCode <> 200 Then
                     'TODO://
+                    ' DNE.JikJikoo.Util.LogIt(request & headers.Text & vbCrLf & System.Text.RegularExpressions.Regex.Match(strOut, "<error>(.*?)</error>").Value)
 
                 End If
 
-                strOut = strOut.Substring(strOut.IndexOf(vbCrLf + vbCrLf) + 4)
             End If
             Return strOut
 
@@ -1195,6 +1205,10 @@ Namespace DNE.Twitter
             Dim request As String = "GET " & url & " HTTP/1.1" & vbCrLf
             request += "Host: " & host & vbCrLf
             request += "User-Agent: JikJikoo" & vbCrLf
+            If _cookie <> "" Then
+                request += "Cookie: " & _cookie & vbCrLf
+
+            End If
             If AuthenticationType = AuthType.Basic Then
                 If mustAuth Then request += "Authorization:Basic " & Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(UserName & ":" & Password)) & vbCrLf
 

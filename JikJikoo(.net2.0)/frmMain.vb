@@ -176,6 +176,7 @@ Public Class frmMain
 
             Next
             stlMain.Top = newtop
+            jikUpdate.txtStatus.Focus()
 
         Else
             Dim newtop As Int32 = 30
@@ -305,7 +306,7 @@ Public Class frmMain
         ReloadConfig()
         jikLogin.LoadLogin()
         AddHandler twa.HttpError, AddressOf TwitterApiHttpError
-        twa.VerifyCredentials()
+
     End Sub
 
     Private Sub jikUpdate_UpdateCompleted(ByVal sender As Object, ByVal e As System.EventArgs) Handles jikUpdate.UpdateCompleted
@@ -351,8 +352,9 @@ Public Class frmMain
                 u = twa.UserShow(jikLogin.txtUid.Text)
                 If u Is Nothing Then Exit Sub
                 CurrentUser = u
-                FriendsIds = twa.FriendsIds()
-                FollowersId = twa.FollowersIds()
+                'FriendsIds = twa.FriendsIds()
+                ' FollowersId = twa.FollowersIds()
+                Thread.Sleep(1000)
                 Dim img As Image = twa.GetImage(CurrentUser.Profile_image_url)
                 If img IsNot Nothing Then jikLogin.picUser.Image = img
                 'lblUser.Text = CurrentUser.Screen_Name
@@ -690,6 +692,7 @@ Public Class frmMain
 
     Private Sub ShowToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ShowToolStripMenuItem.Click
         Me.Show()
+        Me.Activate()
 
     End Sub
 

@@ -154,4 +154,13 @@ Public Class ctrlUpdateStatus
 
     End Sub
 
+    Private Sub btnUpload_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnUpload.Click
+        Dim f As New frmUpload
+        If f.ShowDialog = DialogResult.OK Then
+            txtShorten.Text = f.CtrUploadFile1.txtOut.Text.Trim()
+
+        End If
+
+    End Sub
+
 End Class
