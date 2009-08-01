@@ -308,6 +308,8 @@ Namespace oAuthExample
             Dim ts As TimeSpan = DateTime.UtcNow - New DateTime(1970, 1, 1, 0, 0, 0, _
              0)
             Return Convert.ToInt64(ts.TotalSeconds).ToString()
+
+            
         End Function
 
         ''' <summary>

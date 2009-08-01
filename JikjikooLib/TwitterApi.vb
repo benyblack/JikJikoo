@@ -8,6 +8,7 @@ Imports System.Web
 Imports System.Xml
 Imports System.Drawing
 Imports System.Collections.ObjectModel
+Imports System.Text.RegularExpressions
 
 Imports Org.Mentalis.Network.ProxySocket
 Imports Newtonsoft.Json
@@ -96,12 +97,13 @@ Namespace DNE.Twitter
 
                 End If
                 Dim ts As String = o.GenerateTimeStamp()
+                Dim nonce As String = o.GenerateNonce()
                 Dim sign As String = o.GenerateSignature(New Uri("http://twitter.com" & url & query), _
                                     o.ConsumerKey, o.ConsumerSecret, o.Token, o.TokenSecret, method, ts, _
-                                    o.GenerateNonce(), normurl, normparam)
+                                    nonce, normurl, normparam)
                 If query <> "" Then normparam = normparam.Substring(0, normparam.Length - query.Length - 1)
-                url = String.Format("{0}?{1}&oauth_signature={2}", normurl, normparam, sign)
-                ' DNE.JikJikoo.Util.LogIt(ts & vbCrLf)
+                url = String.Format("{0}?{1}&oauth_signature={2}", normurl, normparam, UrlXEncode(sign))
+                DNE.JikJikoo.Util.LogIt(ts & " : " & nonce & " : " & sign & vbCrLf)
 
             End If
 
@@ -1065,6 +1067,9 @@ Namespace DNE.Twitter
                 If headers.StatusCode <> 200 Then
                     'TODO://
                     ' DNE.JikJikoo.Util.LogIt(request & headers.Text & vbCrLf & System.Text.RegularExpressions.Regex.Match(strOut, "<error>(.*?)</error>").Value)
+                    DNE.JikJikoo.Util.LogIt(Regex.Match(strOut, "<error>(.*?)</error>").Value)
+                    DNE.JikJikoo.Util.LogIt(Regex.Match(strOut, "oauth_signature=(.*?)</request>").Groups(1).Value & vbCrLf)
+
 
                 End If
 
