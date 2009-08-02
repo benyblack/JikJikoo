@@ -106,7 +106,6 @@ Namespace DNE.Twitter
                 DNE.JikJikoo.Util.LogIt(ts & " : " & nonce & " : " & sign & vbCrLf)
 
             End If
-
             If Me.ProxyType = ProxyTypes.Socks4 Or Me.ProxyType = ProxyTypes.Socks5 Or Me.ProxyType = ProxyTypes.None Then
                 Return HttpRequestSocket(method, url, query, host)
 
