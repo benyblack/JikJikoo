@@ -60,6 +60,8 @@
     <Compile Include="Components\DirectMessage.vb" />
     <Compile Include="Enums.vb" />
     <Compile Include="Events.vb" />
+    <Compile Include="HttpWebClient.vb" />
+    <Compile Include="SocketWebClient.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -80,6 +82,7 @@
     <Compile Include="Components\Relationship.vb" />
     <Compile Include="Components\SearchResults.vb" />
     <Compile Include="Components\Status.vb" />
+    <Compile Include="Parser.vb" />
     <Compile Include="ShortenUrl\BitlyProvider.vb" />
     <Compile Include="ShortenUrl\CortasProvider.vb" />
     <Compile Include="ShortenUrl\IsgdProvider.vb" />
@@ -91,6 +94,7 @@
     <Compile Include="TwitterApi.vb" />
     <Compile Include="Components\User.vb" />
     <Compile Include="Util.vb" />
+    <Compile Include="WebClient.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">
