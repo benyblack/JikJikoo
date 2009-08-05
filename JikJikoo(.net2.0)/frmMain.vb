@@ -23,6 +23,7 @@ Public Class frmMain
         Set(ByVal value As Int32)
             If value <> _page Then
                 _page = value
+                If stlMain.Page <> _page Then stlMain.Page = _page
                 If _page = 1 Then
                     stlMain.lnkPrev.Visible = False
 
@@ -35,6 +36,103 @@ Public Class frmMain
         End Set
     End Property
 
+    'Private Sub Bind()
+    '    IsBinding = True
+    '    Try
+    '        Thread.Sleep(50)
+    '        ' check current user
+    '        ' if currentuser is nothing this means app not connected yet
+    '        If CurrentUser Is Nothing Then
+    '            SetCurrentUser()
+    '        End If
+    '        If Not CurrentUser Is Nothing Then
+
+
+    '            Dim sts As Collections.ObjectModel.Collection(Of DNE.Twitter.Status) = Nothing
+    '            If curSttsParams.Key.ToString().Length = 0 OrElse curSttsParams.Key.ToString() = "" Then stlMain.Clear()
+    '            'need to store last stored id
+    '            Dim lid As Int64 = 0
+    '            If stlMain.LastId <> "" Then lid = CLng(stlMain.LastId)
+
+    '            'friends timeline
+    '            If curSttsType = StatusListType.FriendsTimeLine Then
+    '                sts = twa.GetFriendsTimeLine(stlMain.LastId, Page)
+    '                If sts IsNot Nothing Then NewUpdate = sts.Count
+    '                stlMain.AddStatuses(sts)
+
+    '                'mentions
+    '            ElseIf curSttsType = StatusListType.Mentions Then
+    '                sts = twa.GetMentions(stlMain.LastId, Page)
+    '                stlMain.AddStatuses(sts)
+
+    '                'favorites
+    '            ElseIf curSttsType = StatusListType.Favorites Then
+    '                sts = twa.Favorites(CurrentUser.Screen_Name, Page)
+    '                stlMain.AddStatuses(sts)
+
+    '                'myupdates
+    '            ElseIf curSttsType = StatusListType.MyUpdates Then
+    '                sts = twa.GetUserTimeLine(CurrentUser.Screen_Name, stlMain.LastId, Page)
+    '                stlMain.AddStatuses(sts)
+
+    '                'userupdates
+    '            ElseIf curSttsType = StatusListType.UserUpdates Then
+    '                sts = twa.GetUserTimeLine(curSttsParams.Value, stlMain.LastId, Page)
+    '                stlMain.AddStatuses(sts)
+
+    '                'direct messages (inbox)
+    '            ElseIf curSttsType = StatusListType.DirectMessages Then
+    '                sts = Util.DirectMessage2Status(twa.DirectMessages(stlMain.LastId, Page), True)
+    '                stlMain.AddStatuses(sts)
+
+    '                'sent Messages (sent)
+    '            ElseIf curSttsType = StatusListType.SentMessages Then
+    '                sts = Util.DirectMessage2Status(twa.SentMessages(stlMain.LastId, Page), False)
+    '                stlMain.AddStatuses(sts)
+
+    '                'search results
+    '            ElseIf curSttsType = StatusListType.SearchResults Then
+    '                SetActiveLinkButtonColor(lnkSearch)
+    '                sts = Util.SearchResults2Status(twa.Search(curSttsParams.Value, Page, stlMain.LastId))
+    '                stlMain.AddStatuses(sts)
+
+    '                'Friends
+    '            ElseIf curSttsType = StatusListType.Friends Then
+    '                Dim uc As Collection(Of DNE.Twitter.User) = twa.Friends(CurrentUser.Screen_Name, Page)
+    '                stlMain.AddUsers(uc)
+
+    '                'Followers
+    '            ElseIf curSttsType = StatusListType.Followers Then
+    '                Dim uc As Collection(Of DNE.Twitter.User) = twa.Followers(CurrentUser.Screen_Name, Page)
+    '                stlMain.AddUsers(uc)
+
+    '            End If
+    '            curSttsParams.Key = stlMain.LastStatusId
+
+    '            'Update prev controls datetime
+    '            stlMain.DateTimesUpdate()
+    '            stlMain.FormatStatusText(lid)
+
+
+    '        End If
+
+
+    '    Catch ex As NoConnectionException
+    '        TimerRefresh.Enabled = True
+    '        ShowMessage("Error in connection", "Not Connected. check your internet connection", True)
+    '        'MsgBox("Not Connected. check your internet connection")
+
+    '    End Try
+    '    TimerRefresh.Enabled = True
+    '    IsBinding = False
+
+    '    If NewUpdate = 0 Then Exit Sub
+    '    ShowMessage("Alert", String.Format(My.Resources.JikJikoo.NewUpdate, NewUpdate), False)
+    '    NewUpdate = 0
+
+
+    'End Sub
+
     Private Sub Bind()
         IsBinding = True
         Try
@@ -45,76 +143,10 @@ Public Class frmMain
                 SetCurrentUser()
             End If
             If Not CurrentUser Is Nothing Then
-
-
-                Dim sts As Collections.ObjectModel.Collection(Of DNE.Twitter.Status) = Nothing
-                If curSttsParams.Key.ToString().Length = 0 OrElse curSttsParams.Key.ToString() = "" Then stlMain.Clear()
-                'need to store last stored id
-                Dim lid As Int64 = 0
-                If stlMain.LastId <> "" Then lid = CLng(stlMain.LastId)
-
-                'friends timeline
-                If curSttsType = StatusListType.FriendsTimeLine Then
-                    sts = twa.GetFriendsTimeLine(stlMain.LastId, Page)
-                    If sts IsNot Nothing Then NewUpdate = sts.Count
-                    stlMain.AddStatuses(sts)
-
-                    'mentions
-                ElseIf curSttsType = StatusListType.Mentions Then
-                    sts = twa.GetMentions(stlMain.LastId, Page)
-                    stlMain.AddStatuses(sts)
-
-                    'favorites
-                ElseIf curSttsType = StatusListType.Favorites Then
-                    sts = twa.Favorites(CurrentUser.Screen_Name, Page)
-                    stlMain.AddStatuses(sts)
-
-                    'myupdates
-                ElseIf curSttsType = StatusListType.MyUpdates Then
-                    sts = twa.GetUserTimeLine(CurrentUser.Screen_Name, stlMain.LastId, Page)
-                    stlMain.AddStatuses(sts)
-
-                    'userupdates
-                ElseIf curSttsType = StatusListType.UserUpdates Then
-                    sts = twa.GetUserTimeLine(curSttsParams.Value, stlMain.LastId, Page)
-                    stlMain.AddStatuses(sts)
-
-                    'direct messages (inbox)
-                ElseIf curSttsType = StatusListType.DirectMessages Then
-                    sts = Util.DirectMessage2Status(twa.DirectMessages(stlMain.LastId, Page), True)
-                    stlMain.AddStatuses(sts)
-
-                    'sent Messages (sent)
-                ElseIf curSttsType = StatusListType.SentMessages Then
-                    sts = Util.DirectMessage2Status(twa.SentMessages(stlMain.LastId, Page), False)
-                    stlMain.AddStatuses(sts)
-
-                    'search results
-                ElseIf curSttsType = StatusListType.SearchResults Then
-                    SetActiveLinkButtonColor(lnkSearch)
-                    sts = Util.SearchResults2Status(twa.Search(curSttsParams.Value, Page, stlMain.LastId))
-                    stlMain.AddStatuses(sts)
-
-                    'Friends
-                ElseIf curSttsType = StatusListType.Friends Then
-                    Dim uc As Collection(Of DNE.Twitter.User) = twa.Friends(CurrentUser.Screen_Name, Page)
-                    stlMain.AddUsers(uc)
-
-                    'Followers
-                ElseIf curSttsType = StatusListType.Followers Then
-                    Dim uc As Collection(Of DNE.Twitter.User) = twa.Followers(CurrentUser.Screen_Name, Page)
-                    stlMain.AddUsers(uc)
-
-                End If
-                curSttsParams.Key = stlMain.LastStatusId
-
-                'Update prev controls datetime
-                stlMain.DateTimesUpdate()
-                stlMain.FormatStatusText(lid)
-
+                SetActiveLinkButtonColor(lnkSearch)
+                stlMain.Bind(curSttsParams, curSttsType, NewUpdate)
 
             End If
-
 
         Catch ex As NoConnectionException
             TimerRefresh.Enabled = True
@@ -401,19 +433,19 @@ Public Class frmMain
         If t.TwitEvent = TwitEvents.Use_ScreenName Then
             jikUpdate.DirectMessage = False
             jikUpdate.txtStatus.Paste("@" & t.Text)
-            ShowUpdateControl()
+            If Not jikUpdate.Visible Then ShowUpdateControl()
 
         ElseIf t.TwitEvent = TwitEvents.RT Then
             jikUpdate.DirectMessage = False
             jikUpdate.txtStatus.Text = "RT @" & t.Status.User.Screen_Name & " " & t.Status.Text
-            ShowUpdateControl()
+            If Not jikUpdate.Visible Then ShowUpdateControl()
 
         ElseIf t.TwitEvent = TwitEvents.Reply Then
             jikUpdate.DirectMessage = False
             jikUpdate.in_reply_to_status_id = t.Status.Id
             jikUpdate.in_reply_to_screen_name = t.Status.User.Screen_Name
             jikUpdate.txtStatus.Text = "@" & t.Status.User.Screen_Name
-            ShowUpdateControl()
+            If Not jikUpdate.Visible Then ShowUpdateControl()
 
         ElseIf t.TwitEvent = TwitEvents.UserStatuses Then
             jikUpdate.DirectMessage = False
@@ -427,7 +459,7 @@ Public Class frmMain
         ElseIf t.TwitEvent = TwitEvents.DirectMessage Then
             jikUpdate.DirectMessage = True
             jikUpdate.SendMessageTo = t.Text
-            ShowUpdateControl()
+            If Not jikUpdate.Visible Then ShowUpdateControl()
 
         ElseIf t.TwitEvent = TwitEvents.HashTag Then
             jikUpdate.DirectMessage = False

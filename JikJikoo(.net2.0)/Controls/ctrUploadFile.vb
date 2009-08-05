@@ -1,5 +1,7 @@
 ﻿Public Class ctrUploadFile
 
+    Public Event DownloadCompleted As EventHandler
+
     Private Sub btnBrowse_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnBrowse.Click
         Util.SetButtonsStyle(Me)
         Dim ofd As New OpenFileDialog()
@@ -29,7 +31,7 @@
 
     Public Sub eh(ByVal sender As Object, ByVal e As Dropio.Core.TransferProgressEventArgs)
         prgUpload.Value = CInt((e.Bytes / e.Total) * 100)
-
+        If e.Bytes = e.Total Then RaiseEvent DownloadCompleted(Nothing, Nothing)
 
     End Sub
 

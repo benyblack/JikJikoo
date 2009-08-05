@@ -93,20 +93,12 @@ Public Class ctrStatusList
             _tempstatus = st
             Me.Invoke(New MethodInvoker(AddressOf AddStatusControl))
         Else
-            'Dim st As Status = _tempstatus
             Dim c As New ctrStatus()
             c.Status = st
-            'If Images.Count > 0 AndAlso Images.ContainsKey(st.User.Profile_image_url) Then
-            '    c.picUser.Image = Images(st.User.Profile_image_url)
-
-            'Else
             Dim img As Image = Nothing
             img = CacheManager.LoadImage(st.User.Profile_image_url)
             If img Is Nothing Then twa.GetImage(st.User.Profile_image_url)
-            'Me.Images.Add(st.User.Profile_image_url, img)
             c.picUser.Image = img
-
-            'End If
             AddHandler c.TwitEvent, AddressOf TwitEvent
             Me.pnlMain.Controls.Add(c)
             If c.ObjectId > _laststatusId Then
@@ -161,11 +153,7 @@ Public Class ctrStatusList
         Thread.Sleep(50)
         Me.SuspendLayout()
         For i As Int32 = uc.Count - 1 To 0 Step -1
-            'If _users IsNot Nothing AndAlso _users.Contains(uc(i)) Then
-            'If Not UsersContains(uc(i).Screen_Name) Then
             AddStatusControl(uc(i))
-
-            'End If
 
         Next
         Me.ResumeLayout()
@@ -197,10 +185,8 @@ Public Class ctrStatusList
             Me.Invoke(New MethodInvoker(AddressOf AddStatusControlforUser))
         Else
             If UsersContains(u.Screen_Name) Then Exit Sub
-            'Dim st As Status = _tempstatus
             Dim c As New ctrStatus()
             c.User = u
-            'If st.numId > _laststatusId Then _laststatusId = st.numId
             Dim img As Image = Nothing
             img = CacheManager.LoadImage(u.Profile_image_url)
             If img Is Nothing Then twa.GetImage(u.Profile_image_url)
@@ -342,5 +328,84 @@ Public Class ctrStatusList
 
 #End Region
 
-End Class
+#Region " Binding "
 
+    ''' <summary>
+    ''' Bind a collection to this control
+    ''' </summary>
+    ''' <param name="curSttsParams"></param>
+    ''' <param name="curSttsType"></param>
+    ''' <param name="NewUpdate"></param>
+    ''' <remarks></remarks>
+    Public Sub Bind(ByRef curSttsParams As DictionaryEntry, ByVal curSttsType As StatusListType, ByRef NewUpdate As Int32)
+        Dim sts As Collections.ObjectModel.Collection(Of DNE.Twitter.Status) = Nothing
+        If curSttsParams.Key.ToString().Length = 0 OrElse curSttsParams.Key.ToString() = "" Then Me.Clear()
+        'need to store last stored id
+        Dim lid As Int64 = 0
+        If Me.LastId <> "" Then lid = CLng(Me.LastId)
+
+        'friends timeline
+        If curSttsType = StatusListType.FriendsTimeLine Then
+            sts = twa.GetFriendsTimeLine(Me.LastId, Page)
+            If sts IsNot Nothing Then NewUpdate = sts.Count
+            Me.AddStatuses(sts)
+
+            'mentions
+        ElseIf curSttsType = StatusListType.Mentions Then
+            sts = twa.GetMentions(Me.LastId, Page)
+            Me.AddStatuses(sts)
+
+            'favorites
+        ElseIf curSttsType = StatusListType.Favorites Then
+            sts = twa.Favorites(CurrentUser.Screen_Name, Page)
+            Me.AddStatuses(sts)
+
+            'myupdates
+        ElseIf curSttsType = StatusListType.MyUpdates Then
+            sts = twa.GetUserTimeLine(CurrentUser.Screen_Name, Me.LastId, Page)
+            Me.AddStatuses(sts)
+
+            'userupdates
+        ElseIf curSttsType = StatusListType.UserUpdates Then
+            sts = twa.GetUserTimeLine(curSttsParams.Value, Me.LastId, Page)
+            Me.AddStatuses(sts)
+
+            'direct messages (inbox)
+        ElseIf curSttsType = StatusListType.DirectMessages Then
+            sts = Util.DirectMessage2Status(twa.DirectMessages(Me.LastId, Page), True)
+            Me.AddStatuses(sts)
+
+            'sent Messages (sent)
+        ElseIf curSttsType = StatusListType.SentMessages Then
+            sts = Util.DirectMessage2Status(twa.SentMessages(Me.LastId, Page), False)
+            Me.AddStatuses(sts)
+
+            'search results
+        ElseIf curSttsType = StatusListType.SearchResults Then
+            ' SetActiveLinkButtonColor(lnkSearch)
+            sts = Util.SearchResults2Status(twa.Search(curSttsParams.Value, Page, Me.LastId))
+            Me.AddStatuses(sts)
+
+            'Friends
+        ElseIf curSttsType = StatusListType.Friends Then
+            Dim uc As Collection(Of DNE.Twitter.User) = twa.Friends(CurrentUser.Screen_Name, Page)
+            Me.AddUsers(uc)
+
+            'Followers
+        ElseIf curSttsType = StatusListType.Followers Then
+            Dim uc As Collection(Of DNE.Twitter.User) = twa.Followers(CurrentUser.Screen_Name, Page)
+            Me.AddUsers(uc)
+
+        End If
+        curSttsParams.Key = Me.LastStatusId
+
+        'Update prev statuscontrols datetime
+        Me.DateTimesUpdate()
+        Me.FormatStatusText(lid)
+
+
+    End Sub
+
+#End Region
+
+End Class

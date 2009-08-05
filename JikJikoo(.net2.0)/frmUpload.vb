@@ -16,4 +16,10 @@
         Util.SetButtonsStyle(Me)
 
     End Sub
+
+    Private Sub CtrUploadFile1_DownloadCompleted(ByVal sender As Object, ByVal e As System.EventArgs) Handles CtrUploadFile1.DownloadCompleted
+        btnOk.Enabled = True
+
+    End Sub
+
 End Class

@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="MentionsToolStripMenuItem.Text" xml:space="preserve">
+    <value>Mentions</value>
+  </data>
   <data name="&gt;&gt;lblTime.ZOrder" xml:space="preserve">
     <value>2</value>
   </data>
@@ -193,6 +196,9 @@
   </data>
   <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
     <value>6, 13</value>
+  </data>
+  <data name="&gt;&gt;TranslateThisStatusToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="lblUserName.Text" xml:space="preserve">
     <value>Label1</value>
@@ -275,9 +281,6 @@
   <data name="&gt;&gt;SendDirectMessageToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;FlowLayoutPanel1.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
   <data name="&gt;&gt;$this.Type" xml:space="preserve">
     <value>System.Windows.Forms.UserControl, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
@@ -305,14 +308,17 @@
   <data name="&gt;&gt;mnuUsername.Type" xml:space="preserve">
     <value>System.Windows.Forms.ContextMenuStrip, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="&gt;&gt;picUser.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
   <data name="lblUserName.Size" type="System.Drawing.Size, System.Drawing">
     <value>44, 13</value>
   </data>
   <data name="txtStatus.Text" xml:space="preserve">
     <value />
   </data>
-  <data name="&gt;&gt;picUser.Parent" xml:space="preserve">
-    <value>$this</value>
+  <data name="&gt;&gt;TranslateThisStatusToolStripMenuItem.Name" xml:space="preserve">
+    <value>TranslateThisStatusToolStripMenuItem</value>
   </data>
   <data name="&gt;&gt;FlowLayoutPanel1.Type" xml:space="preserve">
     <value>System.Windows.Forms.FlowLayoutPanel, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -347,8 +353,11 @@
   <data name="UseToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>124, 22</value>
   </data>
-  <data name="MentionsToolStripMenuItem.Text" xml:space="preserve">
-    <value>Mentions</value>
+  <data name="TranslateThisStatusToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>158, 22</value>
+  </data>
+  <data name="&gt;&gt;FlowLayoutPanel1.ZOrder" xml:space="preserve">
+    <value>1</value>
   </data>
   <data name="lnkSource.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
     <value>TopCenter</value>

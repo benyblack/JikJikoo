@@ -46,6 +46,7 @@ Partial Class frmUpload
         '
         'btnOk
         '
+        Me.btnOk.Enabled = False
         Me.btnOk.ForeColor = System.Drawing.Color.Black
         Me.btnOk.Location = New System.Drawing.Point(135, 82)
         Me.btnOk.Name = "btnOk"

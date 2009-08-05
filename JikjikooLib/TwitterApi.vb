@@ -20,7 +20,6 @@ Namespace DNE.Twitter
         Public Event DownloadingDataEnd As EventHandler
         Public Event HttpError As HttpEventHandler
 
-        Private _cookie As String = ""
 
         Public Sub New()
 
@@ -101,7 +100,24 @@ Namespace DNE.Twitter
                                     o.ConsumerKey, o.ConsumerSecret, o.Token, o.TokenSecret, method, ts, _
                                     nonce, normurl, normparam)
                 'TODO:// must parse query & params
-                If query <> "" Then normparam = normparam.Substring(0, normparam.Length - query.Length - 1)
+                'Completed
+                'Not Tested
+                If query <> "" Then
+                    Dim qnv As Collections.Specialized.NameValueCollection = HttpUtility.ParseQueryString(query)
+                    Dim pnv As Collections.Specialized.NameValueCollection = HttpUtility.ParseQueryString(normparam)
+                    For i As Int32 = 0 To qnv.Count - 1
+                        pnv.Remove(qnv(i))
+
+                    Next
+                    normparam = ""
+                    For i As Int32 = 0 To pnv.Count - 1
+                        normparam = String.Format("{0}={1}&", pnv.Keys(i), UrlEncode(pnv(pnv.Keys(i))))
+
+                    Next
+                    'remove last "&"
+                    normparam = normparam.Substring(0, normparam.Length - 1)
+                    'normparam = normparam.Substring(0, normparam.Length - query.Length - 1)
+                End If
                 url = String.Format("{0}?{1}&oauth_signature={2}", normurl, normparam, UrlEncode(sign))
                 DNE.JikJikoo.Util.LogIt(ts & " : " & nonce & " : " & sign & vbCrLf)
 
@@ -702,6 +718,7 @@ Namespace DNE.Twitter
 
         ''' <summary>
         ''' TODO://
+        ''' Not Tested
         ''' </summary>
         ''' <param name="MessageId"></param>
         ''' <returns></returns>
@@ -934,7 +951,6 @@ Namespace DNE.Twitter
         ''' <param name="password">The password to use with the request</param>
         ''' <returns>The response of the request, or null if we got 404 or nothing.</returns>
         Protected Function ExecuteGetCommand(ByVal url As String, ByVal userName As String, ByVal password As String) As String
-            'TODO: must replace with socket get
             Using client As New WebClient()
 
                 Dim wp As New WebProxy(Me.ProxyIP, ProxyPort)
@@ -1139,15 +1155,15 @@ Namespace DNE.Twitter
                 'Check HTTP Headers
                 Dim headers As New JikJikoo.HtmlHeaders(strOut.Substring(0, strOut.IndexOf(vbCrLf + vbCrLf)))
                 strOut = strOut.Substring(strOut.IndexOf(vbCrLf + vbCrLf) + 4)
-                If Not String.IsNullOrEmpty(headers("Set-Cookie")) And method.ToLower = "get" Then
-                    _cookie = headers("Set-Cookie")
+                'If Not String.IsNullOrEmpty(headers("Set-Cookie")) And method.ToLower = "get" Then
+                '    _cookie = headers("Set-Cookie")
 
-                End If
+                'End If
                 If headers.StatusCode <> 200 Then
                     'TODO://
                     ' DNE.JikJikoo.Util.LogIt(request & headers.Text & vbCrLf & System.Text.RegularExpressions.Regex.Match(strOut, "<error>(.*?)</error>").Value)
-                    DNE.JikJikoo.Util.LogIt(Regex.Match(strOut, "<error>(.*?)</error>").Value)
-                    DNE.JikJikoo.Util.LogIt(Regex.Match(strOut, "oauth_signature=(.*?)</request>").Groups(1).Value & vbCrLf)
+                    DNE.JikJikoo.Util.LogIt(Regex.Match(strOut, "<error>(.*?)</error>").Groups(1).Value)
+                    'DNE.JikJikoo.Util.LogIt(Regex.Match(strOut, "oauth_signature=(.*?)</request>").Groups(1).Value & vbCrLf)
 
 
                 End If
@@ -1289,10 +1305,10 @@ Namespace DNE.Twitter
             Dim request As String = "GET " & url & " HTTP/1.1" & vbCrLf
             request += "Host: " & host & vbCrLf
             request += "User-Agent: JikJikoo" & vbCrLf
-            If _cookie <> "" Then
-                request += "Cookie: " & _cookie & vbCrLf
+            'If _cookie <> "" Then
+            '    request += "Cookie: " & _cookie & vbCrLf
 
-            End If
+            'End If
             If AuthenticationType = AuthType.Basic Then
                 If mustAuth Then request += "Authorization:Basic " & Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(UserName & ":" & Password)) & vbCrLf
 

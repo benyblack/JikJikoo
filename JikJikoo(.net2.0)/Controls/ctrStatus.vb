@@ -346,4 +346,11 @@ Public Class ctrStatus
 #End Region
 
 
+    Private Sub TranslateThisStatusToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles TranslateThisStatusToolStripMenuItem.Click
+        Dim f As New frmTranslate()
+        f.Translate(txtStatus.Text)
+        f.ShowDialog()
+
+
+    End Sub
 End Class

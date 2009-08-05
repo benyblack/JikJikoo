@@ -148,6 +148,12 @@
     <Compile Include="frmOAuth.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="frmTranslate.Designer.vb">
+      <DependentUpon>frmTranslate.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmTranslate.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="frmUpload.Designer.vb">
       <DependentUpon>frmUpload.vb</DependentUpon>
     </Compile>
@@ -257,6 +263,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmOAuth.resx">
       <DependentUpon>frmOAuth.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmTranslate.resx">
+      <DependentUpon>frmTranslate.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmUpload.resx">
       <DependentUpon>frmUpload.vb</DependentUpon>

@@ -7,29 +7,10 @@ Imports DNE.JikJikoo
 
 Public Class Util
 
-    'bit.ly
-    'login=login&apiKey=apiKey
-    '<bitly>
-    '      <errorCode>0</errorCode>
-    '      <errorMessage></errorMessage>
-    '      <results>
-    '          <nodeKeyVal>
-    '              <userHash>Zkmf7</userHash>
-    '              <shortKeywordUrl></shortKeywordUrl>
-    '              <hash>3j4ir4</hash>
-    '              <nodeKey><![CDATA[http://google.com]]></nodeKey>
-    '              <shortUrl>http://bit.ly/Zkmf7</shortUrl>
-    '          </nodeKeyVal>
-    '      </results>
-    '      <statusCode>OK</statusCode>
-    '</bitly>
-
-    'is.gd
-    'http://is.gd/api.php?longurl=http://www.example.com
-
-    'tinyurl.com
-    'http://tinyurl.com/api-create.php?url=
-
+    ''' <summary>
+    ''' used for checking windows theme
+    ''' </summary>
+    ''' <remarks></remarks>
     Friend Enum Theme
         WindowsClassic
         XPBlue
@@ -66,7 +47,6 @@ Public Class Util
 
         Return Theme.WindowsClassic
     End Function
-
 
     ''' <summary>
     ''' for an issue addressed by soheilpro
@@ -126,6 +106,7 @@ Public Class Util
     End Function
 
     ''' <summary>
+    ''' TODO://
     ''' temporary method. must be removed.
     ''' </summary>
     ''' <param name="dmc"></param>
@@ -155,6 +136,7 @@ Public Class Util
     End Function
 
     ''' <summary>
+    ''' TODO://
     ''' temporary method. must be removed.
     ''' </summary>
     ''' <param name="sr"></param>
@@ -180,6 +162,7 @@ Public Class Util
     End Function
 
     ''' <summary>
+    ''' TODO://
     ''' temporary method. must be removed.
     ''' </summary>
     ''' <param name="r"></param>
@@ -202,6 +185,7 @@ Public Class Util
         Next
         Return sc
     End Function
+
     Public Shared Function ContainRtlChars(ByVal s As String) As Boolean
         For i As Int32 = 0 To s.Length - 1
             Dim ii As Int32 = AscW(s.ToCharArray()(i))
@@ -213,7 +197,6 @@ Public Class Util
         Return False
 
     End Function
-
 
     ''' <summary>
     ''' from:http://dotnetperls.com/pretty-date
@@ -315,6 +298,7 @@ Public Class Util
     Private Shared PersianMonths() As String = {"فروردين", "ارديبهشت", "خرداد", "تير", "مرداد", "شهريور", "مهر", "آبان", "آذر", "دی", "بهمن", "اسفند"}
 
     ''' <summary>
+    ''' Generate a string from datetime for displaying persian datetime string
     ''' </summary>
     ''' <param name="d"></param>
     ''' <returns></returns>
@@ -333,10 +317,12 @@ Public Class Util
 
 End Class
 
+''' <summary>
+''' Supported languages in JikJikoo
+''' </summary>
+''' <remarks></remarks>
 Public Enum Language
     Farsi = 0
     English = 1
 
 End Enum
-
-

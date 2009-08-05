@@ -32,6 +32,14 @@ Namespace DNE.JikJikoo
 
         End Sub
 
+        Protected Sub AddBytes(ByRef al As ArrayList, ByVal b As Byte(), ByVal count As Int32)
+            For i As Int32 = 0 To count - 1
+                al.Add(b(i))
+
+            Next
+
+        End Sub
+
 #Region " Properties "
 
         '-------- Authentication -------
@@ -118,11 +126,19 @@ Namespace DNE.JikJikoo
 
 #End Region
 
-        Protected Sub AddBytes(ByRef al As ArrayList, ByVal b As Byte(), ByVal count As Int32)
-            For i As Int32 = 0 To count - 1
-                al.Add(b(i))
-            Next
-        End Sub
+#Region " Overridables "
+
+        Public MustOverride Function DoPost(ByVal url As Uri, ByVal data As String) As String
+
+        Public MustOverride Function DoGet(ByVal url As Uri) As String
+
+        Public MustOverride Function DownloadData(ByVal url As Uri) As Byte()
+
+        Public MustOverride Function DoGetNoAuth(ByVal url As Uri) As String
+
+        Public MustOverride Function DownloadDataNoAuth(ByVal url As Uri) As Byte()
+
+#End Region
 
     End Class
 

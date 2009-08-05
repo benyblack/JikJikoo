@@ -98,15 +98,11 @@ Namespace DNE.JikJikoo
                 'Check HTTP Headers
                 Dim headers As New DNE.JikJikoo.HtmlHeaders(strOut.Substring(0, strOut.IndexOf(vbCrLf + vbCrLf)))
                 strOut = strOut.Substring(strOut.IndexOf(vbCrLf + vbCrLf) + 4)
-                'If Not String.IsNullOrEmpty(headers("Set-Cookie")) And method.ToLower = "get" Then
-                '    _cookie = headers("Set-Cookie")
-
-                'End If
                 If headers.StatusCode <> 200 Then
                     'TODO://
                     ' DNE.JikJikoo.Util.LogIt(request & headers.Text & vbCrLf & System.Text.RegularExpressions.Regex.Match(strOut, "<error>(.*?)</error>").Value)
-                    DNE.JikJikoo.Util.LogIt(Regex.Match(strOut, "<error>(.*?)</error>").Value)
-                    DNE.JikJikoo.Util.LogIt(Regex.Match(strOut, "oauth_signature=(.*?)</request>").Groups(1).Value & vbCrLf)
+                    DNE.JikJikoo.Util.LogIt(Regex.Match(strOut, "<error>(.*?)</error>").Groups(1).Value)
+                    'DNE.JikJikoo.Util.LogIt(Regex.Match(strOut, "oauth_signature=(.*?)</request>").Groups(1).Value & vbCrLf)
 
 
                 End If
@@ -125,7 +121,7 @@ Namespace DNE.JikJikoo
         ''' <param name="query"></param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Private Function HttpDownloadSocket(ByVal method As String, ByVal url As String, ByVal query As String) As Byte()
+        Private Function HttpDownloadSocket(ByVal method As String, ByVal url As String, ByVal query As String, ByVal mustAuth As Boolean) As Byte()
             ' specify host, url, port number and parameter
             Dim host As String = (New Uri(url)).Host
             Dim port As Integer = 80
@@ -167,8 +163,8 @@ Namespace DNE.JikJikoo
                 socket.Connect(ipe)
 
                 Dim request As String = ""
-                If method.ToLower = "get" Then request = GenerateGetRequest(host, url, query)
-                If method.ToLower = "post" Then request = GeneratePostRequest(host, url, query)
+                If method.ToLower = "get" Then request = GenerateGetRequest(host, url, query, mustAuth)
+                If method.ToLower = "post" Then request = GeneratePostRequest(host, url, query, mustAuth)
 
 
                 Dim bytesSent As [Byte]() = Encoding.ASCII.GetBytes(request)
@@ -283,6 +279,31 @@ Namespace DNE.JikJikoo
         End Function
 
 #End Region
+
+        Public Overrides Function DoGet(ByVal url As System.Uri) As String
+            Return HttpRequestSocket("GET", url.AbsolutePath, url.Query)
+
+        End Function
+
+        Public Overrides Function DoPost(ByVal url As System.Uri, ByVal data As String) As String
+            Return HttpRequestSocket("POST", url.AbsolutePath, data)
+
+        End Function
+
+        Public Overrides Function DownloadData(ByVal url As System.Uri) As Byte()
+            Return HttpDownloadSocket("GET", url.ToString(), "", True)
+
+        End Function
+
+        Public Overrides Function DoGetNoAuth(ByVal url As System.Uri) As String
+            Return HttpRequestSocket("GET", url.AbsolutePath, url.Query, url.Host, False)
+
+        End Function
+
+        Public Overrides Function DownloadDataNoAuth(ByVal url As System.Uri) As Byte()
+            Return HttpDownloadSocket("GET", url.ToString(), "", False)
+
+        End Function
 
     End Class
 
