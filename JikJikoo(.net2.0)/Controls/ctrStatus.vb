@@ -348,7 +348,15 @@ Public Class ctrStatus
 
     Private Sub TranslateThisStatusToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles TranslateThisStatusToolStripMenuItem.Click
         Dim f As New frmTranslate()
-        f.Translate(txtStatus.Text)
+        Dim sOrj As String = ""
+        If Me.Status Is Nothing Then
+            sOrj = Me.User.Status.Text
+
+        Else
+            sOrj = Me.Status.Text
+
+        End If
+        f.Translate(sOrj)
         f.ShowDialog()
 
 

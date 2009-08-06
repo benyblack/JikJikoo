@@ -200,25 +200,27 @@ Public Class frmMain
         jikLogin.Visible = False
         If jikUpdate.Visible Then
             Dim newtop As Int32 = jikUpdate.Top + jikUpdate.Height
+            stlMain.SuspendLayout()
             For i As Int32 = 0 To 10
                 stlMain.Top += ((newtop - 30) \ 10)
-                stlMain.Refresh()
                 jikUpdate.Refresh()
                 pnlMenu.Refresh()
 
             Next
+            stlMain.ResumeLayout()
             stlMain.Top = newtop
             jikUpdate.txtStatus.Focus()
 
         Else
             Dim newtop As Int32 = 30
             Dim diff As Int32 = stlMain.Top - 30
+            stlMain.SuspendLayout()
             For i As Int32 = 0 To 9
                 stlMain.Top -= (diff \ 10)
-                stlMain.Refresh()
                 pnlMenu.Refresh()
 
             Next
+            stlMain.ResumeLayout()
             stlMain.Top = newtop
 
         End If
@@ -234,24 +236,26 @@ Public Class frmMain
 
         If jikLogin.Visible Then
             Dim newtop As Int32 = jikLogin.Top + jikLogin.Height
+            stlMain.SuspendLayout()
             For i As Int32 = 0 To 10
                 stlMain.Top += ((newtop - 30) \ 10)
-                stlMain.Refresh()
                 jikLogin.Refresh()
                 pnlMenu.Refresh()
 
             Next
+            stlMain.ResumeLayout()
             stlMain.Top = newtop
 
         Else
             Dim newtop As Int32 = 30
             Dim diff As Int32 = stlMain.Top - 30
+            stlMain.SuspendLayout()
             For i As Int32 = 0 To 9
                 stlMain.Top -= (diff \ 10)
-                stlMain.Refresh()
                 pnlMenu.Refresh()
 
             Next
+            stlMain.ResumeLayout()
             stlMain.Top = newtop
 
         End If
@@ -343,14 +347,16 @@ Public Class frmMain
 
     Private Sub jikUpdate_UpdateCompleted(ByVal sender As Object, ByVal e As System.EventArgs) Handles jikUpdate.UpdateCompleted
         Me.Text = "JikJikoo - Update Status Completed!"
-        Timer1.Start()
+        SetActiveLinkButtonColor(lnkFriendsTimeLine)
+        SetBindingInfo(StatusListType.FriendsTimeLine)
         TimerRefresh_Tick(jikUpdate, Nothing)
+        Timer1.Start()
 
     End Sub
 
     Private Sub TimerRefresh_Tick(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles TimerRefresh.Tick
         If IsBinding Then
-            TimerRefresh.Interval = 1000
+            TimerRefresh.Interval = 5000
             Exit Sub
         End If
         Dim jc As New JikConfigManager()
@@ -391,7 +397,7 @@ Public Class frmMain
                 If img IsNot Nothing Then jikLogin.picUser.Image = img
                 'lblUser.Text = CurrentUser.Screen_Name
                 lnkMentions.Text = "@" & CurrentUser.Screen_Name
-                jikLogin.SetLastUpdateText(CurrentUser.Status.Text)
+                If CurrentUser.Status IsNot Nothing Then jikLogin.SetLastUpdateText(CurrentUser.Status.Text)
 
             Catch ex As NoConnectionException
                 ShowMessage("Error in connection", "Not Connected. Can not receive user information.", True)

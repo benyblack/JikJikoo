@@ -316,13 +316,13 @@ Public Class ctrStatusList
 
     Private Sub lnkPrev_LinkClicked(ByVal sender As System.Object, ByVal e As System.Windows.Forms.LinkLabelLinkClickedEventArgs) Handles lnkPrev.LinkClicked
         RaiseEvent PagerPrev(Me, Nothing)
-        If Page > 1 Then Page -= 1
+        'If Page > 1 Then Page -= 1
 
     End Sub
 
     Private Sub lnkNext_LinkClicked(ByVal sender As System.Object, ByVal e As System.Windows.Forms.LinkLabelLinkClickedEventArgs) Handles lnkNext.LinkClicked
         RaiseEvent PagerNext(Me, Nothing)
-        Page += 1
+        'Page += 1
 
     End Sub
 

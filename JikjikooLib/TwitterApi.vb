@@ -102,16 +102,17 @@ Namespace DNE.Twitter
                 'TODO:// must parse query & params
                 'Completed
                 'Not Tested
-                If query <> "" Then
+                If query <> "" And method.ToLower = "post" Then
                     Dim qnv As Collections.Specialized.NameValueCollection = HttpUtility.ParseQueryString(query)
                     Dim pnv As Collections.Specialized.NameValueCollection = HttpUtility.ParseQueryString(normparam)
                     For i As Int32 = 0 To qnv.Count - 1
-                        pnv.Remove(qnv(i))
+                        pnv.Remove(qnv.AllKeys(i))
+
 
                     Next
                     normparam = ""
                     For i As Int32 = 0 To pnv.Count - 1
-                        normparam = String.Format("{0}={1}&", pnv.Keys(i), UrlEncode(pnv(pnv.Keys(i))))
+                        normparam += String.Format("{0}={1}&", pnv.Keys(i), UrlEncode(pnv(pnv.Keys(i))))
 
                     Next
                     'remove last "&"
@@ -120,6 +121,7 @@ Namespace DNE.Twitter
                 End If
                 url = String.Format("{0}?{1}&oauth_signature={2}", normurl, normparam, UrlEncode(sign))
                 DNE.JikJikoo.Util.LogIt(ts & " : " & nonce & " : " & sign & vbCrLf)
+                If method.ToLower = "get" Then query = ""
 
             End If
             If Me.ProxyType = ProxyTypes.Socks4 Or Me.ProxyType = ProxyTypes.Socks5 Or Me.ProxyType = ProxyTypes.None Then
