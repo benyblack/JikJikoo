@@ -124,8 +124,14 @@
   <data name="lnkFriendsTimeLine.Text" xml:space="preserve">
     <value>وضعیت دوستان</value>
   </data>
+  <data name="lnkFriendsTimeLine.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <data name="lnkMentions.Location" type="System.Drawing.Point, System.Drawing">
     <value>91, 5</value>
+  </data>
+  <data name="lnkMentions.ToolTip" xml:space="preserve">
+    <value />
   </data>
   <data name="lnkMessages.Location" type="System.Drawing.Point, System.Drawing">
     <value>161, 5</value>
@@ -136,6 +142,9 @@
   <data name="lnkMessages.Text" xml:space="preserve">
     <value>پیام ها</value>
   </data>
+  <data name="lnkMessages.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <data name="lnkFavorites.Location" type="System.Drawing.Point, System.Drawing">
     <value>297, 5</value>
   </data>
@@ -145,6 +154,9 @@
   <data name="lnkFavorites.Text" xml:space="preserve">
     <value>مطالب مورد علاقه</value>
   </data>
+  <data name="lnkFavorites.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <data name="lnkMyUpdates.Location" type="System.Drawing.Point, System.Drawing">
     <value>392, 5</value>
   </data>
@@ -153,6 +165,9 @@
   </data>
   <data name="lnkMyUpdates.Text" xml:space="preserve">
     <value>مطالب من</value>
+  </data>
+  <data name="lnkMyUpdates.ToolTip" xml:space="preserve">
+    <value />
   </data>
   <data name="HideToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>137, 22</value>
@@ -183,6 +198,9 @@
   </data>
   <data name="ContextMenuStrip1.Size" type="System.Drawing.Size, System.Drawing">
     <value>138, 98</value>
+  </data>
+  <data name="ContextMenuStrip1.ToolTip" xml:space="preserve">
+    <value />
   </data>
   <data name="NotifyIcon1.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -1120,17 +1138,32 @@
   <data name="lnkSent.Text" xml:space="preserve">
     <value>پیام های ارسالی</value>
   </data>
+  <data name="lnkSent.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <data name="lnkSearchLinks.Location" type="System.Drawing.Point, System.Drawing">
     <value>468, 5</value>
+  </data>
+  <data name="lnkSearchLinks.ToolTip" xml:space="preserve">
+    <value />
   </data>
   <data name="pnlMenu.Size" type="System.Drawing.Size, System.Drawing">
     <value>494, 24</value>
   </data>
+  <data name="pnlMenu.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <data name="lnkFriends.Location" type="System.Drawing.Point, System.Drawing">
     <value>388, 5</value>
   </data>
+  <data name="lnkFriends.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <data name="lnkFollowers.Location" type="System.Drawing.Point, System.Drawing">
     <value>436, 5</value>
+  </data>
+  <data name="lnkFollowers.ToolTip" xml:space="preserve">
+    <value />
   </data>
   <data name="lnkSearch.Location" type="System.Drawing.Point, System.Drawing">
     <value>35, 5</value>
@@ -1141,17 +1174,29 @@
   <data name="lnkSearch.Text" xml:space="preserve">
     <value>جستجو</value>
   </data>
+  <data name="lnkSearch.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <data name="txtSearch.Location" type="System.Drawing.Point, System.Drawing">
     <value>81, 2</value>
   </data>
+  <data name="txtSearch.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <data name="lnkBrowsLinks.Location" type="System.Drawing.Point, System.Drawing">
     <value>6, 5</value>
+  </data>
+  <data name="lnkBrowsLinks.ToolTip" xml:space="preserve">
+    <value />
   </data>
   <data name="pnlSearch.Location" type="System.Drawing.Point, System.Drawing">
     <value>270, 137</value>
   </data>
   <data name="pnlSearch.Size" type="System.Drawing.Size, System.Drawing">
     <value>491, 26</value>
+  </data>
+  <data name="pnlSearch.ToolTip" xml:space="preserve">
+    <value />
   </data>
   <data name="picStatus.ToolTip" xml:space="preserve">
     <value>ارسال وضعیت جدید</value>
@@ -1294,8 +1339,14 @@
   <data name="jikUpdate.Location" type="System.Drawing.Point, System.Drawing">
     <value>247, 169</value>
   </data>
+  <data name="jikUpdate.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <data name="jikLogin.Location" type="System.Drawing.Point, System.Drawing">
     <value>229, 293</value>
+  </data>
+  <data name="jikLogin.ToolTip" xml:space="preserve">
+    <value />
   </data>
   <assembly alias="mscorlib" name="mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="jikLogin.Visible" type="System.Boolean, mscorlib">
@@ -1310,6 +1361,9 @@
   </data>
   <data name="stlMain.TabIndex" type="System.Int32, mscorlib">
     <value>30</value>
+  </data>
+  <data name="stlMain.ToolTip" xml:space="preserve">
+    <value />
   </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -2237,5 +2291,8 @@
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFf3/AAD4vwAA+R8AAPA/
         AADAHwAAAA8AAIAHAACABwAAgAcAAIADAACAAQAAgAEAAMAMAADgHAAA+HwAAP/+AAA=
 </value>
+  </data>
+  <data name="$this.ToolTip" xml:space="preserve">
+    <value />
   </data>
 </root>
