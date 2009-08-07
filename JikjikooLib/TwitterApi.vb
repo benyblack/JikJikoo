@@ -58,7 +58,7 @@ Namespace DNE.Twitter
                     Next
                     'remove last "&"
                     normparam = normparam.Substring(0, normparam.Length - 1)
-                    'normparam = normparam.Substring(0, normparam.Length - query.Length - 1)
+
                 End If
                 url = String.Format("{0}?{1}&oauth_signature={2}", normurl, normparam, UrlEncode(sign))
                 DNE.JikJikoo.Util.LogIt(ts & " : " & nonce & " : " & sign & vbCrLf)
