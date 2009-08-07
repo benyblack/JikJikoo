@@ -12,6 +12,26 @@ Namespace DNE.JikJikoo
         Public Event DownloadingDataEnd As EventHandler
         Public Event HttpError As HttpEventHandler
 
+
+#Region " Constructors "
+
+        Public Sub New()
+            MyBase.New()
+        End Sub
+
+        ''' <summary>
+        ''' for basic authentication
+        ''' </summary>
+        ''' <param name="twitterUser"></param>
+        ''' <param name="twitterPassword"></param>
+        ''' <remarks></remarks>
+        Public Sub New(ByVal twitterUser As String, ByVal twitterPassword As String)
+            MyBase.New(twitterUser, twitterPassword)
+
+        End Sub
+
+#End Region
+
 #Region " Overrides "
 
         ''' <summary>

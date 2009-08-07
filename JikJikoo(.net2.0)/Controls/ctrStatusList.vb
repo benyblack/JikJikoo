@@ -70,7 +70,6 @@ Public Class ctrStatusList
         CashImage(sts)
         RaiseEvent StartAddStatuses(Me, Nothing)
 
-        Thread.Sleep(50)
         Me.SuspendLayout()
         For i As Int32 = sts.Count - 1 To 0 Step -1
             AddStatusControl(sts(i))
@@ -339,7 +338,10 @@ Public Class ctrStatusList
     ''' <remarks></remarks>
     Public Sub Bind(ByRef curSttsParams As DictionaryEntry, ByVal curSttsType As StatusListType, ByRef NewUpdate As Int32)
         Dim sts As Collections.ObjectModel.Collection(Of DNE.Twitter.Status) = Nothing
-        If curSttsParams.Key.ToString().Length = 0 OrElse curSttsParams.Key.ToString() = "" Then Me.Clear()
+        If curSttsParams.Key.ToString().Length = 0 OrElse curSttsParams.Key.ToString() = "" Then
+            If Me.pnlMain.Controls.Count > 0 Then Me.Clear()
+
+        End If
         'need to store last stored id
         Dim lid As Int64 = 0
         If Me.LastId <> "" Then lid = CLng(Me.LastId)

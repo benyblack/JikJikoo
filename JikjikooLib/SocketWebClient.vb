@@ -15,6 +15,25 @@ Namespace DNE.JikJikoo
         Public Event DownloadingDataEnd As EventHandler
         Public Event HttpError As HttpEventHandler
 
+#Region " Constructors "
+
+        Public Sub New()
+            MyBase.New()
+        End Sub
+
+        ''' <summary>
+        ''' for basic authentication
+        ''' </summary>
+        ''' <param name="twitterUser"></param>
+        ''' <param name="twitterPassword"></param>
+        ''' <remarks></remarks>
+        Public Sub New(ByVal twitterUser As String, ByVal twitterPassword As String)
+            MyBase.New(twitterUser, twitterPassword)
+
+        End Sub
+
+#End Region
+
 #Region " Socket Function "
 
         ''' <summary>
@@ -244,12 +263,17 @@ Namespace DNE.JikJikoo
             Dim request As String = "GET " & url & " HTTP/1.1" & vbCrLf
             request += "Host: " & host & vbCrLf
             request += "User-Agent: JikJikoo" & vbCrLf
+            'If _cookie <> "" Then
+            '    request += "Cookie: " & _cookie & vbCrLf
+
+            'End If
             If AuthenticationType = AuthType.Basic Then
                 If mustAuth Then request += "Authorization:Basic " & Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(UserName & ":" & Password)) & vbCrLf
 
             End If
             request += vbCrLf
             Return request
+
 
         End Function
 
@@ -281,7 +305,7 @@ Namespace DNE.JikJikoo
 #End Region
 
         Public Overrides Function DoGet(ByVal url As System.Uri) As String
-            Return HttpRequestSocket("GET", url.AbsolutePath, url.Query)
+            Return HttpRequestSocket("GET", url.AbsolutePath, url.Query.Substring(1))
 
         End Function
 
@@ -296,7 +320,7 @@ Namespace DNE.JikJikoo
         End Function
 
         Public Overrides Function DoGetNoAuth(ByVal url As System.Uri) As String
-            Return HttpRequestSocket("GET", url.AbsolutePath, url.Query, url.Host, False)
+            Return HttpRequestSocket("GET", url.AbsolutePath, url.Query.Substring(1), url.Host, False)
 
         End Function
 

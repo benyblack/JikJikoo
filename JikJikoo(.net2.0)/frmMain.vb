@@ -141,7 +141,10 @@ Public Class frmMain
             ' if currentuser is nothing this means app not connected yet
             If CurrentUser Is Nothing Then
                 SetCurrentUser()
+
             End If
+
+            'may setcurrentuser retusn nothing
             If Not CurrentUser Is Nothing Then
                 SetActiveLinkButtonColor(lnkSearch)
                 stlMain.Bind(curSttsParams, curSttsType, NewUpdate)
@@ -153,9 +156,15 @@ Public Class frmMain
             ShowMessage("Error in connection", "Not Connected. check your internet connection", True)
             'MsgBox("Not Connected. check your internet connection")
 
+        Catch ex2 As Exception
+            MsgBox(ex2.Message)
+
+        Finally
+            TimerRefresh.Enabled = True
+            IsBinding = False
+
         End Try
-        TimerRefresh.Enabled = True
-        IsBinding = False
+
 
         If NewUpdate = 0 Then Exit Sub
         ShowMessage("Alert", String.Format(My.Resources.JikJikoo.NewUpdate, NewUpdate), False)
@@ -356,8 +365,9 @@ Public Class frmMain
 
     Private Sub TimerRefresh_Tick(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles TimerRefresh.Tick
         If IsBinding Then
-            TimerRefresh.Interval = 5000
+            TimerRefresh.Interval = 1000
             Exit Sub
+
         End If
         Dim jc As New JikConfigManager()
         TimerRefresh.Interval = jc.refresh * 1000
@@ -366,7 +376,7 @@ Public Class frmMain
             'curSttsParams.Value = ""
             WaitingForCleanRefresh = False
         End If
-        t = New Thread(AddressOf Bind)
+        Dim t As New Thread(AddressOf Bind)
         t.Start()
 
     End Sub

@@ -1,5 +1,4 @@
-﻿
-Imports System
+﻿Imports System
 Imports System.Net
 Imports System.Text
 Imports System.Threading
@@ -16,65 +15,7 @@ Namespace DNE.Twitter
 
     Public Class Api
 
-        Public Event DownloadingDataStart As EventHandler
-        Public Event DownloadingDataEnd As EventHandler
-        Public Event HttpError As HttpEventHandler
-
-
-        Public Sub New()
-
-        End Sub
-
-        ''' <summary>
-        ''' Use this cunstructor for Basic Authentication
-        ''' </summary>
-        ''' <param name="user">Username in Twitter</param>
-        ''' <param name="pass">Password in Twitter</param>
-        ''' <remarks></remarks>
-        Public Sub New(ByVal user As String, ByVal pass As String)
-            Me._username = user
-            Me._password = pass
-            _authtype = AuthType.Basic
-
-        End Sub
-
-        ''' <summary>
-        ''' Use this cunstructor for oAthu
-        ''' </summary>
-        ''' <param name="user">Username in Twitter</param>
-        ''' <param name="tok">Token for oAuth</param>
-        ''' <param name="toksecret">TokenSecret for oAuth</param>
-        ''' <remarks></remarks>
-        Public Sub New(ByVal user As String, ByVal tok As String, ByVal toksecret As String)
-            Me._username = user
-            Me.Token = tok
-            Me.TokenSecret = toksecret
-            _authtype = AuthType.oAuth
-
-        End Sub
-
-        ''' <summary>
-        ''' Config Proxy.
-        ''' Default Settings is : SOCKS4A,127.0.0.1,1080,"","" 
-        ''' if you want to use default settign dont call this method
-        ''' </summary>
-        ''' <param name="ptype">Type of Proxy Server</param>
-        ''' <param name="pport">Port of Proxy Server</param>
-        ''' <param name="ip">IP of Proxy Server</param>
-        ''' <param name="_user">User Name of Proxy Server</param>
-        ''' <param name="_pass">Password of Proxy Server</param>
-        ''' <remarks></remarks>
-        Public Sub ConfigProxy(ByVal ptype As ProxyType, ByVal pport As Int32, ByVal ip As String, ByVal _user As String, ByVal _pass As String)
-            Me.ProxyType = ptype
-            Me.ProxyPort = pport
-            Me.ProxyIP = ip
-            Me.ProxyUserName = _user
-            Me.ProxyPassword = _pass
-
-        End Sub
-
         Private Function HttpRequest(ByVal method As String, ByVal url As String, ByVal query As String, Optional ByVal host As String = "twitter.com") As String
-          
             If AuthenticationType = AuthType.oAuth Then
                 Dim o As New oAuthExample.oAuthTwitter(Me)
                 o.ConsumerKey = "Um0Z859qORQgTkN4ehyqdw"
@@ -124,58 +65,126 @@ Namespace DNE.Twitter
                 If method.ToLower = "get" Then query = ""
 
             End If
-            If Me.ProxyType = ProxyTypes.Socks4 Or Me.ProxyType = ProxyTypes.Socks5 Or Me.ProxyType = ProxyTypes.None Then
-                Return HttpRequestSocket(method, url, query, host)
+            If method.ToUpper = "POST" Then
+                Return Me.WebClient.DoPost(New Uri(url), query)
 
-            Else
-                Return HttpRequestHTTP(method, url, query) ', host)
+            ElseIf method.ToUpper = "GET" Then
+                Return Me.WebClient.DoGet(New Uri(url))
 
             End If
             Return ""
 
         End Function
 
-        '''' <summary>
-        '''' This is a different Url Encode implementation since the default .NET one outputs the percent encoding in lower case.
-        '''' While this is not a problem with the percent encoding spec, it is used in upper case throughout OAuth
-        '''' </summary>
-        '''' <param name="value">The value to Url encode</param>
-        '''' <returns>Returns a Url encoded string</returns>
-        'Public Function UrlEncode(ByVal value As String) As String
-        '    Dim result As New StringBuilder()
-        '    Dim unreservedChars As String = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_.~"
-        '    For Each symbol As Char In value
-        '        If unreservedChars.IndexOf(symbol) <> -1 Then
-        '            result.Append(symbol)
-        '        Else
-        '            result.Append("%"c + [String].Format("{0:X2}", AscW(symbol)))
-        '        End If
-        '    Next
+#Region " Cunstructors "
 
-        '    Return result.ToString()
-        'End Function
+        Public Sub New()
 
-        Private Function UrlEncode(ByVal s As String) As String
-            Dim c() As Char = s.ToCharArray
-            Dim ss As String = ""
-            Dim unreservedChars As String = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_.~"
-            For i As Int32 = 0 To s.Length - 1
-                If unreservedChars.IndexOf(c(i)) <> -1 Then
-                    ss += c(i)
+        End Sub
 
-                ElseIf c(i) = " "c Then
-                    ss += "%20"
+        ''' <summary>
+        ''' Use this cunstructor for Basic Authentication
+        ''' </summary>
+        ''' <param name="user">Username in Twitter</param>
+        ''' <param name="pass">Password in Twitter</param>
+        ''' <remarks></remarks>
+        Public Sub New(ByVal user As String, ByVal pass As String)
+            Me.UserName = user
+            Me.Password = pass
+            _authtype = AuthType.Basic
+
+        End Sub
+
+        ''' <summary>
+        ''' Use this cunstructor for oAthu
+        ''' </summary>
+        ''' <param name="user">Username in Twitter</param>
+        ''' <param name="tok">Token for oAuth</param>
+        ''' <param name="toksecret">TokenSecret for oAuth</param>
+        ''' <remarks></remarks>
+        Public Sub New(ByVal user As String, ByVal tok As String, ByVal toksecret As String)
+            Me.UserName = user
+            Me.Token = tok
+            Me.TokenSecret = toksecret
+            _authtype = AuthType.oAuth
+
+        End Sub
+
+#End Region
+
+#Region " Proxy "
+
+        ''' <summary>
+        ''' Config Proxy.
+        ''' Default Settings is : SOCKS4A,127.0.0.1,1080,"","" 
+        ''' if you want to use default settign dont call this method
+        ''' </summary>
+        ''' <param name="ptype">Type of Proxy Server</param>
+        ''' <param name="pport">Port of Proxy Server</param>
+        ''' <param name="ip">IP of Proxy Server</param>
+        ''' <param name="_user">User Name of Proxy Server</param>
+        ''' <param name="_pass">Password of Proxy Server</param>
+        ''' <remarks></remarks>
+        Public Sub ConfigProxy(ByVal ptype As ProxyType, ByVal pport As Int32, ByVal ip As String, ByVal _user As String, ByVal _pass As String)
+            Me.ProxyType = ptype
+            Me.ProxyPort = pport
+            Me.ProxyIP = ip
+            Me.ProxyUserName = _user
+            Me.ProxyPassword = _pass
+            ConfigWebClientProxy()
+
+        End Sub
+
+        Private Sub ConfigWebClientProxy()
+            If Me.ProxyType = ProxyTypes.Http Then
+                If Me.AuthenticationType = AuthType.Basic Then
+                    _hwc = New DNE.JikJikoo.HttpWebClient(Me.UserName, Me.Password)
 
                 Else
-                    ss += HttpUtility.UrlEncode(c(i)).ToUpper()
+                    _hwc = New DNE.JikJikoo.HttpWebClient()
 
                 End If
 
+            Else
+                If Me.AuthenticationType = AuthType.Basic Then
+                    _swc = New DNE.JikJikoo.SocketWebClient(Me.UserName, Me.Password)
 
-            Next
-            Return ss
+                Else
+                    _swc = New DNE.JikJikoo.SocketWebClient()
 
-        End Function
+                End If
+
+            End If
+            Me.WebClient.ConfigProxy(Me.ProxyType, Me.ProxyPort, Me.ProxyIP, Me.ProxyUserName, Me.ProxyPassword)
+            AddHandler _swc.DownloadingDataStart, AddressOf DownloadingData_Start
+            AddHandler _swc.DownloadingDataEnd, AddressOf DownloadingData_End
+            AddHandler _swc.HttpError, AddressOf Http_Error
+
+        End Sub
+
+#End Region
+
+#Region " Events "
+
+        Public Event DownloadingDataStart As EventHandler
+        Public Event DownloadingDataEnd As EventHandler
+        Public Event HttpError As HttpEventHandler
+
+        Private Sub DownloadingData_Start(ByVal sender As Object, ByVal e As EventArgs)
+            RaiseEvent DownloadingDataStart(sender, e)
+        End Sub
+
+        Private Sub DownloadingData_End(ByVal sender As Object, ByVal e As EventArgs)
+            RaiseEvent DownloadingDataEnd(sender, e)
+
+        End Sub
+
+        Private Sub Http_Error(ByVal sender As Object, ByVal e As Twitter.HttpExEventArgs)
+            RaiseEvent HttpError(sender, e)
+
+        End Sub
+
+#End Region
 
 #Region " Urls "
 
@@ -340,6 +349,22 @@ Namespace DNE.Twitter
             Set(ByVal value As String)
                 _proxypassword = value
             End Set
+        End Property
+
+        '----------------------------------
+        Private _swc As DNE.JikJikoo.SocketWebClient = Nothing
+        Private _hwc As DNE.JikJikoo.HttpWebClient = Nothing
+        Protected ReadOnly Property WebClient() As DNE.JikJikoo.WebClient
+            Get
+                If Me.ProxyType = ProxyTypes.Http Then
+                    If _hwc Is Nothing Then ConfigWebClientProxy()
+                    Return _hwc
+                Else
+                    If _swc Is Nothing Then ConfigWebClientProxy()
+                    Return _swc
+                End If
+                
+            End Get
         End Property
 
 #End Region
@@ -943,410 +968,6 @@ Namespace DNE.Twitter
 
 #End Region
 
-#Region " Http Functions "
-
-        ''' <summary>
-        ''' Executes an HTTP GET command and retrives the information.(from Yedda Project)
-        ''' </summary>
-        ''' <param name="url">The URL to perform the GET operation</param>
-        ''' <param name="userName">The username to use with the request</param>
-        ''' <param name="password">The password to use with the request</param>
-        ''' <returns>The response of the request, or null if we got 404 or nothing.</returns>
-        Protected Function ExecuteGetCommand(ByVal url As String, ByVal userName As String, ByVal password As String) As String
-            Using client As New WebClient()
-
-                Dim wp As New WebProxy(Me.ProxyIP, ProxyPort)
-                wp.Credentials = New NetworkCredential(userName, password)
-                client.Proxy = wp
-
-                If AuthenticationType = AuthType.Basic Then
-                    If Not String.IsNullOrEmpty(userName) AndAlso Not String.IsNullOrEmpty(password) Then
-                        client.Credentials = New NetworkCredential(userName, password)
-                    End If
-
-                End If
-
-                Try
-                    Using stream As IO.Stream = client.OpenRead(url)
-                        Using reader As New IO.StreamReader(stream)
-                            Return reader.ReadToEnd()
-                        End Using
-                    End Using
-                Catch ex As WebException
-                    '
-                    ' Handle HTTP 404 errors gracefully and return a null string to indicate there is no content.
-                    '
-                    If TypeOf ex.Response Is HttpWebResponse Then
-                        If TryCast(ex.Response, HttpWebResponse).StatusCode = HttpStatusCode.NotFound Then
-                            Return Nothing
-                        End If
-                    End If
-
-                    Throw ex
-                End Try
-            End Using
-
-            Return Nothing
-        End Function
-
-        ''' <summary>
-        ''' Executes an HTTP POST command and retrives the information. (from Yedda Project)
-        ''' This function will automatically include a "source" parameter if the "Source" property is set.
-        ''' </summary>
-        ''' <param name="url">The URL to perform the POST operation</param>
-        ''' <param name="userName">The username to use with the request</param>
-        ''' <param name="password">The password to use with the request</param>
-        ''' <param name="data">The data to post</param>
-        ''' <returns>The response of the request, or null if we got 404 or nothing.</returns>
-        Protected Function ExecutePostCommand(ByVal url As String, ByVal userName As String, ByVal password As String, ByVal data As String) As String
-            Dim request As WebRequest = WebRequest.Create(url)
-            Dim wp As New WebProxy(Me.ProxyIP, ProxyPort)
-            wp.Credentials = New NetworkCredential(userName, password)
-            request.Proxy = wp
-
-            If Not String.IsNullOrEmpty(userName) AndAlso Not String.IsNullOrEmpty(password) Then
-                If AuthenticationType = AuthType.Basic Then
-                    request.Credentials = New NetworkCredential(userName, password)
-
-                End If
-
-                request.ContentType = "application/x-www-form-urlencoded"
-                request.Method = "POST"
-
-                'request.Headers.Add("X-Twitter-Client", "JikJikoo")
-                'request.Headers.Add("X-Twitter-Version", "0.1 beta")
-                'request.Headers.Add("X-Twitter-URL", "http://code.google.com/p/jikjikoo")
-
-                Dim bytes As Byte() = Encoding.UTF8.GetBytes(data)
-
-                request.ContentLength = bytes.Length
-                Using requestStream As IO.Stream = request.GetRequestStream()
-                    requestStream.Write(bytes, 0, bytes.Length)
-
-                    Using response As WebResponse = request.GetResponse()
-                        Using reader As New IO.StreamReader(response.GetResponseStream())
-                            Return reader.ReadToEnd()
-                        End Using
-                    End Using
-                End Using
-            End If
-            Return Nothing
-
-        End Function
-
-        Protected Function DownloadFromHttp(ByVal url As String) As Byte()
-            If url.Trim = "" Then Return Nothing
-            Dim wc As New WebClient()
-            If Me.ProxyType = ProxyTypes.Http Then
-                Dim wp As New WebProxy(Me.ProxyIP, ProxyPort)
-                wp.Credentials = New NetworkCredential(UserName, Password)
-                wc.Proxy = wp
-
-            End If
-            Dim b() As Byte = Nothing
-            Try
-                b = wc.DownloadData(url)
-
-            Catch ex As WebException
-                '
-                ' Handle HTTP 404 errors gracefully and return a null string to indicate there is no content.
-                '
-                RaiseEvent HttpError(Me, New HttpExEventArgs(ex, url, "Server Not Responsing or Url Not Found"))
-                If TypeOf ex.Response Is HttpWebResponse Then
-                    If TryCast(ex.Response, HttpWebResponse).StatusCode = HttpStatusCode.NotFound Then
-                        Return Nothing
-                    End If
-                End If
-
-            End Try
-            Return b
-        End Function
-
-        Private Function HttpRequestHTTP(ByVal method As String, ByVal url As String, ByVal query As String) As String
-            If method.ToLower = "post" Then
-                Return ExecutePostCommand(url, UserName, Password, query)
-            ElseIf method.ToLower = "get" Then
-                Return ExecuteGetCommand(url, UserName, Password)
-            End If
-            Return ""
-
-        End Function
-
-#End Region
-
-#Region " Socket Function "
-
-        ''' <summary>
-        ''' Send Http Request from socket and recieve responsed data
-        ''' </summary>
-        ''' <param name="method">Get or Post</param>
-        ''' <param name="url"></param>
-        ''' <param name="query"></param>
-        ''' <param name="host"></param>
-        ''' <param name="mustAuthenticate">Optional, used by basic authentication</param>
-        ''' <returns></returns>
-        ''' <remarks></remarks>
-        Private Function HttpRequestSocket(ByVal method As String, ByVal url As String, ByVal query As String, Optional ByVal host As String = "twitter.com", Optional ByVal mustAuthenticate As Boolean = True) As String
-            Dim port As Integer = 80
-
-            ' Retrieve IP from host name
-            Dim hostEntry As IPHostEntry = Nothing 'Dns.GetHostEntry(host)
-            Try
-                hostEntry = Dns.GetHostEntry(host)
-
-            Catch ex As SocketException
-                RaiseEvent HttpError(Me, New HttpExEventArgs(ex, url, "Can not resolve host"))
-                Throw New NoConnectionException()
-
-            End Try
-            Dim address As IPAddress = hostEntry.AddressList(0)
-            Dim ipe As New IPEndPoint(address, port)
-
-            ' Make connection
-            Dim socket As New ProxySocket(ipe.AddressFamily, SocketType.Stream, ProtocolType.Tcp)
-            socket.ProxyType = Me.ProxyType  'ProxyTypes.Socks4
-            If Me.ProxyType <> ProxyTypes.None Then
-                socket.ProxyEndPoint = New IPEndPoint(IPAddress.Parse(Me.ProxyIP), Me.ProxyPort)
-
-            End If
-            If Me.ProxyUserName <> "" Then
-                socket.ProxyUser = Me.ProxyUserName
-                socket.ProxyPass = Me.ProxyPassword
-            Else
-                socket.ProxyUser = ""
-                socket.ProxyPass = ""
-            End If
-
-            ' for result
-            Dim bytes As Integer = 0
-            Dim strOut As String = ""
-            Dim request As String = ""
-            Try
-                socket.Connect(ipe)
-
-                If method.ToLower = "get" Then request = GenerateGetRequest(host, url, query, mustAuthenticate)
-                If method.ToLower = "post" Then request = GeneratePostRequest(host, url, query, mustAuthenticate)
-
-                Dim bytesSent As [Byte]() = Encoding.ASCII.GetBytes(request)
-                Dim bytesReceived As [Byte]() = New [Byte](255) {}
-
-                RaiseEvent DownloadingDataStart(Nothing, Nothing)
-
-                ' send query
-                socket.Send(bytesSent, bytesSent.Length, 0)
-
-                ' get result
-                Do
-                    bytes = socket.Receive(bytesReceived, bytesReceived.Length, 0)
-                    Thread.Sleep(25)
-                    strOut += (Encoding.ASCII.GetString(bytesReceived, 0, bytes))
-                Loop While bytes > 0
-
-                socket.Close()
-            Catch ex As SocketException
-                If socket.Connected Then
-                    socket.Disconnect(False)
-
-                End If
-                RaiseEvent HttpError(Me, New HttpExEventArgs(ex, url, "We got a error while downloading data"))
-
-            End Try
-
-            RaiseEvent DownloadingDataEnd(Nothing, Nothing)
-            If strOut.Length > 4 Then
-                'Check HTTP Headers
-                Dim headers As New JikJikoo.HtmlHeaders(strOut.Substring(0, strOut.IndexOf(vbCrLf + vbCrLf)))
-                strOut = strOut.Substring(strOut.IndexOf(vbCrLf + vbCrLf) + 4)
-                'If Not String.IsNullOrEmpty(headers("Set-Cookie")) And method.ToLower = "get" Then
-                '    _cookie = headers("Set-Cookie")
-
-                'End If
-                If headers.StatusCode <> 200 Then
-                    'TODO://
-                    ' DNE.JikJikoo.Util.LogIt(request & headers.Text & vbCrLf & System.Text.RegularExpressions.Regex.Match(strOut, "<error>(.*?)</error>").Value)
-                    DNE.JikJikoo.Util.LogIt(Regex.Match(strOut, "<error>(.*?)</error>").Groups(1).Value)
-                    'DNE.JikJikoo.Util.LogIt(Regex.Match(strOut, "oauth_signature=(.*?)</request>").Groups(1).Value & vbCrLf)
-
-
-                End If
-
-            End If
-            Return strOut
-
-        End Function
-
-        ''' <summary>
-        ''' A usefull method for downloading small files
-        ''' this method does not require authentication
-        ''' </summary>
-        ''' <param name="method">Get or Post</param>
-        ''' <param name="url"></param>
-        ''' <param name="query"></param>
-        ''' <returns></returns>
-        ''' <remarks></remarks>
-        Private Function HttpDownloadSocket(ByVal method As String, ByVal url As String, ByVal query As String) As Byte()
-            ' specify host, url, port number and parameter
-            Dim host As String = (New Uri(url)).Host
-            Dim port As Integer = 80
-
-            ' Retrieve IP from host name
-            Dim hostEntry As IPHostEntry = Nothing 'Dns.GetHostEntry(host)
-            Try
-                hostEntry = Dns.GetHostEntry(host)
-
-            Catch ex As SocketException
-                RaiseEvent HttpError(Me, New HttpExEventArgs(ex, url, "Can not resolve host"))
-                Return Nothing
-
-            End Try
-
-            Dim address As IPAddress = hostEntry.AddressList(0)
-            Dim ipe As New IPEndPoint(address, port)
-
-            ' Make connection
-            Dim socket As New ProxySocket(ipe.AddressFamily, SocketType.Stream, ProtocolType.Tcp)
-            socket.ProxyType = Me.ProxyType
-            If Me.ProxyType <> ProxyTypes.None Then
-                socket.ProxyEndPoint = New IPEndPoint(IPAddress.Parse(Me.ProxyIP), Me.ProxyPort)
-
-            End If
-            If Me.ProxyUserName <> "" Then
-                socket.ProxyUser = Me.ProxyUserName
-                socket.ProxyPass = Me.ProxyPassword
-            Else
-                socket.ProxyUser = ""
-                socket.ProxyPass = ""
-            End If
-
-            ' for result
-            Dim bytes As Integer = 0
-            Dim strOut As String = ""
-            Dim ba As New ArrayList
-            Try
-                socket.Connect(ipe)
-
-                Dim request As String = ""
-                If method.ToLower = "get" Then request = GenerateGetRequest(host, url, query)
-                If method.ToLower = "post" Then request = GeneratePostRequest(host, url, query)
-
-
-                Dim bytesSent As [Byte]() = Encoding.ASCII.GetBytes(request)
-                Dim bytesReceived As [Byte]() = New [Byte](255) {}
-
-                ' send query
-                socket.Send(bytesSent, bytesSent.Length, 0)
-                Dim ns As New NetworkStream(socket, True)
-                ns.ReadTimeout = 5000
-
-
-                Do
-                    Dim ssize As Int32 = socket.Available
-                    If ssize > bytesReceived.Length Then
-                        ssize = bytesReceived.Length
-                    End If
-                    bytes = socket.Receive(bytesReceived, ssize, 0)
-                    'bytes = ns.Read(bytesReceived, 0, bytesReceived.Length)
-                    Thread.Sleep(25)
-                    AddBytes(ba, bytesReceived, bytes)
-
-                    'bytes = socket.Receive(bytesReceived, bytesReceived.Length, 0)
-                    'Thread.Sleep(25)
-                    'AddBytes(ba, bytesReceived, bytes)
-                Loop While ns.DataAvailable 'bytes > 0
-                socket.Close()
-
-            Catch ex As SocketException
-                If socket.Connected Then
-                    socket.Disconnect(False)
-
-                End If
-                RaiseEvent HttpError(Me, New HttpExEventArgs(ex, url, "We got a error while downloading data"))
-
-            End Try
-
-            ' seeking end of header
-            Dim b() As Byte = ba.ToArray(GetType(Byte))
-            Dim b1310 As Int32 = 0
-            For i As Int32 = 0 To b.Length - 1
-                If b(i) = 13 Then
-                    If (i < b.Length - 4) Then
-                        If b(i + 1) = 10 And b(i + 2) = 13 And b(i + 3) = 10 Then
-                            b1310 = i + 4
-                        End If
-
-                    End If
-                End If
-            Next
-            Dim outb(b.Length - b1310 - 1) As Byte
-            Array.Copy(b, b1310, outb, 0, b.Length - b1310)
-            Return outb
-
-        End Function
-
-        ''' <summary>
-        ''' 
-        ''' </summary>
-        ''' <param name="host"></param>
-        ''' <param name="url"></param>
-        ''' <param name="query"></param>
-        ''' <param name="mustAuth">Optional,this will use for Basic Authentication</param>
-        ''' <returns></returns>
-        ''' <remarks></remarks>
-        Private Function GenerateGetRequest(ByVal host As String, ByVal url As String, _
-                            ByVal query As String, Optional ByVal mustAuth As Boolean = False) As String
-            If query <> "" Then
-                If (url.IndexOf("?") > 0) Then
-                    url = (url & "&")
-                Else
-                    url = (url & "?")
-                End If
-
-            End If
-
-            If query <> "" Then url += query 'HttpUtility.UrlEncode(query)
-            Dim request As String = "GET " & url & " HTTP/1.1" & vbCrLf
-            request += "Host: " & host & vbCrLf
-            request += "User-Agent: JikJikoo" & vbCrLf
-            'If _cookie <> "" Then
-            '    request += "Cookie: " & _cookie & vbCrLf
-
-            'End If
-            If AuthenticationType = AuthType.Basic Then
-                If mustAuth Then request += "Authorization:Basic " & Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(UserName & ":" & Password)) & vbCrLf
-
-            End If
-            request += vbCrLf
-            Return request
-
-        End Function
-
-        ''' <summary>
-        ''' 
-        ''' </summary>
-        ''' <param name="host"></param>
-        ''' <param name="url"></param>
-        ''' <param name="data"></param>
-        ''' <param name="mustAuth">Optional,this will use for Basic Authentication</param>
-        ''' <returns></returns>
-        ''' <remarks></remarks>
-        Private Function GeneratePostRequest(ByVal host As String, _
-                ByVal url As String, ByVal data As String, Optional ByVal mustAuth As Boolean = False) As String
-            Dim request As String = "POST " & url & " HTTP/1.1" & vbCrLf
-            request += "Host: " & host & vbCrLf
-            request += "User-Agent: JikJikoo" & vbCrLf
-            request += "Content-Type: application/x-www-form-urlencoded" & vbCrLf
-            If AuthenticationType = AuthType.Basic Then
-                If mustAuth Then request += "Authorization:Basic " & Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(UserName & ":" & Password)) & vbCrLf
-
-            End If
-            request += "Content-Length:" & data.Length & vbCrLf & vbCrLf
-            request += data
-            Return request
-
-        End Function
-
-#End Region
-
 #Region " Util "
 
         Private Function ParsTwitterXML(Of T)(ByVal sXml As String, ByVal xt As TwitterXmlTypes) As T
@@ -1374,7 +995,7 @@ Namespace DNE.Twitter
         End Function
 
         Public Function GetImage(ByVal url As String) As Drawing.Image
-            Dim b() As Byte = DownloadFromHttp(url)
+            Dim b() As Byte = Me.WebClient.DownloadDataNoAuth(New Uri(url))
             If b Is Nothing Then Return Nothing
             Try
                 Return Image.FromStream(New IO.MemoryStream(b))
@@ -1388,14 +1009,7 @@ Namespace DNE.Twitter
         End Function
 
         Public Function GetSimpleHttpGet(ByVal url As String) As String
-            If Me.ProxyType = ProxyTypes.Socks4 Or Me.ProxyType = ProxyTypes.Socks5 Or Me.ProxyType = ProxyTypes.None Then
-                Return HttpRequestSocket("GET", url, "", (New Uri(url)).Host, False)
-
-            Else
-                Return HttpRequest("GET", url, "")
-
-            End If
-            Return ""
+            Return Me.WebClient.DoGetNoAuth(New Uri(url))
 
         End Function
 
@@ -1404,6 +1018,28 @@ Namespace DNE.Twitter
                 al.Add(b(i))
             Next
         End Sub
+
+        Private Function UrlEncode(ByVal s As String) As String
+            Dim c() As Char = s.ToCharArray
+            Dim ss As String = ""
+            Dim unreservedChars As String = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_.~"
+            For i As Int32 = 0 To s.Length - 1
+                If unreservedChars.IndexOf(c(i)) <> -1 Then
+                    ss += c(i)
+
+                ElseIf c(i) = " "c Then
+                    ss += "%20"
+
+                Else
+                    ss += HttpUtility.UrlEncode(c(i)).ToUpper()
+
+                End If
+
+
+            Next
+            Return ss
+
+        End Function
 
 #End Region
 
