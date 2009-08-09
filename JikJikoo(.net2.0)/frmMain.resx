@@ -279,46 +279,46 @@
   <metadata name="NotifyIcon1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>229, 17</value>
   </metadata>
-  <metadata name="ContextMenuStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+  <metadata name="mnuNotify.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>344, 17</value>
   </metadata>
-  <data name="ContextMenuStrip1.Font" type="System.Drawing.Font, System.Drawing">
+  <data name="mnuNotify.Font" type="System.Drawing.Font, System.Drawing">
     <value>Tahoma, 8.25pt</value>
   </data>
   <data name="HideToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>103, 22</value>
+    <value>152, 22</value>
   </data>
   <data name="HideToolStripMenuItem.Text" xml:space="preserve">
     <value>&amp;Hide</value>
   </data>
   <data name="ShowToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>103, 22</value>
+    <value>152, 22</value>
   </data>
   <data name="ShowToolStripMenuItem.Text" xml:space="preserve">
     <value>&amp;Show</value>
   </data>
   <data name="ToolStripSeparator1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>100, 6</value>
+    <value>149, 6</value>
   </data>
   <data name="AboutToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>103, 22</value>
+    <value>152, 22</value>
   </data>
   <data name="AboutToolStripMenuItem.Text" xml:space="preserve">
     <value>&amp;About</value>
   </data>
   <data name="ExitToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>103, 22</value>
+    <value>152, 22</value>
   </data>
   <data name="ExitToolStripMenuItem.Text" xml:space="preserve">
     <value>E&amp;xit</value>
   </data>
-  <data name="ContextMenuStrip1.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="mnuNotify.Size" type="System.Drawing.Size, System.Drawing">
     <value>104, 98</value>
   </data>
-  <data name="&gt;&gt;ContextMenuStrip1.Name" xml:space="preserve">
-    <value>ContextMenuStrip1</value>
+  <data name="&gt;&gt;mnuNotify.Name" xml:space="preserve">
+    <value>mnuNotify</value>
   </data>
-  <data name="&gt;&gt;ContextMenuStrip1.Type" xml:space="preserve">
+  <data name="&gt;&gt;mnuNotify.Type" xml:space="preserve">
     <value>System.Windows.Forms.ContextMenuStrip, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="NotifyIcon1.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
@@ -1254,6 +1254,54 @@
   <data name="NotifyIcon1.Visible" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
+  <data name="&gt;&gt;lnkSent.Name" xml:space="preserve">
+    <value>lnkSent</value>
+  </data>
+  <data name="&gt;&gt;lnkSent.Type" xml:space="preserve">
+    <value>System.Windows.Forms.LinkLabel, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lnkSent.Parent" xml:space="preserve">
+    <value>pnlMenu</value>
+  </data>
+  <data name="&gt;&gt;lnkSent.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;lnkSearchLinks.Name" xml:space="preserve">
+    <value>lnkSearchLinks</value>
+  </data>
+  <data name="&gt;&gt;lnkSearchLinks.Type" xml:space="preserve">
+    <value>System.Windows.Forms.LinkLabel, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lnkSearchLinks.Parent" xml:space="preserve">
+    <value>pnlMenu</value>
+  </data>
+  <data name="&gt;&gt;lnkSearchLinks.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="pnlMenu.Location" type="System.Drawing.Point, System.Drawing">
+    <value>2, 1</value>
+  </data>
+  <data name="pnlMenu.Size" type="System.Drawing.Size, System.Drawing">
+    <value>491, 23</value>
+  </data>
+  <data name="pnlMenu.TabIndex" type="System.Int32, mscorlib">
+    <value>24</value>
+  </data>
+  <data name="pnlMenu.Visible" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="&gt;&gt;pnlMenu.Name" xml:space="preserve">
+    <value>pnlMenu</value>
+  </data>
+  <data name="&gt;&gt;pnlMenu.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Panel, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;pnlMenu.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;pnlMenu.ZOrder" xml:space="preserve">
+    <value>9</value>
+  </data>
   <data name="lnkSent.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
@@ -1313,30 +1361,6 @@
   </data>
   <data name="&gt;&gt;lnkSearchLinks.ZOrder" xml:space="preserve">
     <value>1</value>
-  </data>
-  <data name="pnlMenu.Location" type="System.Drawing.Point, System.Drawing">
-    <value>2, 1</value>
-  </data>
-  <data name="pnlMenu.Size" type="System.Drawing.Size, System.Drawing">
-    <value>491, 23</value>
-  </data>
-  <data name="pnlMenu.TabIndex" type="System.Int32, mscorlib">
-    <value>24</value>
-  </data>
-  <data name="pnlMenu.Visible" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
-  <data name="&gt;&gt;pnlMenu.Name" xml:space="preserve">
-    <value>pnlMenu</value>
-  </data>
-  <data name="&gt;&gt;pnlMenu.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Panel, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;pnlMenu.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;pnlMenu.ZOrder" xml:space="preserve">
-    <value>8</value>
   </data>
   <data name="lnkFriends.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -1428,6 +1452,54 @@
   <data name="&gt;&gt;lnkSearch.ZOrder" xml:space="preserve">
     <value>4</value>
   </data>
+  <data name="&gt;&gt;txtSearch.Name" xml:space="preserve">
+    <value>txtSearch</value>
+  </data>
+  <data name="&gt;&gt;txtSearch.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;txtSearch.Parent" xml:space="preserve">
+    <value>pnlSearch</value>
+  </data>
+  <data name="&gt;&gt;txtSearch.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;lnkBrowsLinks.Name" xml:space="preserve">
+    <value>lnkBrowsLinks</value>
+  </data>
+  <data name="&gt;&gt;lnkBrowsLinks.Type" xml:space="preserve">
+    <value>System.Windows.Forms.LinkLabel, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lnkBrowsLinks.Parent" xml:space="preserve">
+    <value>pnlSearch</value>
+  </data>
+  <data name="&gt;&gt;lnkBrowsLinks.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="pnlSearch.Location" type="System.Drawing.Point, System.Drawing">
+    <value>8, 123</value>
+  </data>
+  <data name="pnlSearch.Size" type="System.Drawing.Size, System.Drawing">
+    <value>491, 35</value>
+  </data>
+  <data name="pnlSearch.TabIndex" type="System.Int32, mscorlib">
+    <value>26</value>
+  </data>
+  <data name="pnlSearch.Visible" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="&gt;&gt;pnlSearch.Name" xml:space="preserve">
+    <value>pnlSearch</value>
+  </data>
+  <data name="&gt;&gt;pnlSearch.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Panel, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;pnlSearch.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;pnlSearch.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
   <data name="txtSearch.Location" type="System.Drawing.Point, System.Drawing">
     <value>81, 6</value>
   </data>
@@ -1479,30 +1551,9 @@
   <data name="&gt;&gt;lnkBrowsLinks.ZOrder" xml:space="preserve">
     <value>3</value>
   </data>
-  <data name="pnlSearch.Location" type="System.Drawing.Point, System.Drawing">
-    <value>8, 123</value>
-  </data>
-  <data name="pnlSearch.Size" type="System.Drawing.Size, System.Drawing">
-    <value>491, 35</value>
-  </data>
-  <data name="pnlSearch.TabIndex" type="System.Int32, mscorlib">
-    <value>26</value>
-  </data>
-  <data name="pnlSearch.Visible" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
-  <data name="&gt;&gt;pnlSearch.Name" xml:space="preserve">
-    <value>pnlSearch</value>
-  </data>
-  <data name="&gt;&gt;pnlSearch.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Panel, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;pnlSearch.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;pnlSearch.ZOrder" xml:space="preserve">
-    <value>3</value>
-  </data>
+  <metadata name="tip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>501, 17</value>
+  </metadata>
   <data name="picStatus.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Right</value>
   </data>
@@ -1518,9 +1569,6 @@
   <data name="picStatus.TabIndex" type="System.Int32, mscorlib">
     <value>27</value>
   </data>
-  <metadata name="tip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>501, 17</value>
-  </metadata>
   <data name="picStatus.ToolTip" xml:space="preserve">
     <value>Create New Status</value>
   </data>
@@ -1534,7 +1582,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;picStatus.ZOrder" xml:space="preserve">
-    <value>7</value>
+    <value>8</value>
   </data>
   <data name="picSetting.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Right</value>
@@ -1693,7 +1741,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;picSetting.ZOrder" xml:space="preserve">
-    <value>4</value>
+    <value>5</value>
   </data>
   <data name="picUser.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Right</value>
@@ -1723,8 +1771,11 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;picUser.ZOrder" xml:space="preserve">
-    <value>5</value>
+    <value>6</value>
   </data>
+  <metadata name="tip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>443, 18</value>
+  </metadata>
   <data name="jikUpdate.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Left, Right</value>
   </data>
@@ -1747,13 +1798,13 @@
     <value>jikUpdate</value>
   </data>
   <data name="&gt;&gt;jikUpdate.Type" xml:space="preserve">
-    <value>JikJikoo.ctrlUpdateStatus, JikJikoo(.net2.0), Version=0.8.1.18643, Culture=neutral, PublicKeyToken=null</value>
+    <value>JikJikoo.ctrlUpdateStatus, JikJikoo(.net2.0), Version=0.8.1.899, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;jikUpdate.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
   <data name="&gt;&gt;jikUpdate.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>2</value>
   </data>
   <data name="jikLogin.Location" type="System.Drawing.Point, System.Drawing">
     <value>270, 148</value>
@@ -1768,13 +1819,13 @@
     <value>jikLogin</value>
   </data>
   <data name="&gt;&gt;jikLogin.Type" xml:space="preserve">
-    <value>JikJikoo.ctrLoginOAuth, JikJikoo(.net2.0), Version=0.8.1.18643, Culture=neutral, PublicKeyToken=null</value>
+    <value>JikJikoo.ctrLoginOAuth, JikJikoo(.net2.0), Version=0.8.1.899, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;jikLogin.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
   <data name="&gt;&gt;jikLogin.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>3</value>
   </data>
   <data name="stlMain.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Bottom, Left, Right</value>
@@ -1795,16 +1846,55 @@
     <value>stlMain</value>
   </data>
   <data name="&gt;&gt;stlMain.Type" xml:space="preserve">
-    <value>JikJikoo.ctrStatusList, JikJikoo(.net2.0), Version=0.8.1.18643, Culture=neutral, PublicKeyToken=null</value>
+    <value>JikJikoo.ctrStatusList, JikJikoo(.net2.0), Version=0.8.1.899, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;stlMain.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
   <data name="&gt;&gt;stlMain.ZOrder" xml:space="preserve">
-    <value>6</value>
+    <value>7</value>
+  </data>
+  <metadata name="mnuTitleBar.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>516, 18</value>
+  </metadata>
+  <data name="MaximizeToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>124, 22</value>
+  </data>
+  <data name="MaximizeToolStripMenuItem.Text" xml:space="preserve">
+    <value>&amp;Maximize</value>
+  </data>
+  <data name="RestoreToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>124, 22</value>
+  </data>
+  <data name="RestoreToolStripMenuItem.Text" xml:space="preserve">
+    <value>&amp;Restore</value>
+  </data>
+  <data name="MinimizeToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>124, 22</value>
+  </data>
+  <data name="MinimizeToolStripMenuItem.Text" xml:space="preserve">
+    <value>Mi&amp;nimize</value>
+  </data>
+  <data name="ExitToolStripMenuItem1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>124, 22</value>
+  </data>
+  <data name="ExitToolStripMenuItem1.Text" xml:space="preserve">
+    <value>E&amp;xit</value>
+  </data>
+  <data name="mnuTitleBar.Size" type="System.Drawing.Size, System.Drawing">
+    <value>125, 92</value>
+  </data>
+  <data name="&gt;&gt;mnuTitleBar.Name" xml:space="preserve">
+    <value>mnuTitleBar</value>
+  </data>
+  <data name="&gt;&gt;mnuTitleBar.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ContextMenuStrip, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
+  </metadata>
+  <metadata name="$this.TrayHeight" type="System.Int32, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>60</value>
   </metadata>
   <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
     <value>6, 13</value>
@@ -2801,6 +2891,30 @@
   </data>
   <data name="&gt;&gt;tip1.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolTip, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;MaximizeToolStripMenuItem.Name" xml:space="preserve">
+    <value>MaximizeToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;MaximizeToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;RestoreToolStripMenuItem.Name" xml:space="preserve">
+    <value>RestoreToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;RestoreToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;MinimizeToolStripMenuItem.Name" xml:space="preserve">
+    <value>MinimizeToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;MinimizeToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;ExitToolStripMenuItem1.Name" xml:space="preserve">
+    <value>ExitToolStripMenuItem1</value>
+  </data>
+  <data name="&gt;&gt;ExitToolStripMenuItem1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
     <value>frmMain</value>

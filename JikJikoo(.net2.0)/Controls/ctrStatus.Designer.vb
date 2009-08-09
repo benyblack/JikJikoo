@@ -38,6 +38,7 @@ Partial Class ctrStatus
         Me.SendDirectMessageToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
         Me.DeleteThisStatusToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
         Me.TranslateThisStatusToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
+        Me.StatusesToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
         CType(Me.picUser, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.FlowLayoutPanel1.SuspendLayout()
         Me.mnuUsername.SuspendLayout()
@@ -112,7 +113,7 @@ Partial Class ctrStatus
         Me.mnuUsername.BackColor = System.Drawing.Color.Black
         Me.mnuUsername.BackgroundImage = Nothing
         Me.mnuUsername.Font = Nothing
-        Me.mnuUsername.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.UseToolStripMenuItem, Me.ReplyToolStripMenuItem, Me.RTToolStripMenuItem, Me.MentionsToolStripMenuItem, Me.SendDirectMessageToolStripMenuItem, Me.DeleteThisStatusToolStripMenuItem, Me.TranslateThisStatusToolStripMenuItem})
+        Me.mnuUsername.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.UseToolStripMenuItem, Me.ReplyToolStripMenuItem, Me.RTToolStripMenuItem, Me.MentionsToolStripMenuItem, Me.SendDirectMessageToolStripMenuItem, Me.DeleteThisStatusToolStripMenuItem, Me.TranslateThisStatusToolStripMenuItem, Me.StatusesToolStripMenuItem})
         Me.mnuUsername.Name = "ContextMenuStrip1"
         Me.mnuUsername.ShowImageMargin = False
         '
@@ -186,6 +187,16 @@ Partial Class ctrStatus
         Me.TranslateThisStatusToolStripMenuItem.Name = "TranslateThisStatusToolStripMenuItem"
         Me.TranslateThisStatusToolStripMenuItem.ShortcutKeyDisplayString = Nothing
         '
+        'StatusesToolStripMenuItem
+        '
+        Me.StatusesToolStripMenuItem.AccessibleDescription = Nothing
+        Me.StatusesToolStripMenuItem.AccessibleName = Nothing
+        resources.ApplyResources(Me.StatusesToolStripMenuItem, "StatusesToolStripMenuItem")
+        Me.StatusesToolStripMenuItem.BackgroundImage = Nothing
+        Me.StatusesToolStripMenuItem.ForeColor = System.Drawing.Color.White
+        Me.StatusesToolStripMenuItem.Name = "StatusesToolStripMenuItem"
+        Me.StatusesToolStripMenuItem.ShortcutKeyDisplayString = Nothing
+        '
         'ctrStatus
         '
         Me.AccessibleDescription = Nothing
@@ -221,5 +232,6 @@ Partial Class ctrStatus
     Friend WithEvents SendDirectMessageToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents DeleteThisStatusToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents TranslateThisStatusToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents StatusesToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
 
 End Class

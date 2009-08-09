@@ -292,14 +292,22 @@ Public Class ctrStatus
 
     Private Sub lblUserName_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles lblUserName.Click
         whatisClickedInTxtStatus = lblUserName.Text
+        StatusesToolStripMenuItem.Text = String.Format("{0}'s statuses", lblUserName.Text)
         If FriendsIds Is Nothing Or FollowersId Is Nothing Then
             SendDirectMessageToolStripMenuItem.Enabled = False
 
         Else
-            If Array.IndexOf(FriendsIds, Status.User.Id) = -1 Then
+            Dim curuserid As String = ""
+            If Status Is Nothing Then
+                curuserid = User.Id
+
+            Else
+                curuserid = Status.User.Id
+            End If
+            If Array.IndexOf(FriendsIds, curuserid) = -1 Then
                 SendDirectMessageToolStripMenuItem.Enabled = False
 
-            ElseIf Array.IndexOf(FollowersId, Status.User.Id) = -1 Then
+            ElseIf Array.IndexOf(FollowersId, curuserid) = -1 Then
                 SendDirectMessageToolStripMenuItem.Enabled = False
 
             Else
@@ -343,9 +351,6 @@ Public Class ctrStatus
 
     End Sub
 
-#End Region
-
-
     Private Sub TranslateThisStatusToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles TranslateThisStatusToolStripMenuItem.Click
         Dim f As New frmTranslate()
         Dim sOrj As String = ""
@@ -361,4 +366,14 @@ Public Class ctrStatus
 
 
     End Sub
+
+#End Region
+
+
+    Private Sub StatusesToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles StatusesToolStripMenuItem.Click
+        whatisClickedInTxtStatus = lblUserName.Text
+        RaiseEvent TwitEvent(Me, New TwitEventArgs(Status, whatisClickedInTxtStatus, TwitEvents.UserStatuses))
+
+    End Sub
+
 End Class

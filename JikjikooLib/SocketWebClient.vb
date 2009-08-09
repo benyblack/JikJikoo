@@ -119,9 +119,7 @@ Namespace DNE.JikJikoo
                 strOut = strOut.Substring(strOut.IndexOf(vbCrLf + vbCrLf) + 4)
                 If headers.StatusCode <> 200 Then
                     'TODO://
-                    ' DNE.JikJikoo.Util.LogIt(request & headers.Text & vbCrLf & System.Text.RegularExpressions.Regex.Match(strOut, "<error>(.*?)</error>").Value)
-                    DNE.JikJikoo.Util.LogIt(Regex.Match(strOut, "<error>(.*?)</error>").Groups(1).Value)
-                    'DNE.JikJikoo.Util.LogIt(Regex.Match(strOut, "oauth_signature=(.*?)</request>").Groups(1).Value & vbCrLf)
+                    DNE.JikJikoo.Util.LogIt(Regex.Match(strOut, "<error>(.*?)</error>").Groups(1).Value & vbCrLf)
 
 
                 End If
@@ -310,7 +308,7 @@ Namespace DNE.JikJikoo
         End Function
 
         Public Overrides Function DoPost(ByVal url As System.Uri, ByVal data As String) As String
-            Return HttpRequestSocket("POST", url.AbsolutePath, data)
+            Return HttpRequestSocket("POST", url.ToString(), data)
 
         End Function
 

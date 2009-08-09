@@ -37,7 +37,7 @@ Namespace DNE.Twitter
                 End If
                 Dim ts As String = o.GenerateTimeStamp()
                 Dim nonce As String = o.GenerateNonce()
-                Dim sign As String = o.GenerateSignature(New Uri("http://twitter.com" & url & query), _
+                Dim sign As String = o.GenerateSignature(New Uri(String.Format("http://{0}{1}{2}", host, url, query)), _
                                     o.ConsumerKey, o.ConsumerSecret, o.Token, o.TokenSecret, method, ts, _
                                     nonce, normurl, normparam)
                 'TODO:// must parse query & params
@@ -61,7 +61,7 @@ Namespace DNE.Twitter
 
                 End If
                 url = String.Format("{0}?{1}&oauth_signature={2}", normurl, normparam, UrlEncode(sign))
-                DNE.JikJikoo.Util.LogIt(ts & " : " & nonce & " : " & sign & vbCrLf)
+                DNE.JikJikoo.Util.LogIt(ts & " : " & nonce & " : " & UrlEncode(sign) & vbCrLf)
                 If method.ToLower = "get" Then query = ""
 
             End If
@@ -1029,6 +1029,9 @@ Namespace DNE.Twitter
 
                 ElseIf c(i) = " "c Then
                     ss += "%20"
+
+                ElseIf c(i) = "+"c Then
+                    ss += "%2B"
 
                 Else
                     ss += HttpUtility.UrlEncode(c(i)).ToUpper()

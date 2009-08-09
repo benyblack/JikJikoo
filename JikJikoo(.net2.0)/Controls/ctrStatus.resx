@@ -188,11 +188,17 @@
   <data name="lblTime.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
     <value>TopRight</value>
   </data>
+  <data name="StatusesToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>158, 22</value>
+  </data>
   <data name="MentionsToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>124, 22</value>
   </data>
   <data name="&gt;&gt;RTToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;StatusesToolStripMenuItem.Name" xml:space="preserve">
+    <value>StatusesToolStripMenuItem</value>
   </data>
   <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
     <value>6, 13</value>
@@ -236,6 +242,9 @@
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
     <value>ctrStatus</value>
   </data>
+  <data name="&gt;&gt;lblUserName.Name" xml:space="preserve">
+    <value>lblUserName</value>
+  </data>
   <data name="&gt;&gt;UseToolStripMenuItem.Name" xml:space="preserve">
     <value>UseToolStripMenuItem</value>
   </data>
@@ -266,8 +275,8 @@
   <data name="&gt;&gt;FlowLayoutPanel1.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
-  <data name="&gt;&gt;lblUserName.Name" xml:space="preserve">
-    <value>lblUserName</value>
+  <data name="&gt;&gt;StatusesToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;lblUserName.Type" xml:space="preserve">
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>

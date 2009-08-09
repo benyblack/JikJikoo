@@ -14,8 +14,8 @@ Public Class frmMain
     Private IsBinding As Boolean = False
     Private NewUpdate As Int32 = 0
     Private WaitingForCleanRefresh As Boolean = False
-    Private _page As Int32 = 1
 
+    Private _page As Int32 = 1
     Friend Property Page() As Int32
         Get
             Return _page
@@ -36,103 +36,6 @@ Public Class frmMain
         End Set
     End Property
 
-    'Private Sub Bind()
-    '    IsBinding = True
-    '    Try
-    '        Thread.Sleep(50)
-    '        ' check current user
-    '        ' if currentuser is nothing this means app not connected yet
-    '        If CurrentUser Is Nothing Then
-    '            SetCurrentUser()
-    '        End If
-    '        If Not CurrentUser Is Nothing Then
-
-
-    '            Dim sts As Collections.ObjectModel.Collection(Of DNE.Twitter.Status) = Nothing
-    '            If curSttsParams.Key.ToString().Length = 0 OrElse curSttsParams.Key.ToString() = "" Then stlMain.Clear()
-    '            'need to store last stored id
-    '            Dim lid As Int64 = 0
-    '            If stlMain.LastId <> "" Then lid = CLng(stlMain.LastId)
-
-    '            'friends timeline
-    '            If curSttsType = StatusListType.FriendsTimeLine Then
-    '                sts = twa.GetFriendsTimeLine(stlMain.LastId, Page)
-    '                If sts IsNot Nothing Then NewUpdate = sts.Count
-    '                stlMain.AddStatuses(sts)
-
-    '                'mentions
-    '            ElseIf curSttsType = StatusListType.Mentions Then
-    '                sts = twa.GetMentions(stlMain.LastId, Page)
-    '                stlMain.AddStatuses(sts)
-
-    '                'favorites
-    '            ElseIf curSttsType = StatusListType.Favorites Then
-    '                sts = twa.Favorites(CurrentUser.Screen_Name, Page)
-    '                stlMain.AddStatuses(sts)
-
-    '                'myupdates
-    '            ElseIf curSttsType = StatusListType.MyUpdates Then
-    '                sts = twa.GetUserTimeLine(CurrentUser.Screen_Name, stlMain.LastId, Page)
-    '                stlMain.AddStatuses(sts)
-
-    '                'userupdates
-    '            ElseIf curSttsType = StatusListType.UserUpdates Then
-    '                sts = twa.GetUserTimeLine(curSttsParams.Value, stlMain.LastId, Page)
-    '                stlMain.AddStatuses(sts)
-
-    '                'direct messages (inbox)
-    '            ElseIf curSttsType = StatusListType.DirectMessages Then
-    '                sts = Util.DirectMessage2Status(twa.DirectMessages(stlMain.LastId, Page), True)
-    '                stlMain.AddStatuses(sts)
-
-    '                'sent Messages (sent)
-    '            ElseIf curSttsType = StatusListType.SentMessages Then
-    '                sts = Util.DirectMessage2Status(twa.SentMessages(stlMain.LastId, Page), False)
-    '                stlMain.AddStatuses(sts)
-
-    '                'search results
-    '            ElseIf curSttsType = StatusListType.SearchResults Then
-    '                SetActiveLinkButtonColor(lnkSearch)
-    '                sts = Util.SearchResults2Status(twa.Search(curSttsParams.Value, Page, stlMain.LastId))
-    '                stlMain.AddStatuses(sts)
-
-    '                'Friends
-    '            ElseIf curSttsType = StatusListType.Friends Then
-    '                Dim uc As Collection(Of DNE.Twitter.User) = twa.Friends(CurrentUser.Screen_Name, Page)
-    '                stlMain.AddUsers(uc)
-
-    '                'Followers
-    '            ElseIf curSttsType = StatusListType.Followers Then
-    '                Dim uc As Collection(Of DNE.Twitter.User) = twa.Followers(CurrentUser.Screen_Name, Page)
-    '                stlMain.AddUsers(uc)
-
-    '            End If
-    '            curSttsParams.Key = stlMain.LastStatusId
-
-    '            'Update prev controls datetime
-    '            stlMain.DateTimesUpdate()
-    '            stlMain.FormatStatusText(lid)
-
-
-    '        End If
-
-
-    '    Catch ex As NoConnectionException
-    '        TimerRefresh.Enabled = True
-    '        ShowMessage("Error in connection", "Not Connected. check your internet connection", True)
-    '        'MsgBox("Not Connected. check your internet connection")
-
-    '    End Try
-    '    TimerRefresh.Enabled = True
-    '    IsBinding = False
-
-    '    If NewUpdate = 0 Then Exit Sub
-    '    ShowMessage("Alert", String.Format(My.Resources.JikJikoo.NewUpdate, NewUpdate), False)
-    '    NewUpdate = 0
-
-
-    'End Sub
-
     Private Sub Bind()
         IsBinding = True
         Try
@@ -146,7 +49,7 @@ Public Class frmMain
 
             'may setcurrentuser retusn nothing
             If Not CurrentUser Is Nothing Then
-                SetActiveLinkButtonColor(lnkSearch)
+                If curSttsType = StatusListType.SearchResults Then SetActiveLinkButtonColor(lnkSearch)
                 stlMain.Bind(curSttsParams, curSttsType, NewUpdate)
 
             End If
@@ -218,6 +121,7 @@ Public Class frmMain
             Next
             stlMain.ResumeLayout()
             stlMain.Top = newtop
+            stlMain.Height = stlMain.Height - jikUpdate.Height
             jikUpdate.txtStatus.Focus()
 
         Else
@@ -231,6 +135,7 @@ Public Class frmMain
             Next
             stlMain.ResumeLayout()
             stlMain.Top = newtop
+            stlMain.Height = stlMain.Height + jikUpdate.Height
 
         End If
 
@@ -349,7 +254,10 @@ Public Class frmMain
         picStatus.BringToFront()
         '--------------------------------
         ReloadConfig()
-        jikLogin.LoadLogin()
+        If Not jikLogin.LoadLogin() Then
+            ShowUserLoginControl(True)
+
+        End If
         AddHandler twa.HttpError, AddressOf TwitterApiHttpError
 
     End Sub
@@ -387,6 +295,26 @@ Public Class frmMain
 
     End Sub
 
+
+    Public Const WM_NCRBUTTONDOWN = &HA4
+    Public Const WM_NCRBUTTONUP = &HA5
+
+    ''' <summary>
+    ''' from: http://www.daniweb.com/forums/post657263-2.html
+    ''' </summary>
+    ''' <param name="WndMsg"></param>
+    ''' <remarks></remarks>
+    Protected Overrides Sub WndProc(ByRef WndMsg As System.Windows.Forms.Message)
+        If WndMsg.Msg = WM_NCRBUTTONDOWN Then
+            Dim dy As Int32 = Me.Height - Me.ClientSize.Height
+            Dim dx As Int32 = CInt((Me.Width - Me.ClientSize.Width) / 2)
+            Dim mp As New Size(Control.MousePosition.X - Me.Location.X - dx, Control.MousePosition.Y - Me.Location.Y - dy + dx)
+            mnuTitleBar.Show(Me, mp)
+            Return ' Prevent to process this Message to the Base Class
+        End If
+        MyBase.WndProc(WndMsg)
+    End Sub
+
 #End Region
 
 #Region " Login Events "
@@ -400,8 +328,8 @@ Public Class frmMain
                 u = twa.UserShow(jikLogin.txtUid.Text)
                 If u Is Nothing Then Exit Sub
                 CurrentUser = u
-                'FriendsIds = twa.FriendsIds()
-                ' FollowersId = twa.FollowersIds()
+                FriendsIds = twa.FriendsIds()
+                FollowersId = twa.FollowersIds()
                 Thread.Sleep(1000)
                 Dim img As Image = twa.GetImage(CurrentUser.Profile_image_url)
                 If img IsNot Nothing Then jikLogin.picUser.Image = img
@@ -720,7 +648,7 @@ Public Class frmMain
 
 #End Region
 
-#Region " NotifyIcon & Context Menu"
+#Region " NotifyIcon & Context Menus "
 
     Private Sub NotifyIcon1_MouseDoubleClick(ByVal sender As System.Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles NotifyIcon1.MouseDoubleClick
         If Me.Visible Then
@@ -750,7 +678,7 @@ Public Class frmMain
 
     End Sub
 
-    Private Sub ExitToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ExitToolStripMenuItem.Click
+    Private Sub ExitToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ExitToolStripMenuItem.Click, ExitToolStripMenuItem1.Click
         If t IsNot Nothing Then
             t.Abort()
 
@@ -758,6 +686,36 @@ Public Class frmMain
         NotifyIcon1.Visible = False
         Application.DoEvents()
         Application.Exit()
+
+    End Sub
+
+    Private Sub MaximizeToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MaximizeToolStripMenuItem.Click
+        If Not Me.WindowState = FormWindowState.Maximized Then Me.WindowState = FormWindowState.Maximized
+
+    End Sub
+
+    Private Sub MinimizeToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MinimizeToolStripMenuItem.Click
+        If Not Me.WindowState = FormWindowState.Minimized Then Me.WindowState = FormWindowState.Minimized
+
+    End Sub
+
+    Private Sub RestoreToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles RestoreToolStripMenuItem.Click
+        If Not Me.WindowState = FormWindowState.Normal Then Me.WindowState = FormWindowState.Normal
+
+    End Sub
+
+    Private Sub mnuTitleBar_Opening(ByVal sender As Object, ByVal e As System.ComponentModel.CancelEventArgs) Handles mnuTitleBar.Opening
+        If Me.WindowState = FormWindowState.Maximized Then
+            MaximizeToolStripMenuItem.Enabled = False
+            MinimizeToolStripMenuItem.Enabled = True
+            RestoreToolStripMenuItem.Enabled = True
+
+        ElseIf Me.WindowState = FormWindowState.Normal Then
+            MaximizeToolStripMenuItem.Enabled = True
+            MinimizeToolStripMenuItem.Enabled = True
+            RestoreToolStripMenuItem.Enabled = False
+
+        End If
 
     End Sub
 
@@ -839,5 +797,5 @@ Public Class frmMain
 #End Region
 
 #End Region
-
+   
 End Class

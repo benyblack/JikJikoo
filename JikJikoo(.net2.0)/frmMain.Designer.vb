@@ -32,7 +32,7 @@ Partial Class frmMain
         Me.lnkFavorites = New System.Windows.Forms.LinkLabel
         Me.lnkMyUpdates = New System.Windows.Forms.LinkLabel
         Me.NotifyIcon1 = New System.Windows.Forms.NotifyIcon(Me.components)
-        Me.ContextMenuStrip1 = New System.Windows.Forms.ContextMenuStrip(Me.components)
+        Me.mnuNotify = New System.Windows.Forms.ContextMenuStrip(Me.components)
         Me.HideToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
         Me.ShowToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
         Me.ToolStripSeparator1 = New System.Windows.Forms.ToolStripSeparator
@@ -54,12 +54,18 @@ Partial Class frmMain
         Me.jikUpdate = New JikJikoo.ctrlUpdateStatus
         Me.jikLogin = New JikJikoo.ctrLoginOAuth
         Me.stlMain = New JikJikoo.ctrStatusList
-        Me.ContextMenuStrip1.SuspendLayout()
+        Me.mnuTitleBar = New System.Windows.Forms.ContextMenuStrip(Me.components)
+        Me.MaximizeToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
+        Me.RestoreToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
+        Me.MinimizeToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
+        Me.ExitToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem
+        Me.mnuNotify.SuspendLayout()
         Me.pnlMenu.SuspendLayout()
         Me.pnlSearch.SuspendLayout()
         CType(Me.picStatus, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picSetting, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.picUser, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.mnuTitleBar.SuspendLayout()
         Me.SuspendLayout()
         '
         'Timer1
@@ -113,14 +119,14 @@ Partial Class frmMain
         'NotifyIcon1
         '
         Me.NotifyIcon1.BalloonTipIcon = System.Windows.Forms.ToolTipIcon.Info
-        Me.NotifyIcon1.ContextMenuStrip = Me.ContextMenuStrip1
+        Me.NotifyIcon1.ContextMenuStrip = Me.mnuNotify
         resources.ApplyResources(Me.NotifyIcon1, "NotifyIcon1")
         '
-        'ContextMenuStrip1
+        'mnuNotify
         '
-        resources.ApplyResources(Me.ContextMenuStrip1, "ContextMenuStrip1")
-        Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.HideToolStripMenuItem, Me.ShowToolStripMenuItem, Me.ToolStripSeparator1, Me.AboutToolStripMenuItem, Me.ExitToolStripMenuItem})
-        Me.ContextMenuStrip1.Name = "ContextMenuStrip1"
+        resources.ApplyResources(Me.mnuNotify, "mnuNotify")
+        Me.mnuNotify.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.HideToolStripMenuItem, Me.ShowToolStripMenuItem, Me.ToolStripSeparator1, Me.AboutToolStripMenuItem, Me.ExitToolStripMenuItem})
+        Me.mnuNotify.Name = "ContextMenuStrip1"
         '
         'HideToolStripMenuItem
         '
@@ -273,6 +279,32 @@ Partial Class frmMain
         resources.ApplyResources(Me.stlMain, "stlMain")
         Me.stlMain.Name = "stlMain"
         '
+        'mnuTitleBar
+        '
+        Me.mnuTitleBar.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.MaximizeToolStripMenuItem, Me.RestoreToolStripMenuItem, Me.MinimizeToolStripMenuItem, Me.ExitToolStripMenuItem1})
+        Me.mnuTitleBar.Name = "mnuTitleBar"
+        resources.ApplyResources(Me.mnuTitleBar, "mnuTitleBar")
+        '
+        'MaximizeToolStripMenuItem
+        '
+        Me.MaximizeToolStripMenuItem.Name = "MaximizeToolStripMenuItem"
+        resources.ApplyResources(Me.MaximizeToolStripMenuItem, "MaximizeToolStripMenuItem")
+        '
+        'RestoreToolStripMenuItem
+        '
+        Me.RestoreToolStripMenuItem.Name = "RestoreToolStripMenuItem"
+        resources.ApplyResources(Me.RestoreToolStripMenuItem, "RestoreToolStripMenuItem")
+        '
+        'MinimizeToolStripMenuItem
+        '
+        Me.MinimizeToolStripMenuItem.Name = "MinimizeToolStripMenuItem"
+        resources.ApplyResources(Me.MinimizeToolStripMenuItem, "MinimizeToolStripMenuItem")
+        '
+        'ExitToolStripMenuItem1
+        '
+        Me.ExitToolStripMenuItem1.Name = "ExitToolStripMenuItem1"
+        resources.ApplyResources(Me.ExitToolStripMenuItem1, "ExitToolStripMenuItem1")
+        '
         'frmMain
         '
         resources.ApplyResources(Me, "$this")
@@ -288,7 +320,7 @@ Partial Class frmMain
         Me.Controls.Add(Me.pnlMenu)
         Me.ForeColor = System.Drawing.Color.White
         Me.Name = "frmMain"
-        Me.ContextMenuStrip1.ResumeLayout(False)
+        Me.mnuNotify.ResumeLayout(False)
         Me.pnlMenu.ResumeLayout(False)
         Me.pnlMenu.PerformLayout()
         Me.pnlSearch.ResumeLayout(False)
@@ -296,6 +328,7 @@ Partial Class frmMain
         CType(Me.picStatus, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.picSetting, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.picUser, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.mnuTitleBar.ResumeLayout(False)
         Me.ResumeLayout(False)
 
     End Sub
@@ -309,7 +342,7 @@ Partial Class frmMain
     Friend WithEvents lnkFavorites As System.Windows.Forms.LinkLabel
     Friend WithEvents lnkMyUpdates As System.Windows.Forms.LinkLabel
     Friend WithEvents NotifyIcon1 As System.Windows.Forms.NotifyIcon
-    Friend WithEvents ContextMenuStrip1 As System.Windows.Forms.ContextMenuStrip
+    Friend WithEvents mnuNotify As System.Windows.Forms.ContextMenuStrip
     Friend WithEvents HideToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents ShowToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents ToolStripSeparator1 As System.Windows.Forms.ToolStripSeparator
@@ -329,4 +362,9 @@ Partial Class frmMain
     Friend WithEvents picSetting As System.Windows.Forms.PictureBox
     Friend WithEvents picUser As System.Windows.Forms.PictureBox
     Friend WithEvents tip1 As System.Windows.Forms.ToolTip
+    Friend WithEvents mnuTitleBar As System.Windows.Forms.ContextMenuStrip
+    Friend WithEvents MaximizeToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents MinimizeToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents ExitToolStripMenuItem1 As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents RestoreToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
 End Class

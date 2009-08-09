@@ -239,16 +239,17 @@ Namespace DNE.JikJikoo
                 u.Verified = xdoc.SelectNodes("/users/user/verified")(i).InnerText
 
                 Dim st As New DNE.Twitter.StatusBase()
-                If xdoc.SelectNodes("/users/user/status/favorited")(i) IsNot Nothing Then
-                    st.Favorited = xdoc.SelectNodes("/users/user/status/favorited")(i).InnerText
-                    st.Created_At = xdoc.SelectNodes("/users/user/status/created_at")(i).InnerText
-                    st.Id = xdoc.SelectNodes("/users/user/status/id")(i).InnerText
-                    st.In_reply_to_screen_name = xdoc.SelectNodes("/users/user/status/in_reply_to_screen_name")(i).InnerText
-                    st.In_reply_to_status_id = xdoc.SelectNodes("/users/user/status/in_reply_to_status_id")(i).InnerText
-                    st.In_reply_to_user_id = xdoc.SelectNodes("/users/user/status/in_reply_to_user_id")(i).InnerText
-                    st.Source = xdoc.SelectNodes("/users/user/status/source")(i).InnerText
-                    st.Text = xdoc.SelectNodes("/users/user/status/text")(i).InnerText
-                    st.Truncated = xdoc.SelectNodes("/users/user/status/truncated")(i).InnerText
+                'xdoc.SelectNodes("/users/user[id='6253282']/status/favorited")(i)
+                If xdoc.SelectSingleNode(String.Format("/users/user[id='{0}']/status/favorited", u.Id)) IsNot Nothing Then
+                    st.Favorited = xdoc.SelectSingleNode(String.Format("/users/user[id='{0}']/status/favorited", u.Id)).InnerText
+                    st.Created_At = xdoc.SelectSingleNode(String.Format("/users/user[id='{0}']/status/created_at", u.Id)).InnerText
+                    st.Id = xdoc.SelectSingleNode(String.Format("/users/user[id='{0}']/status/id", u.Id)).InnerText
+                    st.In_reply_to_screen_name = xdoc.SelectSingleNode(String.Format("/users/user[id='{0}']/status/in_reply_to_screen_name", u.Id)).InnerText
+                    st.In_reply_to_status_id = xdoc.SelectSingleNode(String.Format("/users/user[id='{0}']/status/in_reply_to_status_id", u.Id)).InnerText
+                    st.In_reply_to_user_id = xdoc.SelectSingleNode(String.Format("/users/user[id='{0}']/status/in_reply_to_user_id", u.Id)).InnerText
+                    st.Source = xdoc.SelectSingleNode(String.Format("/users/user[id='{0}']/status/source", u.Id)).InnerText
+                    st.Text = xdoc.SelectSingleNode(String.Format("/users/user[id='{0}']/status/text", u.Id)).InnerText
+                    st.Truncated = xdoc.SelectSingleNode(String.Format("/users/user[id='{0}']/status/truncated", u.Id)).InnerText
                     u.Status = st
 
                 End If

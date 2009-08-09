@@ -200,7 +200,10 @@
   <data name="TranslateThisStatusToolStripMenuItem.Text" xml:space="preserve">
     <value>&amp;Translate This Status</value>
   </data>
+  <data name="StatusesToolStripMenuItem.Text" xml:space="preserve">
+    <value>Statuses</value>
+  </data>
   <data name="mnuUsername.Size" type="System.Drawing.Size, System.Drawing">
-    <value>159, 180</value>
+    <value>159, 202</value>
   </data>
 </root>

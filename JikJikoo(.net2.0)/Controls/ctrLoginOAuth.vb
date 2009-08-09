@@ -100,8 +100,8 @@
 
     End Sub
 
-    Friend Sub LoadLogin()
-        If Me.Site IsNot Nothing AndAlso Me.Site.DesignMode Then Exit Sub
+    Friend Function LoadLogin() As Boolean
+        If Me.Site IsNot Nothing AndAlso Me.Site.DesignMode Then Exit Function
         Dim ace As New AppConfig()
         If ace.GetValue("user") <> "" Then
             txtUid.Text = ace.GetValue("user")
@@ -114,6 +114,11 @@
                 txtUid.ForeColor = Color.White
                 txtUid.BorderStyle = Windows.Forms.BorderStyle.None
                 RaiseEvent Login(Nothing, Nothing)
+                Return True
+
+            Else
+                Return False
+
             End If
 
         Else
@@ -121,10 +126,11 @@
             txtUid.BackColor = Color.White
             txtUid.ForeColor = Color.Black
             txtUid.BorderStyle = Windows.Forms.BorderStyle.Fixed3D
+            Return False
 
         End If
 
-    End Sub
+    End Function
 
     Private Function GetoAuth() As Boolean
         'get oAuth info from user
