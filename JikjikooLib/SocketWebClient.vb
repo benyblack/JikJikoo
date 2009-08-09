@@ -5,6 +5,7 @@ Imports Org.Mentalis.Network.ProxySocket
 Imports System.Text
 Imports System.Text.RegularExpressions
 Imports System.Threading
+Imports System.Web
 
 Namespace DNE.JikJikoo
 
@@ -119,7 +120,7 @@ Namespace DNE.JikJikoo
                 strOut = strOut.Substring(strOut.IndexOf(vbCrLf + vbCrLf) + 4)
                 If headers.StatusCode <> 200 Then
                     'TODO://
-                    DNE.JikJikoo.Util.LogIt(Regex.Match(strOut, "<error>(.*?)</error>").Groups(1).Value & vbCrLf)
+                    'DNE.JikJikoo.Util.LogIt(Regex.Match(strOut, "<error>(.*?)</error>").Groups(1).Value & vbCrLf)
 
 
                 End If
@@ -308,7 +309,7 @@ Namespace DNE.JikJikoo
         End Function
 
         Public Overrides Function DoPost(ByVal url As System.Uri, ByVal data As String) As String
-            Return HttpRequestSocket("POST", url.ToString(), data)
+            Return HttpRequestSocket("POST", url.AbsolutePath & url.Query, data)
 
         End Function
 
@@ -324,6 +325,31 @@ Namespace DNE.JikJikoo
 
         Public Overrides Function DownloadDataNoAuth(ByVal url As System.Uri) As Byte()
             Return HttpDownloadSocket("GET", url.ToString(), "", False)
+
+        End Function
+
+        Private Function UrlEncode(ByVal s As String) As String
+            Dim c() As Char = s.ToCharArray
+            Dim ss As String = ""
+            Dim unreservedChars As String = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_.~"
+            For i As Int32 = 0 To s.Length - 1
+                If unreservedChars.IndexOf(c(i)) <> -1 Then
+                    ss += c(i)
+
+                ElseIf c(i) = " "c Then
+                    ss += "%20"
+
+                ElseIf c(i) = "+"c Then
+                    ss += "%2B"
+
+                Else
+                    ss += HttpUtility.UrlEncode(c(i)).ToUpper()
+
+                End If
+
+
+            Next
+            Return ss
 
         End Function
 

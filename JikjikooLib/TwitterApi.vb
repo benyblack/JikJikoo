@@ -61,7 +61,7 @@ Namespace DNE.Twitter
 
                 End If
                 url = String.Format("{0}?{1}&oauth_signature={2}", normurl, normparam, UrlEncode(sign))
-                DNE.JikJikoo.Util.LogIt(ts & " : " & nonce & " : " & UrlEncode(sign) & vbCrLf)
+                'DNE.JikJikoo.Util.LogIt(ts & " : " & nonce & " : " & UrlEncode(sign) & vbCrLf)
                 If method.ToLower = "get" Then query = ""
 
             End If

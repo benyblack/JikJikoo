@@ -306,6 +306,7 @@ Public Class frmMain
     ''' <remarks></remarks>
     Protected Overrides Sub WndProc(ByRef WndMsg As System.Windows.Forms.Message)
         If WndMsg.Msg = WM_NCRBUTTONDOWN Then
+            'size: http://ivision.wordpress.com/2007/01/05/title-bar-height-and-form-border-width-of-net-form/
             Dim dy As Int32 = Me.Height - Me.ClientSize.Height
             Dim dx As Int32 = CInt((Me.Width - Me.ClientSize.Width) / 2)
             Dim mp As New Size(Control.MousePosition.X - Me.Location.X - dx, Control.MousePosition.Y - Me.Location.Y - dy + dx)
