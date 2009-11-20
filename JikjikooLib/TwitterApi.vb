@@ -10,13 +10,351 @@ Imports System.Collections.ObjectModel
 Imports System.Text.RegularExpressions
 
 Imports Org.Mentalis.Network.ProxySocket
+Imports System.Collections.Specialized
+Imports System.Security.Cryptography
 
 Namespace DNE.Twitter
 
     Public Class Api
 
+        'Public Function OAuthWebRequest(ByVal url As String, ByVal PostData As String) As String
+        '    Dim OutURL As String = String.Empty
+        '    Dim QueryString As String = String.Empty
+        '    Dim ReturnValue As String = String.Empty
+        '    If True Then
+        '        If PostData.Length > 0 Then
+        '            Dim qs As NameValueCollection = HttpUtility.ParseQueryString(PostData)
+        '            PostData = String.Empty
+        '            For Each Key As String In qs.AllKeys
+        '                If PostData.Length > 0 Then
+        '                    PostData &= "&"
+        '                End If
+        '                qs(Key) = HttpUtility.UrlDecode(qs(Key))
+        '                qs(Key) = UrlEncode(qs(Key))
+        '                PostData &= Key + "=" + qs(Key)
+        '            Next
+        '            If url.IndexOf("?") > 0 Then
+        '                url &= "&"
+        '            Else
+        '                url &= "?"
+        '            End If
+        '            url &= PostData
+        '        End If
+        '    End If
+
+        '    Dim RequestUri As New Uri(url)
+        '    Dim Nonce As String = GenerateNonce()
+        '    Dim TimeStamp As String = GenerateTimeStamp()
+        '    Dim Sig As String = GenerateSignature(RequestUri, Me.ConsumerKey, Me.ConsumerSecret, Me.Token, Me.TokenSecret, RequestMethod.ToString, TimeStamp, Nonce, OutURL, QueryString)
+
+        '    QueryString &= "&oauth_signature=" + OAuthUrlEncode(Sig)
+        '    If RequestMethod = OAuth.Method.POST Then
+        '        PostData = QueryString
+        '        QueryString = String.Empty
+        '    End If
+
+        '    If QueryString.Length > 0 Then
+        '        OutURL &= "?"
+        '    End If
+
+        '    ReturnValue = WebRequest(RequestMethod, OutURL + QueryString, PostData)
+
+        '    Return ReturnValue
+        'End Function
+
+#Region "Base OAuth Members"
+        Protected Const OAuthVersion As String = "1.0"
+        Protected Const OAuthParameterPrefix As String = "oauth_"
+        Protected Const OAuthConsumerKeyKey As String = "oauth_consumer_key"
+        Protected Const OAuthCallbackKey As String = "oauth_callback"
+        Protected Const OAuthVersionKey As String = "oauth_version"
+        Protected Const OAuthSignatureMethodKey As String = "oauth_signature_method"
+        Protected Const OAuthSignatureKey As String = "oauth_signature"
+        Protected Const OAuthTimestampKey As String = "oauth_timestamp"
+        Protected Const OAuthNonceKey As String = "oauth_nonce"
+        Protected Const OAuthTokenKey As String = "oauth_token"
+        Protected Const OAuthTokenSecretKey As String = "oauth_token_secret"
+        Protected Const OAuthVerifier As String = "oauth_verifier"
+        Protected Const HMACSHA1SignatureType As String = "HMAC-SHA1"
+        Protected Const PlainTextSignatureType As String = "PLAINTEXT"
+        Protected Const RSASHA1SignatureType As String = "RSA-SHA1"
+
+        Protected _Random As Random = New Random()
+
+        Public Enum SignatureTypes
+            HMACSHA1
+            PLAINTEXT
+            RSASHA1
+        End Enum
+
+        Protected Class QueryParameter
+            Dim _name As String = Nothing
+            Dim _value As String = Nothing
+
+            Public Sub New(ByVal Name As String, ByVal value As String)
+                _name = Name
+                _value = value
+            End Sub
+
+            Public Property Name() As String
+                Get
+                    Return _name
+                End Get
+                Set(ByVal value As String)
+                    _name = value
+                End Set
+            End Property
+
+            Public Property Value() As String
+                Get
+                    Return _value
+                End Get
+                Set(ByVal value As String)
+                    _value = value
+                End Set
+            End Property
+        End Class
+
+        Protected Class QueryParameterComparer
+            Implements IComparer(Of QueryParameter)
+
+            Public Function Compare(ByVal x As QueryParameter, ByVal y As QueryParameter) As Integer Implements System.Collections.Generic.IComparer(Of QueryParameter).Compare
+                If x.Name = y.Name Then
+                    Return String.Compare(x.Value, y.Value)
+                Else
+                    Return String.Compare(x.Name, y.Name)
+                End If
+            End Function
+        End Class
+
+        Private Function ComputeHash(ByVal Algorithm As HashAlgorithm, ByVal Data As String) As String
+            If Algorithm IsNot Nothing Then
+                If String.IsNullOrEmpty(Data) = False Then
+                    Dim DataBuffer() As Byte = System.Text.Encoding.ASCII.GetBytes(Data)
+                    Dim HashBytes() As Byte = Algorithm.ComputeHash(DataBuffer)
+                    Return Convert.ToBase64String(HashBytes)
+                Else
+                    Throw New ArgumentNullException("Data")
+                End If
+            Else
+                Throw New ArgumentNullException("Algorithm")
+            End If
+
+
+        End Function
+
+        Private Function GetQueryParameters(ByVal Parameters As String) As List(Of QueryParameter)
+            If Parameters.StartsWith("?") Then
+                Parameters = Parameters.Remove(0, 1)
+            End If
+
+            Dim Result As List(Of QueryParameter) = New List(Of QueryParameter)
+
+            If String.IsNullOrEmpty(Parameters) = False Then
+                Dim p() As String = Parameters.Split(Convert.ToChar("&"))
+                For Each s As String In p
+                    If String.IsNullOrEmpty(s) = False Then 'And s.StartsWith(OAuthParameterPrefix) = False Then
+                        If s.IndexOf("=") > -1 Then
+                            Dim Temp() As String = s.Split(Convert.ToChar("="))
+                            Result.Add(New QueryParameter(Temp(0), Temp(1)))
+                        Else
+                            Result.Add(New QueryParameter(s, String.Empty))
+                        End If
+                    End If
+                Next
+            End If
+            Return Result
+        End Function
+
+        Public Shared Function OAuthUrlEncode(ByVal value As String) As String
+            Dim result As New StringBuilder()
+
+            Dim Unreserved_Symbols As String = "-_.~"
+            Dim Unreserved_English As String = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+            Dim Unreserved_German As String = "äöüÄÖÜß"
+
+            Dim UnreservedChars As String = String.Concat(Unreserved_Symbols, Unreserved_English, Unreserved_German)
+            For Each symbol As Char In value
+                If UnreservedChars.IndexOf(symbol) <> -1 Then
+                    result.Append(symbol)
+                Else
+                    result.Append("%"c + [String].Format("{0:X2}", AscW(symbol)))
+                End If
+            Next
+
+            Return result.ToString()
+        End Function
+
+        Protected Function NormalizeRequestParameters(ByVal Parameters As IList(Of QueryParameter)) As String
+            Dim sb As New StringBuilder
+            Dim p As QueryParameter = Nothing
+            For i As Integer = 0 To Parameters.Count - 1
+                p = Parameters(i)
+                sb.AppendFormat("{0}={1}", p.Name, p.Value)
+                If i < Parameters.Count - 1 Then
+                    sb.Append("&")
+                End If
+            Next
+            Return sb.ToString
+        End Function
+
+        Public Function GenerateSignatureBase(ByVal URL As Uri, ByVal ConsumerKey As String, ByVal Token As String, ByVal TokenSecret As String, ByVal HTTPMethod As String, ByVal TimeStamp As String, ByVal Nonce As String, ByVal SignatureType As String, ByRef NormalizedURL As String, ByRef NormalizedRequestParameters As String) As String
+            If Token Is Nothing Then
+                Token = String.Empty
+            End If
+
+            If TokenSecret Is Nothing Then
+                TokenSecret = String.Empty
+            End If
+
+            If String.IsNullOrEmpty(ConsumerKey) Then
+                Throw New ArgumentNullException("ConsumerKey")
+            End If
+
+            If String.IsNullOrEmpty(HTTPMethod) Then
+                Throw New ArgumentNullException("HTTPMethod")
+            End If
+
+            If String.IsNullOrEmpty(SignatureType) Then
+                Throw New ArgumentNullException("SignatureType")
+            End If
+
+            NormalizedURL = Nothing
+            NormalizedRequestParameters = Nothing
+
+            Dim Parameters As List(Of QueryParameter) = GetQueryParameters(URL.Query)
+            With Parameters
+                Parameters.Add(New QueryParameter(OAuthVersionKey, OAuthVersion))
+                Parameters.Add(New QueryParameter(OAuthNonceKey, Nonce))
+                Parameters.Add(New QueryParameter(OAuthTimestampKey, TimeStamp))
+                Parameters.Add(New QueryParameter(OAuthSignatureMethodKey, SignatureType))
+                Parameters.Add(New QueryParameter(OAuthConsumerKeyKey, ConsumerKey))
+            End With
+
+            If String.IsNullOrEmpty(Token) = False Then
+                Parameters.Add(New QueryParameter(OAuthTokenKey, Token))
+            End If
+
+            Parameters.Sort(New QueryParameterComparer)
+
+            NormalizedURL = String.Format("{0}://{1}", URL.Scheme, URL.Host)
+            If (Not (URL.Scheme = "http" And URL.Port = 80) Or (URL.Scheme = "https" And URL.Port = 443)) Then
+                NormalizedURL &= ":" + URL.Port.ToString
+            End If
+
+            NormalizedURL &= URL.AbsolutePath
+            NormalizedRequestParameters = NormalizeRequestParameters(Parameters)
+            Dim SignatureBase As New StringBuilder()
+            With SignatureBase
+                .AppendFormat("{0}&", HTTPMethod.ToUpper())
+                .AppendFormat("{0}&", OAuthUrlEncode(NormalizedURL))
+                .AppendFormat("{0}", OAuthUrlEncode(NormalizedRequestParameters))
+            End With
+
+            Return SignatureBase.ToString
+        End Function
+
+        Public Function GenerateSignatureUsingHash(ByVal SignatureBase As String, ByVal Hash As HashAlgorithm) As String
+            Return ComputeHash(Hash, SignatureBase)
+        End Function
+
+        Public Function GenerateSignature(ByVal URL As Uri, ByVal ConsumerKey As String, ByVal ConsumerSecret As String, ByVal Token As String, ByVal TokenSecret As String, ByVal HTTPMethod As String, ByVal TimeStamp As String, ByVal Nonce As String, ByRef NormalizedUrl As String, ByRef NormalizedRequestParameters As String) As String
+            Return GenerateSignature(URL, ConsumerKey, ConsumerSecret, Token, TokenSecret, HTTPMethod, TimeStamp, Nonce, SignatureTypes.HMACSHA1, NormalizedUrl, NormalizedRequestParameters)
+        End Function
+
+        Public Function GenerateSignature(ByVal url As Uri, ByVal ConsumerKey As String, ByVal ConsumerSecret As String, ByVal Token As String, ByVal TokenSecret As String, ByVal HTTPMethod As String, ByVal TimeStamp As String, ByVal Nonce As String, ByVal SignatureType As SignatureTypes, ByRef NormalizedUrl As String, ByRef NormalizedRequestParameters As String) As String
+            NormalizedUrl = Nothing
+            NormalizedRequestParameters = Nothing
+
+            Select Case SignatureType
+                Case SignatureTypes.PLAINTEXT
+                    Return HttpUtility.UrlEncode(String.Format("{0}&{1}", ConsumerSecret, TokenSecret))
+
+                Case SignatureTypes.HMACSHA1
+                    Dim SignatureBase As String = GenerateSignatureBase(url, ConsumerKey, Token, TokenSecret, HTTPMethod, TimeStamp, Nonce, HMACSHA1SignatureType, NormalizedUrl, NormalizedRequestParameters)
+
+                    Dim hmacsha1 As New HMACSHA1()
+                    Dim ts As String = String.Empty
+                    If String.IsNullOrEmpty(TokenSecret) Then
+                        ts = String.Empty
+                    Else
+                        ts = OAuthUrlEncode(TokenSecret)
+                    End If
+                    hmacsha1.Key = Encoding.ASCII.GetBytes(String.Format("{0}&{1}", OAuthUrlEncode(ConsumerSecret), ts))
+                    Return GenerateSignatureUsingHash(SignatureBase, hmacsha1)
+
+                Case SignatureTypes.RSASHA1
+                    Throw New NotImplementedException()
+
+                Case Else
+                    Throw New ArgumentException("Unknown signature type", "signatureType")
+            End Select
+        End Function
+
+        Public Overridable Function GenerateTimeStamp() As String
+            ' Default implementation of UNIX time of the current UTC time
+            Dim ts As TimeSpan = DateTime.UtcNow - New DateTime(1970, 1, 1, 0, 0, 0, 0)
+            Return Convert.ToInt64(ts.TotalSeconds).ToString()
+        End Function
+
+        Public Overridable Function GenerateNonce() As String
+            ' Just a simple implementation of a random number between 123400 and 9999999
+            Return _Random.[Next](123400, 9999999).ToString()
+        End Function
+
+#End Region
+
+        Public Function OAuthWebRequest(ByVal RequestMethod As String, ByVal url As String, ByVal PostData As String) As String
+            Dim OutURL As String = String.Empty
+            Dim QueryString As String = String.Empty
+            Dim ReturnValue As String = String.Empty
+            If RequestMethod = "POST" Then
+                If PostData.Length > 0 Then
+                    Dim qs As NameValueCollection = HttpUtility.ParseQueryString(PostData)
+                    PostData = String.Empty
+                    For Each Key As String In qs.AllKeys
+                        If PostData.Length > 0 Then
+                            PostData &= "&"
+                        End If
+                        qs(Key) = HttpUtility.UrlDecode(qs(Key))
+                        qs(Key) = OAuthUrlEncode(qs(Key))
+                        PostData &= Key + "=" + qs(Key)
+                    Next
+                    If url.IndexOf("?") > 0 Then
+                        url &= "&"
+                    Else
+                        url &= "?"
+                    End If
+                    url &= PostData
+                End If
+            End If
+
+            Dim RequestUri As New Uri(url)
+            Dim Nonce As String = GenerateNonce()
+            Dim TimeStamp As String = GenerateTimeStamp()
+            Dim Sig As String = GenerateSignature(RequestUri, "Um0Z859qORQgTkN4ehyqdw", _
+                                        "F1Ce6okvMspIYBbrJJ7Qh2LkvkJNhxruiI2Ln7CmA", _token, _tokensecret, _
+                                        RequestMethod.ToString, TimeStamp, Nonce, OutURL, QueryString)
+
+            QueryString &= "&oauth_signature=" + OAuthUrlEncode(Sig)
+            If RequestMethod = "POST" Then
+                PostData = QueryString
+                QueryString = String.Empty
+            End If
+
+            If QueryString.Length > 0 Then
+                OutURL &= "?"
+            End If
+            ReturnValue = Me.WebClient.DoPost(New Uri(OutURL + QueryString), PostData)
+            Return ReturnValue
+
+        End Function
+
         Private Function HttpRequest(ByVal method As String, ByVal url As String, ByVal query As String, Optional ByVal host As String = "twitter.com") As String
             If AuthenticationType = AuthType.oAuth Then
+                If method = "POST" Then
+                    Return OAuthWebRequest("POST", String.Format("http://{0}{1}", host, url), query)
+                End If
                 Dim o As New oAuthExample.oAuthTwitter(Me)
                 o.ConsumerKey = "Um0Z859qORQgTkN4ehyqdw"
                 o.ConsumerSecret = "F1Ce6okvMspIYBbrJJ7Qh2LkvkJNhxruiI2Ln7CmA"
@@ -40,35 +378,13 @@ Namespace DNE.Twitter
                 Dim sign As String = o.GenerateSignature(New Uri(String.Format("http://{0}{1}{2}", host, url, query)), _
                                     o.ConsumerKey, o.ConsumerSecret, o.Token, o.TokenSecret, method, ts, _
                                     nonce, normurl, normparam)
-                'TODO:// must parse query & params
-                'Completed
-                'Not Tested
-                If query <> "" And method.ToLower = "post" Then
-                    Dim qnv As Collections.Specialized.NameValueCollection = HttpUtility.ParseQueryString(query)
-                    Dim pnv As Collections.Specialized.NameValueCollection = HttpUtility.ParseQueryString(normparam)
-                    For i As Int32 = 0 To qnv.Count - 1
-                        pnv.Remove(qnv.AllKeys(i))
 
-
-                    Next
-                    normparam = ""
-                    For i As Int32 = 0 To pnv.Count - 1
-                        normparam += String.Format("{0}={1}&", pnv.Keys(i), UrlEncode(pnv(pnv.Keys(i))))
-
-                    Next
-                    'remove last "&"
-                    normparam = normparam.Substring(0, normparam.Length - 1)
-
-                End If
                 url = String.Format("{0}?{1}&oauth_signature={2}", normurl, normparam, UrlEncode(sign))
                 'DNE.JikJikoo.Util.LogIt(ts & " : " & nonce & " : " & UrlEncode(sign) & vbCrLf)
                 If method.ToLower = "get" Then query = ""
 
             End If
-            If method.ToUpper = "POST" Then
-                Return Me.WebClient.DoPost(New Uri(url), query)
-
-            ElseIf method.ToUpper = "GET" Then
+            If method.ToUpper = "GET" Then
                 Return Me.WebClient.DoGet(New Uri(url))
 
             End If
@@ -363,7 +679,7 @@ Namespace DNE.Twitter
                     If _swc Is Nothing Then ConfigWebClientProxy()
                     Return _swc
                 End If
-                
+
             End Get
         End Property
 
@@ -1019,30 +1335,45 @@ Namespace DNE.Twitter
             Next
         End Sub
 
-        Private Function UrlEncode(ByVal s As String) As String
-            Dim c() As Char = s.ToCharArray
-            Dim ss As String = ""
+        Public Shared Function UrlEncode(ByVal value As String) As String
+            Dim result As New StringBuilder()
             Dim unreservedChars As String = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_.~"
-            For i As Int32 = 0 To s.Length - 1
-                If unreservedChars.IndexOf(c(i)) <> -1 Then
-                    ss += c(i)
-
-                ElseIf c(i) = " "c Then
-                    ss += "%20"
-
-                ElseIf c(i) = "+"c Then
-                    ss += "%2B"
-
+            For Each symbol As Char In value
+                If unreservedChars.IndexOf(symbol) <> -1 Then
+                    result.Append(symbol)
                 Else
-                    ss += HttpUtility.UrlEncode(c(i)).ToUpper()
-
+                    result.Append("%"c + [String].Format("{0:X2}", AscW(symbol)))
                 End If
-
-
             Next
-            Return ss
 
+            Return result.ToString()
         End Function
+
+
+        'Private Function UrlEncode(ByVal s As String) As String
+        '    Dim c() As Char = s.ToCharArray
+        '    Dim ss As String = ""
+        '    Dim unreservedChars As String = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_.~"
+        '    For i As Int32 = 0 To s.Length - 1
+        '        If unreservedChars.IndexOf(c(i)) <> -1 Then
+        '            ss += c(i)
+
+        '        ElseIf c(i) = " "c Then
+        '            ss += "%20"
+
+        '        ElseIf c(i) = "+"c Then
+        '            ss += "%2B"
+
+        '        Else
+        '            ss += HttpUtility.UrlEncode(c(i)).ToUpper()
+
+        '        End If
+
+
+        '    Next
+        '    Return ss
+
+        'End Function
 
 #End Region
 

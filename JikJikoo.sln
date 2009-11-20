@@ -8,6 +8,21 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SocksProxy", "SocksProxy\SocksProxy.csproj", "{AD6738D4-105E-447A-8C4E-3913177D2C3B}"
 EndProject
 Global
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 4
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = https://tfs05.codeplex.com/
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = JikJikoo(.net2.0)\\JikJikoo(.net2.0).vbproj
+		SccProjectName1 = JikJikoo(.net2.0)
+		SccLocalPath1 = JikJikoo(.net2.0)
+		SccProjectUniqueName2 = JikjikooLib\\JikjikooLib.vbproj
+		SccProjectName2 = JikjikooLib
+		SccLocalPath2 = JikjikooLib
+		SccProjectUniqueName3 = SocksProxy\\SocksProxy.csproj
+		SccProjectName3 = SocksProxy
+		SccLocalPath3 = SocksProxy
+	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
